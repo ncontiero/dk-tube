@@ -2,7 +2,7 @@ import type { FC, PropsWithChildren } from "react";
 import Head from "next/head";
 
 export interface MetaProps {
-  title: string;
+  title?: string;
   path: string;
   baseUrl?: string;
   description?: string;
@@ -24,7 +24,7 @@ export interface MetaProps {
  * Add meta tags to the document head.
  */
 export const Meta: FC<PropsWithChildren<MetaProps>> = ({
-  title,
+  title = "",
   description,
   path,
   baseUrl = process.env.SITE_BASEURL,
@@ -46,7 +46,7 @@ export const Meta: FC<PropsWithChildren<MetaProps>> = ({
   return (
     <Head>
       {/* SEO */}
-      <title>{`${title} · ${siteName}`}</title>
+      <title>{`${title && title + " ·"} ${siteName}`}</title>
       <meta name="title" content={`${title} · ${siteName}`}></meta>
       {description && <meta name="description" content={description} />}
       <meta name="robots" content={`${indexString} ${followString}`} />
