@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL") // uses connection pooling
+  directUrl         = env("DATABASE_URL_NON_POOLING") // uses a direct connection
+  shadowDatabaseUrl = env("DATABASE_URL_NON_POOLING") // used for migrations
+}
+
+model User {
+  id         String @id @default(uuid())
+  externalId String @unique
+  username   String @unique
+  email      String @unique
+  image      String @default("https://img.clerk.com/preview.png")
+
+  videos    Video[]
+  playlists Playlist[]
+
+  @@map("users")
+}
+
+model Video {
+  id        String   @id @default(uuid())
+  title     String
+  thumb     String
+  youtubeId String
+  createdAt DateTime @default(now())
+
+  playlists Playlist[]
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("videos")
+}
+
+model Playlist {
+  id        String   @id @default(uuid())
+  name      String
+  isPlubic  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  videos Video[]
+
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("playlists")
+}
