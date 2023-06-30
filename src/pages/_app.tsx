@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ptBR } from "@clerk/localizations";
 import { dark } from "@clerk/themes";
+import { Header } from "@/components/Header";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -15,7 +16,10 @@ export default function App({ Component, pageProps }: AppProps) {
       localization={ptBR}
       {...pageProps}
     >
-      <Component {...pageProps} />
+      <Header />
+      <div className="pb-[90px] pt-14">
+        <Component {...pageProps} />
+      </div>
     </ClerkProvider>
   );
 }

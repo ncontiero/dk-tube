@@ -14,3 +14,23 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+body::-webkit-scrollbar {
+  @apply h-2 w-2;
+}
+body::-webkit-scrollbar-track {
+  @apply bg-violet-600 bg-gradient-to-b from-black/60 to-zinc-900;
+}
+body::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-zinc-400/50 backdrop-blur hover:bg-zinc-500/50;
+}
+
+.cl-pageScrollBox::-webkit-scrollbar {
+  @apply h-2 w-2;
+}
+.cl-pageScrollBox::-webkit-scrollbar-track {
+  @apply rounded-md bg-violet-600 bg-gradient-to-b from-black/60 to-zinc-900;
+}
+.cl-pageScrollBox::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-zinc-400/20 backdrop-blur hover:bg-zinc-500/50;
+}

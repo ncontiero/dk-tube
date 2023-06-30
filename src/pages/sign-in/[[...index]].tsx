@@ -5,7 +5,7 @@ export default function SignInPage() {
   return (
     <>
       <Meta path="/sign-in" title="Fazer Login" />
-      <div className="my-10 flex items-center justify-center">
+      <div className="my-20 flex items-center justify-center">
         <SignIn
           path="/sign-in"
           routing="path"

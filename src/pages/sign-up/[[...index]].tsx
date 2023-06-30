@@ -5,7 +5,7 @@ export default function SignUpPage() {
   return (
     <>
       <Meta path="/sign-up" title="Criar Conta" />
-      <div className="my-10 flex items-center justify-center">
+      <div className="my-20 flex items-center justify-center">
         <SignUp
           path="/sign-up"
           routing="path"
