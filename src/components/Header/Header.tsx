@@ -1,67 +1,81 @@
+import { useState } from "react";
 import { usePathname } from "next/navigation";
+
 import Link from "next/link";
 import { Logo } from "../Logo";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
+import { Search } from "lucide-react";
+import { SearchBar } from "./SearchBar";
+
 export function Header() {
   const pathname = usePathname();
+  const [hasSearchBar, setHasSearchBar] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[9999] flex h-14 items-center justify-between border-b border-zinc-300/10 bg-black/50 pl-4 pr-6 backdrop-blur-md">
-      <Link
-        href="/"
-        title="Ir para o inicio"
-        className="rounded-md px-3 py-4 ring-purple-400 duration-200 focus:outline-none focus:ring-2"
-      >
-        <Logo />
-      </Link>
-      <form className="w-1/4">
-        <div className="flex rounded-3xl">
-          <input
-            type="text"
-            placeholder="Buscar videos..."
-            className="w-full rounded-l-3xl border border-zinc-500/50 bg-transparent px-3 py-2 outline-none duration-200 focus:border-purple-400"
+    <header className="fixed top-0 z-[9999] flex h-14 w-full items-center border-b border-zinc-300/10 bg-zinc-700/20 pl-2 pr-3 backdrop-blur-md sm:h-16 sm:pl-4 sm:pr-6">
+      <div className="flex h-full w-full items-center justify-between gap-2">
+        <Link
+          href="/"
+          title="Ir para o inicio"
+          className="rounded-md py-2 pl-1 ring-purple-400 duration-200 focus:outline-none focus:ring-2 sm:px-3 sm:py-4"
+        >
+          <Logo />
+        </Link>
+        {!hasSearchBar && (
+          <form className="flex h-full w-full max-w-lg items-center md:flex-1">
+            <div className="hidden w-full rounded-3xl md:flex">
+              <input
+                type="text"
+                placeholder="Buscar videos..."
+                className="w-full rounded-l-3xl border border-zinc-500/50 bg-transparent px-3 py-2 outline-none duration-200 focus:border-purple-400"
+              />
+              <button
+                type="button"
+                className="rounded-r-3xl border-y border-r border-zinc-500/50 bg-white/10 px-2 outline-purple-400 duration-200 hover:bg-white/20 sm:px-4 sm:py-2"
+              >
+                <Search className="mr-1" />
+              </button>
+            </div>
+          </form>
+        )}
+        <div className="flex items-center gap-4 md:gap-0">
+          <SearchBar
+            hasSearchBar={hasSearchBar}
+            setHasSearchBar={setHasSearchBar}
           />
-          <button
-            type="button"
-            className="rounded-r-3xl border-y border-r border-zinc-500/50 bg-white/10 p-2 px-4 outline-purple-400 duration-200 hover:bg-white/20"
-          >
-            🔎
-          </button>
-        </div>
-      </form>
-      <div className="flex items-end">
-        <SignedOut>
-          <Link
-            href="/sign-in"
-            className={`flex h-full w-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase sm:w-auto sm:rounded-3xl sm:px-4 sm:py-2 ${
-              pathname === "/sign-in" ? "text-purple-600" : "text-inherit"
-            } ring-purple-400 duration-200 hover:text-purple-400 focus:text-purple-400 focus:outline-none focus:ring-2 active:opacity-70`}
-          >
-            Login
-          </Link>
-        </SignedOut>
-        <SignedIn>
-          <UserButton
-            userProfileMode="modal"
-            appearance={{
-              elements: { card: "bg-zinc-900/70 backdrop-blur-xl" },
-              userProfile: {
-                elements: {
-                  modalBackdrop: "bg-black/50 backdrop-blur-2xl max-h-screen",
-                  modalContent: "m-0",
-                  card: "bg-zinc-900/40 backdrop-blur-xl border border-zinc-700",
-                  profileSectionPrimaryButton:
-                    "hover:bg-violet-600/10 duration-300",
-                  accordionTriggerButton: "hover:bg-gray-600/10 duration-300",
-                  formButtonReset: "hover:bg-violet-600/20 duration-300",
-                  fileDropAreaButtonPrimary:
-                    "hover:bg-violet-600/20 duration-300",
+          <SignedOut>
+            <Link
+              href="/sign-in"
+              className={`flex h-full w-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase sm:w-auto sm:rounded-3xl sm:px-4 sm:py-2 ${
+                pathname === "/sign-in" ? "text-purple-600" : "text-inherit"
+              } ring-purple-400 duration-200 hover:text-purple-400 focus:text-purple-400 focus:outline-none focus:ring-2 active:opacity-70`}
+            >
+              Login
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <UserButton
+              userProfileMode="modal"
+              appearance={{
+                elements: { card: "bg-zinc-900/70 backdrop-blur-xl" },
+                userProfile: {
+                  elements: {
+                    modalBackdrop: "bg-black/50 backdrop-blur-2xl max-h-screen",
+                    modalContent: "m-0",
+                    card: "bg-zinc-900/40 backdrop-blur-xl border border-zinc-700",
+                    profileSectionPrimaryButton:
+                      "hover:bg-violet-600/10 duration-300",
+                    accordionTriggerButton: "hover:bg-gray-600/10 duration-300",
+                    formButtonReset: "hover:bg-violet-600/20 duration-300",
+                    fileDropAreaButtonPrimary:
+                      "hover:bg-violet-600/20 duration-300",
+                  },
                 },
-              },
-            }}
-          />
-        </SignedIn>
+              }}
+            />
+          </SignedIn>
+        </div>
       </div>
     </header>
   );

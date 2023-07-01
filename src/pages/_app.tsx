@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {...pageProps}
     >
       <Header />
-      <div className="pb-[90px] pt-14">
+      <div className="pb-20 pt-16">
         <Component {...pageProps} />
       </div>
     </ClerkProvider>
