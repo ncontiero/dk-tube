@@ -25,7 +25,7 @@ CREATE TABLE "videos" (
 CREATE TABLE "playlists" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "isPlubic" BOOLEAN NOT NULL DEFAULT true,
+    "isPublic" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
 

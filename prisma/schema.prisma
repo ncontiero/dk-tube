@@ -40,12 +40,12 @@ model Video {
 model Playlist {
   id        String   @id @default(uuid())
   name      String
-  isPlubic  Boolean  @default(true)
+  isPublic  Boolean  @default(true)
   createdAt DateTime @default(now())
 
   videos Video[]
 
-  User   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
   userId String
 
   @@map("playlists")
