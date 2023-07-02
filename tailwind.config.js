@@ -9,6 +9,10 @@ module.exports = {
       fontFamily: {
         inter: "Inter, sans-serif",
       },
+      screens: {
+        xs: "590px",
+        mdlg: "875px",
+      },
     },
   },
   plugins: [],
