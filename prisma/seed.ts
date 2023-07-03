@@ -81,6 +81,14 @@ async function main() {
   });
   console.log(`Created video with id: ${video2.id}`);
 
+  const video3 = await createVideo({
+    title: "Fluid Sim Hue Test",
+    thumb: "https://i.ytimg.com/vi/qC0vDKVPCrw/hqdefault.jpg",
+    youtubeId: "qC0vDKVPCrw",
+    userId: user1.id,
+  });
+  console.log(`Created video with id: ${video3.id}`);
+
   const playlist1 = await createPlaylist({
     name: "Musics",
     userId: user1.id,
