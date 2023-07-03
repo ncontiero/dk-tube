@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <QueryClientProvider client={queryClient}>
         <Header />
-        <div className="pb-20 pt-16">
+        <div className="pt-16">
           <Component {...pageProps} />
         </div>
       </QueryClientProvider>

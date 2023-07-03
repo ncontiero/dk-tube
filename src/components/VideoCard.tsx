@@ -2,19 +2,22 @@ import { VideoWithUser } from "@/utils/formatters";
 import Image from "next/image";
 import Link from "next/link";
 
+export type VideoCardVariant = "large" | "medium" | "small";
+
 interface VideoCardProps {
   video: VideoWithUser;
+  variant?: VideoCardVariant;
 }
 
-export function VideoCard({ video }: VideoCardProps) {
+export function VideoCard({ video, variant = "medium" }: VideoCardProps) {
   return (
     <div className="relative flex w-full flex-col items-center xs:mb-4 md:mb-10 xl:max-w-[360px]">
       <Link
-        href={`/watch?v=${video.youtubeId}`}
+        href={`/watch?v=${video.id}`}
         className="absolute z-[5] -m-1 h-[105%] w-[102%] rounded-xl outline-none duration-200 focus:bg-zinc-600/50"
       />
       <Link
-        href={`/watch?v=${video.youtubeId}`}
+        href={`/watch?v=${video.id}`}
         className="z-10 w-full rounded-xl outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2"
       >
         <Image
@@ -41,7 +44,7 @@ export function VideoCard({ video }: VideoCardProps) {
         </div>
         <div className="flex flex-col overflow-hidden">
           <Link
-            href={`/watch?v=${video.youtubeId}`}
+            href={`/watch?v=${video.id}`}
             className="z-10 outline-none ring-purple-400 duration-200 hover:opacity-80 focus:ring-2"
           >
             <h3 className="mb-1 mt-3 truncate">{video.title}</h3>

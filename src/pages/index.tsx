@@ -29,7 +29,11 @@ export default function HomePage() {
         image={{ src: "/logo.png", alt: "Logo do DkTube" }}
       />
       <div className="mt-4 flex w-full justify-center gap-4 xs:mt-6 xs:max-w-screen-2xl md:mx-auto xl:mt-12">
-        <ListVideos videos={videos} isFetching={isFetchingVideos} />
+        <ListVideos
+          videos={videos}
+          isFetching={isFetchingVideos}
+          videoCardVariant="large"
+        />
       </div>
     </>
   );
