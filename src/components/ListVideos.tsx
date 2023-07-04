@@ -1,5 +1,5 @@
 import { VideoWithUser } from "@/utils/formatters";
-import { VideoCard, VideoCardVariant } from "./VideoCard";
+import { VideoCard, VideoCardVariant } from "./VideoCard/VideoCard";
 
 interface ListVideosProps {
   videos?: VideoWithUser[];
