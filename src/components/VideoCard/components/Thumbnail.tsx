@@ -2,7 +2,7 @@ import type { VideoWithUser } from "@/utils/formatters";
 import Image from "next/image";
 import Link from "next/link";
 
-export type VideoCardVariant = "large" | "medium" | "small";
+export type VideoCardVariant = "large" | "medium" | "small" | "largeVertical";
 
 interface ThumbnailProps {
   video: VideoWithUser;
@@ -14,10 +14,12 @@ export function Thumbnail({ video, variant }: ThumbnailProps) {
     <Link
       href={`/watch?v=${video.id}`}
       className={`z-10 w-full ${
-        variant === "large" ? "rounded-xl" : "h-24 w-40 rounded-md"
+        variant === "large" || variant === "largeVertical"
+          ? "xs:rounded-xl"
+          : "h-24 w-40 xs:rounded-md"
       } outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2`}
     >
-      {variant === "large" ? (
+      {variant === "large" || variant === "largeVertical" ? (
         <Image
           src={video.thumb}
           alt={video.title}

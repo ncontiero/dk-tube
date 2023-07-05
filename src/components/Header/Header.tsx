@@ -56,14 +56,19 @@ export function Header() {
           </SignedOut>
           <SignedIn>
             <UserButton
+              afterSignOutUrl="/"
               userProfileMode="modal"
               appearance={{
                 elements: { card: "bg-zinc-900/70 backdrop-blur-xl" },
                 userProfile: {
                   elements: {
-                    modalBackdrop: "bg-black/50 backdrop-blur-2xl max-h-screen",
-                    modalContent: "m-0",
-                    card: "bg-zinc-900/40 backdrop-blur-xl border border-zinc-700",
+                    modalBackdrop:
+                      "bg-black/50 backdrop-blur-2xl w-[101vw] h-[101vh] inset-0 overflow-hidden",
+                    modalContent: "h-[101vh] w-[101vw] inset-0",
+                    rootBox: "w-[101vw] h-[101vh] inset-0",
+                    card: "bg-zinc-900/40 inset-0 w-full max-w-none backdrop-blur-xl rounded-none border border-zinc-700 xl:max-w-[60%] xl:m-auto xl:inset-auto",
+                    scrollBox: "inset-0 rounded-none",
+                    pageScrollBox: "inset-0",
                     profileSectionPrimaryButton:
                       "hover:bg-violet-600/10 duration-300",
                     accordionTriggerButton: "hover:bg-gray-600/10 duration-300",

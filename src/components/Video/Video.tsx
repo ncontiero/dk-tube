@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+
+import { motion } from "framer-motion";
 import ReactPlayer from "react-player/youtube";
 
 export type VideoProps = {
@@ -32,7 +34,7 @@ export function Video({ videoId }: VideoProps) {
 
   return (
     <div className="relative flex h-full w-full justify-center">
-      <div id="video" className="aspect-video h-full w-full rounded-lg">
+      <div id="video" className="z-[999] aspect-video h-full w-full rounded-lg">
         <ReactPlayer
           ref={videoRef}
           url={`https://www.youtube.com/watch?v=${videoId}`}
@@ -49,9 +51,12 @@ export function Video({ videoId }: VideoProps) {
           controls
         />
       </div>
-      <div
+      <motion.div
         id="ambilight-video"
-        className="pointer-events-none absolute left-0 top-0 -z-[1] h-full w-full scale-125 opacity-50 shadow-[0_0_120px_rgba(0,0,0,0)] blur-[80px] saturate-[300%]"
+        className="pointer-events-none absolute left-0 top-0 -z-[1] h-full w-full shadow-[0_0_120px_rgba(0,0,0,0)] blur-[80px] saturate-[300%]"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 0.5, scale: 1.25 }}
+        transition={{ duration: 0.3, delay: 1 }}
       >
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=${videoId}`}
@@ -63,7 +68,7 @@ export function Video({ videoId }: VideoProps) {
           onReady={(player) => optimizeAmbilight(player.getInternalPlayer())}
           controls={false}
         />
-      </div>
+      </motion.div>
     </div>
   );
 }

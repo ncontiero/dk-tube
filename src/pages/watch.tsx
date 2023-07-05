@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 
 import { SITE_NAME } from "@/utils/constants";
 import { api } from "@/lib/axios";
@@ -13,6 +15,9 @@ import { VideoCard } from "@/components/VideoCard";
 import { Meta } from "@/components/Meta";
 
 export default function WatchPage() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { width: screenWidth } = useWindowDimensions();
+
   const {
     query: { v },
   } = useRouter();
@@ -53,13 +58,30 @@ export default function WatchPage() {
         description={video.title}
         image={{ src: video.thumb, alt: video.title }}
       />
-      <div className="grid w-full grid-cols-4 justify-start md:px-20">
-        <div className="col-span-3 flex w-full flex-col items-center justify-center pr-6 pt-6">
-          <Video videoId={video.youtubeId} />
-          <div className="mb-6 mt-4 flex w-full flex-col justify-start">
+      <div className="grid grid-cols-1 px-0 md:px-20 xl:grid-cols-3">
+        <div className="col-span-2 flex w-full flex-col items-center justify-center pt-6 mdlg:pb-0 mdlg:pr-6">
+          <div
+            className={`relative -mt-6 md:mt-0 md:h-full md:w-full`}
+            style={
+              screenWidth <= 778
+                ? {
+                    height: ref.current?.offsetHeight || 100 + "px",
+                    width: screenWidth + "px",
+                  }
+                : {}
+            }
+          >
+            <div
+              ref={ref}
+              className="fixed inset-x-0 top-14 z-20 w-full sm:top-16 md:relative md:inset-x-auto md:top-auto md:z-auto"
+            >
+              <Video videoId={video.youtubeId} />
+            </div>
+          </div>
+          <div className="mb-6 mt-4 flex w-full flex-col justify-start px-4 mdlg:px-0">
             <h1 className="text-2xl font-semibold">{video.title}</h1>
             <div>
-              <div className="mt-3.5 flex gap-4 overflow-hidden">
+              <div className="mt-3.5 flex gap-2 overflow-hidden mdlg:gap-4">
                 <Link
                   href={`/channel/${video.user.id}`}
                   className="outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2"
@@ -67,14 +89,14 @@ export default function WatchPage() {
                   <Image
                     src={video.user.image}
                     alt={video.user.username}
-                    width={48}
-                    height={48}
+                    width={screenWidth > 778 ? 48 : 34}
+                    height={screenWidth > 778 ? 48 : 34}
                     className="aspect-square rounded-full object-cover"
                   />
                 </Link>
                 <Link
                   href={`/channel/${video.user.id}`}
-                  className="truncate text-xl font-semibold outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2"
+                  className="self-center truncate text-lg outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2 mdlg:self-auto mdlg:text-xl mdlg:font-semibold"
                 >
                   {video.user.username}
                 </Link>
@@ -82,10 +104,21 @@ export default function WatchPage() {
             </div>
           </div>
         </div>
-        <div className="h-full w-full pt-4">
+        <div
+          className={`h-full w-full pt-4 ${
+            screenWidth > 580 && "px-4 md:px-0"
+          }`}
+        >
           {videos &&
             videos.map(
-              (v) => v.id !== video.id && <VideoCard key={v.id} video={v} />,
+              (v) =>
+                v.id !== video.id && (
+                  <VideoCard
+                    key={v.id}
+                    video={v}
+                    variant={screenWidth > 580 ? "medium" : "largeVertical"}
+                  />
+                ),
             )}
         </div>
       </div>
