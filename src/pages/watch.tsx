@@ -22,23 +22,20 @@ export default function WatchPage() {
     query: { v },
   } = useRouter();
 
-  const { data: video, isFetching: isVideoFetching } =
-    useQuery<VideoWithUser | null>({
-      queryKey: ["watch", v],
-      queryFn: async () => {
-        try {
-          return (await api.get(`/videos/${v}`)).data || null;
-        } catch (error) {
-          console.error(error);
-          return null;
-        }
-      },
-      staleTime: 1000 * 60 * 5,
-    });
+  const { data: video } = useQuery<VideoWithUser | null>({
+    queryKey: ["watch", v],
+    queryFn: async () => {
+      try {
+        return (await api.get(`/videos/${v}`)).data || null;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
+    staleTime: 1000 * 60 * 5,
+  });
 
-  const { data: videos, isFetching: isVideosFetching } = useQuery<
-    VideoWithUser[]
-  >({
+  const { data: videos } = useQuery<VideoWithUser[]>({
     queryKey: ["videos"],
     queryFn: async () => {
       try {
