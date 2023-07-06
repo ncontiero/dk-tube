@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "vercel:build": "prisma generate && prisma migrate deploy && next build",
     "lint": "next lint --dir . && eslint . && prettier . '!.docker' -c",
     "lint:fix": "eslint --fix . && prettier . '!.docker' -w"
   },
