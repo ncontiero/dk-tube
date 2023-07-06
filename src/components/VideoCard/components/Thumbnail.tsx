@@ -1,8 +1,8 @@
 import type { VideoWithUser } from "@/utils/formatters";
+import type { VideoCardVariant } from "../types";
+
 import Image from "next/image";
 import Link from "next/link";
-
-export type VideoCardVariant = "large" | "medium" | "small" | "largeVertical";
 
 interface ThumbnailProps {
   video: VideoWithUser;
