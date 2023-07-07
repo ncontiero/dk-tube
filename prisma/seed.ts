@@ -67,7 +67,7 @@ async function main() {
 
   const video1 = await createVideo({
     title: "The Lost Soul Down (Slowed & Reverb)",
-    thumb: "https://i.ytimg.com/vi/HoqSbJ03zgo/hqdefault.jpg",
+    thumb: "https://i.ytimg.com/vi/HoqSbJ03zgo/maxresdefault.jpg",
     youtubeId: "HoqSbJ03zgo",
     userId: user1.id,
   });
@@ -75,7 +75,7 @@ async function main() {
 
   const video2 = await createVideo({
     title: "Dreams of Polaris",
-    thumb: "https://i.ytimg.com/vi/ym88wdYzbPM/hqdefault.jpg",
+    thumb: "https://i.ytimg.com/vi/ym88wdYzbPM/maxresdefault.jpg",
     youtubeId: "ym88wdYzbPM",
     userId: user1.id,
   });
@@ -83,7 +83,7 @@ async function main() {
 
   const video3 = await createVideo({
     title: "Fluid Sim Hue Test",
-    thumb: "https://i.ytimg.com/vi/qC0vDKVPCrw/hqdefault.jpg",
+    thumb: "https://i.ytimg.com/vi/qC0vDKVPCrw/maxresdefault.jpg",
     youtubeId: "qC0vDKVPCrw",
     userId: user1.id,
   });

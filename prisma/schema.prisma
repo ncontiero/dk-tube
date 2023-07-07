@@ -10,11 +10,12 @@ datasource db {
 }
 
 model User {
-  id         String @id @default(uuid())
-  externalId String @unique
-  username   String @unique
-  email      String @unique
-  image      String @default("https://img.clerk.com/preview.png")
+  id         String   @id @default(uuid())
+  externalId String   @unique
+  username   String   @unique
+  email      String   @unique
+  image      String   @default("https://img.clerk.com/preview.png")
+  createdAt  DateTime @default(now())
 
   videos    Video[]
   playlists Playlist[]

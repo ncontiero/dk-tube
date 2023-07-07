@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   postgres:
-    image: bitnami/postgresql:latest
+    image: postgres:latest
     env_file:
       - .env
     ports:
