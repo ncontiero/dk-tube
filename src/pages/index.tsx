@@ -1,6 +1,7 @@
+import type { VideoWithUser } from "@/utils/types";
+
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
-import { VideoWithUser } from "@/utils/formatters";
 
 import { ListVideos } from "@/components/ListVideos";
 import { Meta } from "@/components/Meta";

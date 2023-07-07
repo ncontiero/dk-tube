@@ -1,4 +1,4 @@
-import { VideoWithUser } from "@/utils/formatters";
+import type { VideoWithUser } from "@/utils/types";
 import { VideoCard, type VideoCardVariant } from "./VideoCard";
 
 interface ListVideosProps {

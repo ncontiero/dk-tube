@@ -1,3 +1,5 @@
+import type { VideoWithUser } from "@/utils/types";
+
 import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
@@ -5,7 +7,6 @@ import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 
 import { SITE_NAME } from "@/utils/constants";
 import { api } from "@/lib/axios";
-import { VideoWithUser } from "@/utils/formatters";
 
 import Head from "next/head";
 import Link from "next/link";

@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "../Logo";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SearchBar } from "./SearchBar";
 
 import { Search } from "lucide-react";
-import { SearchBar } from "./SearchBar";
 
 export function Header() {
   const pathname = usePathname();

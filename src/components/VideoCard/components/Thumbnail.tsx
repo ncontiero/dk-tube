@@ -1,4 +1,4 @@
-import type { VideoWithUser } from "@/utils/formatters";
+import type { VideoWithUser } from "@/utils/types";
 import type { VideoCardVariant } from "../types";
 
 import Image from "next/image";
