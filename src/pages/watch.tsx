@@ -5,15 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 
-import { SITE_NAME } from "@/utils/constants";
 import { api } from "@/lib/axios";
 
-import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { Video } from "@/components/Video";
 import { VideoCard } from "@/components/VideoCard";
 import { Meta } from "@/components/Meta";
+import { PageError } from "@/components/PageError";
 
 export default function WatchPage() {
   const skeletonItems = [1, 2, 3, 4, 5, 6];
@@ -101,7 +100,7 @@ export default function WatchPage() {
         path={`/watch?v=${video.id}`}
         title={video.title}
         description={video.title}
-        image={{ src: video.thumb, alt: video.title }}
+        image={{ src: video.thumb, alt: video.title, isExternalImage: true }}
       />
       <div className="grid grid-cols-1 px-0 md:px-20 xl:grid-cols-3">
         <div className="col-span-2 flex w-full flex-col items-center justify-center pt-6 mdlg:pb-0 mdlg:pr-6">
@@ -169,27 +168,6 @@ export default function WatchPage() {
       </div>
     </>
   ) : (
-    <div className="flex flex-col justify-center text-center md:min-h-[280px] md:flex-row md:justify-start md:text-start">
-      <Head>
-        <title>
-          Não foi possível encontrar o video que você está procurando.
-        </title>
-      </Head>
-      <section className="flex w-full flex-col text-center">
-        <h1 className="mb-2 pt-10 text-2xl">
-          Não foi possível encontrar o video que você está procurando.
-        </h1>
-        <p className="mt-2 text-lg">
-          Por favor, volte para a{" "}
-          <Link
-            href="/"
-            className="text-blue-300 underline-offset-2 hover:text-blue-200 hover:underline active:opacity-70"
-          >
-            página inicial do {SITE_NAME}
-          </Link>
-          .
-        </p>
-      </section>
-    </div>
+    <PageError title="Não foi possível encontrar o video que você está procurando." />
   );
 }
