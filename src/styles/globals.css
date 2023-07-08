@@ -25,6 +25,16 @@ body::-webkit-scrollbar-thumb {
   @apply rounded-md bg-zinc-400/50 backdrop-blur hover:bg-zinc-500/50;
 }
 
+*::-webkit-scrollbar {
+  @apply h-3 w-3;
+}
+*::-webkit-scrollbar-track {
+  @apply rounded-md bg-violet-600 bg-gradient-to-l from-black/60 to-zinc-900;
+}
+*::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-zinc-400/50 backdrop-blur hover:bg-zinc-500/50;
+}
+
 .cl-pageScrollBox::-webkit-scrollbar {
   @apply h-2 w-2;
 }
