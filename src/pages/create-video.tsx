@@ -93,8 +93,8 @@ export default function CreateVideoPage() {
               creatingVideo ||
               !!errors.title ||
               !!errors.youtubeId ||
-              watch("title") === "" ||
-              watch("youtubeId") === ""
+              !watch("title") ||
+              !watch("youtubeId")
             }
           >
             {creatingVideo ? <Loader className="animate-spin" /> : "Criar"}
