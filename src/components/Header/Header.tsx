@@ -6,7 +6,7 @@ import { Logo } from "../Logo";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { SearchBar } from "./SearchBar";
 
-import { Search } from "lucide-react";
+import { FilePlus, Search } from "lucide-react";
 
 export function Header() {
   const pathname = usePathname();
@@ -55,6 +55,12 @@ export function Header() {
             </Link>
           </SignedOut>
           <SignedIn>
+            <Link
+              href="/create-video"
+              className="mr-5 rounded-full p-2 outline-none ring-purple-400 duration-200 hover:bg-zinc-800 focus:bg-zinc-600 focus:ring-2"
+            >
+              <FilePlus />
+            </Link>
             <UserButton
               afterSignOutUrl="/"
               userProfileMode="modal"

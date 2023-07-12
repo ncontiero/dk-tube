@@ -7,6 +7,7 @@ import { videoFormatter } from "@/utils/formatters";
 import { z } from "zod";
 import { catchError } from "@/utils/errors";
 import { getMostQualityThumb } from "@/utils/getMostQualityThumb";
+import { getAuth } from "@clerk/nextjs/server";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
@@ -39,14 +40,17 @@ router.get(async (req, res) => {
 });
 
 const createVideoSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  youtubeId: z.string().min(1, { message: "youtubeId is required" }),
-  userId: z.string().uuid(),
+  title: z.string().nonempty("Title is required"),
+  youtubeId: z.string().nonempty("YoutubeId is required"),
 });
 
 router.post(async (req, res) => {
   try {
-    const { title, youtubeId, userId } = createVideoSchema.parse(req.body);
+    const { userId } = getAuth(req);
+    if (!userId)
+      return res.status(401).json({ error: "Unauthorized", status: 401 });
+
+    const { title, youtubeId } = createVideoSchema.parse(req.body);
     const thumb = (await getMostQualityThumb(youtubeId)) as string;
 
     const video = await prisma.video.create({
@@ -54,7 +58,7 @@ router.post(async (req, res) => {
         title,
         youtubeId,
         thumb,
-        userId,
+        user: { connect: { externalId: userId } },
       },
       include: { user: true },
     });
