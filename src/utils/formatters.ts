@@ -65,3 +65,20 @@ export function userWithVideosFormatter(user: UserWithVideosAndPlaylists) {
     playlists: user.playlists.map(simplePlaylistFormatter),
   };
 }
+
+export function searchedUserFormatter(user: User) {
+  return {
+    id: user.id,
+    label: user.username,
+    image: user.image,
+    user: null,
+  };
+}
+export function searchedVideoFormatter(video: VideoWithUser) {
+  return {
+    id: video.id,
+    label: video.title,
+    image: video.thumb,
+    user: userFormatter(video.user),
+  };
+}

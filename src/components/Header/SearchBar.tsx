@@ -1,14 +1,27 @@
+import type { UseFormRegister, UseFormHandleSubmit } from "react-hook-form";
+
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { ArrowLeft, Search } from "lucide-react";
 
+type SearchProps = { query: string };
+
 interface SearchBarProps {
   hasSearchBar: boolean;
   setHasSearchBar: (value: boolean) => void;
+  handleSubmit: UseFormHandleSubmit<SearchProps>;
+  register: UseFormRegister<SearchProps>;
+  submitSearch: (data: SearchProps) => void;
 }
 
-export function SearchBar({ hasSearchBar, setHasSearchBar }: SearchBarProps) {
+export function SearchBar({
+  hasSearchBar,
+  setHasSearchBar,
+  handleSubmit,
+  register,
+  submitSearch,
+}: SearchBarProps) {
   return (
     <Dialog.Root open={hasSearchBar} onOpenChange={setHasSearchBar}>
       <Dialog.Trigger
@@ -30,6 +43,7 @@ export function SearchBar({ hasSearchBar, setHasSearchBar }: SearchBarProps) {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
                 className="h-full w-full"
+                onSubmit={handleSubmit(submitSearch)}
               >
                 <div className="flex h-full w-full bg-zinc-800">
                   <Dialog.Close asChild>
@@ -48,9 +62,10 @@ export function SearchBar({ hasSearchBar, setHasSearchBar }: SearchBarProps) {
                         className="w-full rounded-l-3xl bg-transparent px-3 py-2 outline-none duration-200 focus:border-purple-400"
                         // eslint-disable-next-line jsx-a11y/no-autofocus
                         autoFocus={hasSearchBar}
+                        {...register("query")}
                       />
                       <button
-                        type="button"
+                        type="submit"
                         className="rounded-r-3xl px-4 py-2 outline-purple-400 duration-200"
                       >
                         <Search className="mr-1" />

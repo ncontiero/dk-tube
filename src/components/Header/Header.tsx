@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useSafePush } from "@/hooks/useSafePush";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "react-toastify";
 
 import Link from "next/link";
 import { Logo } from "../Logo";
@@ -8,9 +13,37 @@ import { SearchBar } from "./SearchBar";
 
 import { FilePlus, Search } from "lucide-react";
 
+const submitSearchFormSchema = z.object({
+  query: z.string().nonempty("Digite um termo para buscar."),
+});
+
+type SubmitSearchFormData = z.infer<typeof submitSearchFormSchema>;
+
 export function Header() {
+  const { safePush } = useSafePush();
   const pathname = usePathname();
   const [hasSearchBar, setHasSearchBar] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SubmitSearchFormData>({
+    resolver: zodResolver(submitSearchFormSchema),
+  });
+
+  async function submitSearch(data: SubmitSearchFormData) {
+    try {
+      safePush(`/search?query=${data.query}`);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setHasSearchBar(false);
+    }
+  }
+
+  useEffect(() => {
+    if (errors.query) toast.error(errors.query.message);
+  }, [errors.query]);
 
   return (
     <header className="fixed top-0 z-[9999] flex h-14 w-full items-center border-b border-zinc-300/10 bg-zinc-700/20 pl-2 pr-3 backdrop-blur-md sm:h-16 sm:pl-4 sm:pr-6">
@@ -23,15 +56,19 @@ export function Header() {
           <Logo />
         </Link>
         {!hasSearchBar && (
-          <form className="flex h-full w-full max-w-lg items-center md:flex-1">
+          <form
+            className="flex h-full w-full max-w-lg items-center md:flex-1"
+            onSubmit={handleSubmit(submitSearch)}
+          >
             <div className="hidden w-full rounded-3xl md:flex">
               <input
                 type="text"
                 placeholder="Buscar videos..."
                 className="w-full rounded-l-3xl border border-zinc-500/50 bg-transparent px-3 py-2 outline-none duration-200 focus:border-purple-400"
+                {...register("query")}
               />
               <button
-                type="button"
+                type="submit"
                 className="rounded-r-3xl border-y border-r border-zinc-500/50 bg-white/10 px-2 outline-purple-400 duration-200 hover:bg-white/20 sm:px-4 sm:py-2"
               >
                 <Search className="mr-1" />
@@ -43,6 +80,9 @@ export function Header() {
           <SearchBar
             hasSearchBar={hasSearchBar}
             setHasSearchBar={setHasSearchBar}
+            handleSubmit={handleSubmit}
+            register={register}
+            submitSearch={submitSearch}
           />
           <SignedOut>
             <Link
@@ -57,7 +97,7 @@ export function Header() {
           <SignedIn>
             <Link
               href="/create-video"
-              className="mr-5 rounded-full p-2 outline-none ring-purple-400 duration-200 hover:bg-zinc-800 focus:bg-zinc-600 focus:ring-2"
+              className="mr-5 rounded-full p-2 outline-none ring-purple-400 duration-200 hover:bg-zinc-800 focus-visible:ring-2 active:bg-zinc-600"
             >
               <FilePlus />
             </Link>

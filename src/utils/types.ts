@@ -21,3 +21,10 @@ export interface UserWithVideosAndPlaylists extends User {
   videos: Video[];
   playlists: PlaylistWithVideos[];
 }
+
+export interface SearchResult {
+  id: string;
+  label: string;
+  image: string;
+  user: User | null;
+}
