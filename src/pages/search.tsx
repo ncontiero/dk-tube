@@ -51,7 +51,9 @@ export default function SearchPage() {
           {searchResults.map((result) => (
             <div key={result.id} className="relative flex items-start gap-4">
               <Link
-                href={`/watch?v=${result.id}`}
+                href={`/${
+                  !result.user ? `channel/${result.id}` : `watch?v=${result.id}`
+                }`}
                 className="absolute z-[5] -m-1 h-[105%] w-[102%] rounded-xl outline-none duration-200 focus:bg-zinc-600/30"
               />
               <Link
