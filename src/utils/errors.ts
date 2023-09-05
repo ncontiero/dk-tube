@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export function catchError(error: any) {
+export function catchError(error: unknown) {
   let message = "Internal server error";
   let status = 500;
 

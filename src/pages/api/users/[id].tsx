@@ -28,7 +28,7 @@ router.get(async (req, res) => {
     }
 
     return res.status(200).json(userWithVideosFormatter(user));
-  } catch (err: any) {
+  } catch (err: unknown) {
     const response = catchError(err);
     return res.status(response.status).json(response);
   }

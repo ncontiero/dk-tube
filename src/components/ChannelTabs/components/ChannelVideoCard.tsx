@@ -13,7 +13,6 @@ interface ChannelVideoCardProps {
 export function ChannelVideoCard({
   video,
   variant = "main",
-  loading = false,
 }: ChannelVideoCardProps) {
   return (
     <div

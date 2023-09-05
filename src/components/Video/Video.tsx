@@ -14,6 +14,7 @@ export function Video({ videoId }: VideoProps) {
   const videoRef = useRef<ReactPlayer>(null);
   const ambilightVideoRef = useRef<ReactPlayer>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const optimizeAmbilight = useCallback((player?: Record<string, any>) => {
     if (!player || !player.getAvailableQualityLevels) return;
     const qualityLevels: string[] = [...player.getAvailableQualityLevels()];
