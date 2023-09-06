@@ -1,38 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DKTUBE
 
-## Getting Started
+[![license mit](https://img.shields.io/badge/licence-MIT-6C47FF)](LICENSE)
 
-First, run the development server:
+A project based on Youtube.
+
+## Technologies used
+
+- [Next.Js](https://nextjs.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Clerk](https://clerk.com/)
+- [TanStack Query](https://tanstack.com/query/v3/)
+- [react-player](https://github.com/CookPete/react-player)
+
+## Install and run the project
+
+### Global Dependencies
+
+You need to have a main dependency installed:
+
+- [Node.js](https://nodejs.dev/) LTS v16 (or any higher version)
+
+Do you use `nvm`? Then you can run `nvm install` in the project folder to install and use the most appropriate version of Node.js.
+
+### Get the repository
+
+```bash
+git clone https://github.com/dkshs/dkshs.me.git
+```
+
+### Local Dependencies
+
+So after getting the repository, don't forget to install the project's local dependencies:
+
+```bash
+npm install
+```
+
+### Environment variables
+
+Create a `.env` file similar to [`.env.example`](./.env.example).
+
+Change [Clerk](https://dashboard.clerk.com/) variables according to your project.
+
+```env
+# ...
+
+# Clerk Keys
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="YOUR_CLERK_PUBLISHABLE_KEY"
+CLERK_SECRET_KEY="YOUR_CLERK_SECRET_KEY"
+# Only PROD
+CLERK_WEBHOOK_SIGNING_SECRET="YOUR_CLERK_WEBHOOK_SIGNING_SECRET"
+
+# Clerk Routes
+NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
+NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/"
+
+# ...
+```
+
+### Run the project
+
+To run the project locally, just run the command below:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- go to <http://localhost:3000> to see the application.
