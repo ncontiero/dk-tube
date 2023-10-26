@@ -40,15 +40,16 @@ router.get(async (req, res) => {
 });
 
 const createVideoSchema = z.object({
-  title: z.string().nonempty("Title is required"),
-  youtubeId: z.string().nonempty("YoutubeId is required"),
+  title: z.string().min(1, "Title is required"),
+  youtubeId: z.string().min(1, "YoutubeId is required"),
 });
 
 router.post(async (req, res) => {
   try {
     const { userId } = getAuth(req);
-    if (!userId)
+    if (!userId) {
       return res.status(401).json({ error: "Unauthorized", status: 401 });
+    }
 
     const { title, youtubeId } = createVideoSchema.parse(req.body);
     const thumb = (await getMostQualityThumb(youtubeId)) as string;

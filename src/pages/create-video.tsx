@@ -11,8 +11,8 @@ import { Meta } from "@/components/Meta";
 import { Loader } from "lucide-react";
 
 const createVideoFormSchema = z.object({
-  title: z.string().nonempty("O titulo é obrigatório"),
-  youtubeId: z.string().nonempty("O id do vídeo do Youtube é obrigatório"),
+  title: z.string().min(1, "O titulo é obrigatório"),
+  youtubeId: z.string().min(1, "O id do vídeo do Youtube é obrigatório"),
 });
 
 type CreateVideoFormData = z.infer<typeof createVideoFormSchema>;

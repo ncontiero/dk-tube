@@ -13,7 +13,7 @@ const router = createRouter<NextApiRequest, NextApiResponse>();
 
 const queryParserSchema = z.object({
   limit: z.string().transform(Number).optional(),
-  search: z.string().nonempty("The search query is required"),
+  search: z.string().min(1, "The search query is required"),
 });
 
 router.get(async (req, res) => {

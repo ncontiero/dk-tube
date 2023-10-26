@@ -1,5 +1,8 @@
 version: "3.8"
 
+volumes:
+  postgres_data: {}
+
 services:
   postgres:
     image: postgres:latest
@@ -8,7 +11,7 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
-      - ./.docker/postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   pg_admin:
     image: dpage/pgadmin4

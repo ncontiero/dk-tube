@@ -1,5 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
 import Head from "next/head";
+import { env } from "@/env.mjs";
 
 export interface MetaProps {
   title?: string;
@@ -7,6 +8,7 @@ export interface MetaProps {
   baseUrl?: string;
   description?: string;
   siteName?: string;
+  manifest?: string;
   image?: {
     src: string;
     alt: string;
@@ -27,18 +29,20 @@ export const Meta: FC<PropsWithChildren<MetaProps>> = ({
   title = "",
   description,
   path,
-  baseUrl = process.env.SITE_BASEURL,
-  siteName = process.env.SITE_NAME,
+  baseUrl = env.NEXT_PUBLIC_SITE_BASEURL,
+  siteName = env.NEXT_PUBLIC_SITE_NAME,
   type = "website",
   image,
   updatedAt,
   index = true,
   follow = true,
-  locale = process.env.SITE_LOCALE,
+  locale = env.NEXT_PUBLIC_SITE_LOCALE,
   twitter,
   children,
 }) => {
+  const titleSiteName = title ? `${title} · ${siteName}` : siteName;
   const canonicalUrl = `${baseUrl}${path}`;
+  const imgUrl = image && `${image.isExternalImage ? "" : baseUrl}${image.src}`;
 
   const indexString = index ? "index" : "noindex";
   const followString = follow ? "follow" : "nofollow";
@@ -46,39 +50,30 @@ export const Meta: FC<PropsWithChildren<MetaProps>> = ({
   return (
     <Head>
       {/* SEO */}
-      <title>{`${title && title + " ·"} ${siteName}`}</title>
-      <meta name="title" content={`${title} · ${siteName}`}></meta>
+      <title>{titleSiteName}</title>
+      <meta name="title" content={titleSiteName}></meta>
       {description && <meta name="description" content={description} />}
-      <meta name="robots" content={`${indexString} ${followString}`} />
+      <meta name="robots" content={`${indexString}, ${followString}`} />
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Facebook */}
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content={titleSiteName} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:type" content={type} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:locale" content={locale} />
       {description && <meta property="og:description" content={description} />}
-      {image && (
-        <meta
-          property="og:image"
-          content={`${image.isExternalImage ? "" : baseUrl}${image.src}`}
-        />
-      )}
+      {image && <meta property="og:image" content={imgUrl} />}
       {image && <meta property="og:image:alt" content={image.alt} />}
       {updatedAt && <meta property="og:updated" content={updatedAt} />}
 
       {/* Twitter */}
       {twitter && <meta name="twitter:site" content={`@${twitter}`} />}
+      {twitter && <meta name="twitter:creator" content={`@${twitter}`} />}
       <meta property="twitter:url" content={canonicalUrl} />
-      <meta property="twitter:title" content={`${title} · ${siteName}`} />
+      <meta property="twitter:title" content={titleSiteName} />
       <meta property="twitter:description" content={description} />
-      {image && (
-        <meta
-          name="twitter:image"
-          content={`${image.isExternalImage ? "" : baseUrl}${image.src}`}
-        />
-      )}
+      {image && <meta name="twitter:image" content={imgUrl} />}
       {image && <meta name="twitter:image:alt" content={image.alt} />}
       <meta
         name="twitter:card"

@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { IncomingHttpHeaders } from "http";
-import type { WebhookEvent } from "@clerk/clerk-sdk-node";
+import type { WebhookEvent } from "@clerk/nextjs/server";
 
+import { env } from "@/env.mjs";
 import { createRouter } from "next-connect";
 import { Webhook, type WebhookRequiredHeaders } from "svix";
 import { buffer } from "micro";
@@ -23,12 +24,11 @@ export const config = {
   },
 };
 
-const secret = process.env.CLERK_WEBHOOK_SIGNING_SECRET;
-if (!secret) throw new Error("CLERK_WEBHOOK_SIGNING_SECRET not set");
+const secret = env.CLERK_WEBHOOK_SIGNING_SECRET;
 
 router.post(async (req, res) => {
   const payload = (await buffer(req)).toString();
-  const headers = req.headers;
+  const { headers } = req;
 
   const wh = new Webhook(secret);
   let msg: WebhookEvent | null = null;
@@ -46,11 +46,9 @@ router.post(async (req, res) => {
       case "user.created": {
         const username =
           msg.data.username || `user_${generateRandomString(25)}`;
+        const emails = msg.data.email_addresses;
 
-        if (
-          !msg.data.email_addresses ||
-          msg.data.email_addresses.length === 0
-        ) {
+        if (emails.length === 0) {
           return res
             .status(400)
             .json({ error: "No email address found", status: 400 });
@@ -59,7 +57,7 @@ router.post(async (req, res) => {
         await prisma.user.create({
           data: {
             externalId: msg.data.id,
-            email: msg.data.email_addresses[0].email_address,
+            email: emails[0].email_address,
             username,
             image: msg.data.image_url,
           },
@@ -69,11 +67,9 @@ router.post(async (req, res) => {
       case "user.updated": {
         const username =
           msg.data.username || `user_${generateRandomString(25)}`;
+        const emails = msg.data.email_addresses;
 
-        if (
-          !msg.data.email_addresses ||
-          msg.data.email_addresses.length === 0
-        ) {
+        if (emails.length === 0) {
           return res
             .status(400)
             .json({ error: "No email address found", status: 400 });
@@ -84,7 +80,7 @@ router.post(async (req, res) => {
             externalId: msg.data.id,
           },
           data: {
-            email: msg.data.email_addresses[0].email_address,
+            email: emails[0].email_address,
             username,
             image: msg.data.image_url,
           },

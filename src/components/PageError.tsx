@@ -1,4 +1,4 @@
-import { SITE_NAME } from "@/utils/constants";
+import { env } from "@/env.mjs";
 
 import Head from "next/head";
 import Link from "next/link";
@@ -23,7 +23,7 @@ export function PageError({
             href="/"
             className="text-blue-300 underline-offset-2 hover:text-blue-200 hover:underline active:opacity-70"
           >
-            página inicial do {SITE_NAME}
+            página inicial do {env.NEXT_PUBLIC_SITE_NAME}
           </Link>
           .
         </p>

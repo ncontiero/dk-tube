@@ -1,6 +1,6 @@
 import axios from "axios";
-import { NEXT_PUBLIC_API_URL } from "@/utils/constants";
+import { env } from "@/env.mjs";
 
 export const api = axios.create({
-  baseURL: NEXT_PUBLIC_API_URL,
+  baseURL: env.NEXT_PUBLIC_API_URL,
 });

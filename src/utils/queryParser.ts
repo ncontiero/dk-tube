@@ -10,6 +10,5 @@ const querySchema = z.object({
 });
 
 export function queryParser(req: NextApiRequest) {
-  const query = querySchema.parse(req.query);
-  return query;
+  return querySchema.parse(req.query);
 }

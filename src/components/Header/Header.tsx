@@ -14,7 +14,7 @@ import { SearchBar } from "./SearchBar";
 import { FilePlus, Search } from "lucide-react";
 
 const submitSearchFormSchema = z.object({
-  query: z.string().nonempty("Digite um termo para buscar."),
+  query: z.string().min(1, "Digite um termo para buscar."),
 });
 
 type SubmitSearchFormData = z.infer<typeof submitSearchFormSchema>;
@@ -42,7 +42,9 @@ export function Header() {
   }
 
   useEffect(() => {
-    if (errors.query) toast.error(errors.query.message);
+    if (errors.query) {
+      toast.error(errors.query.message);
+    }
   }, [errors.query]);
 
   return (
