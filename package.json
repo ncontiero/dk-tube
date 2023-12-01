@@ -23,7 +23,7 @@
     "@t3-oss/env-nextjs": "^0.7.1",
     "@tanstack/react-query": "^5.12.1",
     "axios": "^1.6.2",
-    "framer-motion": "^10.16.9",
+    "framer-motion": "^10.16.12",
     "lucide-react": "^0.294.0",
     "micro": "^10.0.1",
     "next": "14.0.3",
