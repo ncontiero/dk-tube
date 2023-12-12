@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@clerk/localizations':
-    specifier: ^1.26.11
-    version: 1.26.11(react@18.2.0)
+    specifier: ^1.26.12
+    version: 1.26.12(react@18.2.0)
   '@clerk/nextjs':
     specifier: ^4.27.6
     version: 4.27.6(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -177,13 +177,13 @@ packages:
       - react
     dev: false
 
-  /@clerk/localizations@1.26.11(react@18.2.0):
-    resolution: {integrity: sha512-IIDZlGjsLL7Yeswvqz2hmUixwRb08CPzgozl3kduZH1qVcBVx1TCmn0R3k8WYCSLj8p/xBCBpcycwawCDyXhQQ==}
+  /@clerk/localizations@1.26.12(react@18.2.0):
+    resolution: {integrity: sha512-SDN5vG7cZfpJJ/J2bOfLhT6w8//G0hqpLjX34GR0142ee0BlkaF/9u+QIgmDM9fdKgxzKVuXYrrswMj9omqhVw==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16'
     dependencies:
-      '@clerk/types': 3.58.1
+      '@clerk/types': 3.59.0
       react: 18.2.0
     dev: false
 
@@ -228,13 +228,6 @@ packages:
       react: '>=16'
     dependencies:
       react: 18.2.0
-    dev: false
-
-  /@clerk/types@3.58.1:
-    resolution: {integrity: sha512-cumryWXAYNCApsc3pmuHiJQnhUcNuQPCMI8w/bVU9VuGm9Ry0zhCWawD7F3/VWAOnAPu4ghKrwEaLkGsiSsY2Q==}
-    engines: {node: '>=14'}
-    dependencies:
-      csstype: 3.1.1
     dev: false
 
   /@clerk/types@3.59.0:
