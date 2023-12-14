@@ -13,7 +13,7 @@
     "lint:fix": "eslint --fix . && prettier . -w"
   },
   "dependencies": {
-    "@clerk/localizations": "^1.26.12",
+    "@clerk/localizations": "^1.26.13",
     "@clerk/nextjs": "^4.28.0",
     "@clerk/themes": "^1.7.9",
     "@hookform/resolvers": "^3.3.2",
