@@ -20,8 +20,8 @@ export function ChannelVideoCard({
         variant === "large"
           ? "flex-col xs:mb-4 md:mb-10 xl:max-w-[360px]"
           : variant === "small"
-          ? "w-full xs:max-w-[220px] xs:flex-col"
-          : "mt-2 gap-2"
+            ? "w-full xs:max-w-[220px] xs:flex-col"
+            : "mt-2 gap-2"
       } items-center`}
     >
       <Link
@@ -30,8 +30,8 @@ export function ChannelVideoCard({
           variant === "large"
             ? "h-[105%] w-[102%] xs:h-[108%] xs:rounded-xl sm:h-[110%] md:h-[115%]"
             : variant === "small"
-            ? "-ml-1 h-[110%] w-full rounded-xl xs:h-[115%] xs:w-[103%]"
-            : "h-[105%] w-full xs:rounded-xl"
+              ? "-ml-1 h-[110%] w-full rounded-xl xs:h-[115%] xs:w-[103%]"
+              : "h-[105%] w-full xs:rounded-xl"
         } outline-none duration-200 focus:bg-zinc-600/30`}
       />
       {variant === "large" ? (

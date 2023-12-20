@@ -36,14 +36,14 @@ export function VideoCard({
                 variant === "large"
                   ? "h-[103%] xs:h-[108%] sm:h-[110%] md:h-[115%]"
                   : variant === "largeVertical"
-                  ? "h-[104%]"
-                  : "h-[108%]"
+                    ? "h-[104%]"
+                    : "h-[108%]"
               } w-[102%] rounded-xl outline-none duration-200 focus:bg-zinc-600/30 xs:-mt-1`}
             />
             {variant === "large" || variant === "largeVertical" ? (
               <Thumbnail video={video} variant={variant} />
             ) : (
-              <div className="min-h-24 z-10 min-w-[160px]">
+              <div className="z-10 min-h-24 min-w-[160px]">
                 <Thumbnail video={video} variant={variant} />
               </div>
             )}
