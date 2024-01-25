@@ -66,8 +66,8 @@ dependencies:
     specifier: ^10.0.4
     version: 10.0.4(react-dom@18.2.0)(react@18.2.0)
   svix:
-    specifier: ^1.15.0
-    version: 1.15.0
+    specifier: ^1.16.0
+    version: 1.16.0
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -4478,8 +4478,8 @@ packages:
       - encoding
     dev: false
 
-  /svix@1.15.0:
-    resolution: {integrity: sha512-oV11/VIpD77QymPEIjGr8XvQwcJxPIRO8XVpWJb33ZX2qs1q7jYlVaSJ6ABYThKbmnxIGyJr5+RpchVOSE7pZg==}
+  /svix@1.16.0:
+    resolution: {integrity: sha512-IpBTYfXYC/qfkRFiHk6FMrheeknAb+cVucTemeyve5/oHQLvGa3e0PYpkl5DfJL7rNheC6IuK++ahPcRSF98GQ==}
     dependencies:
       '@stablelib/base64': 1.0.1
       es6-promise: 4.2.8
