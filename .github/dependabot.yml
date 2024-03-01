@@ -17,10 +17,26 @@ updates:
   # Update npm packages
   - package-ecosystem: "npm"
     directory: "/"
+    groups:
+      definitely-typed:
+        patterns:
+          - "^@types/"
+        update-types:
+          - "minor"
+          - "patch"
+      prisma:
+        patterns:
+          - "^@prisma/"
+          - "^prisma"
+      clerk:
+        patterns:
+          - "^@clerk/"
+      radix-ui:
+        patterns:
+          - "^@radix-ui/"
     ignore:
       - dependency-name: "@types/*"
-        update-types:
-          - "version-update:semver-patch"
+        update-types: ["version-update:semver-major"]
     schedule:
       interval: "daily"
     labels:
