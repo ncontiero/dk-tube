@@ -27,7 +27,7 @@ export const env = createEnv({
    */
   client: {
     // these variables are used for the site's SEO
-    NEXT_PUBLIC_SITE_NAME: z.string().default("DkBlog"),
+    NEXT_PUBLIC_SITE_NAME: z.string().default("DkTube"),
     NEXT_PUBLIC_SITE_LOCALE: z.string().default("en_US"),
     // URLs
     NEXT_PUBLIC_SITE_BASEURL: z.string().url().default("http://localhost:3000"),
