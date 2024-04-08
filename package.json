@@ -15,7 +15,7 @@
   "dependencies": {
     "@clerk/localizations": "^1.28.1",
     "@clerk/nextjs": "^4.29.11",
-    "@clerk/themes": "^1.7.11",
+    "@clerk/themes": "^1.7.12",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.12.1",
     "@radix-ui/react-dialog": "^1.0.5",
