@@ -1,6 +1,7 @@
 {
   "name": "dk-tube",
   "version": "0.1.0",
+  "packageManager": "pnpm@9.0.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -52,6 +53,6 @@
     "typescript": "^5.4.5"
   },
   "prisma": {
-    "seed": "pnpm run prisma:seed"
+    "seed": "pnpm prisma:seed"
   }
 }
