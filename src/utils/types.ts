@@ -1,4 +1,4 @@
-import type { Playlist, Video, User } from "@prisma/client";
+import type { Playlist, User, Video } from "@prisma/client";
 
 export interface UserProps {
   id: string;

@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { IncomingHttpHeaders } from "http";
+import type { IncomingHttpHeaders } from "node:http";
 import type { WebhookEvent } from "@clerk/nextjs/server";
 
-import { env } from "@/env.mjs";
 import { createRouter } from "next-connect";
 import { Webhook, type WebhookRequiredHeaders } from "svix";
 import { buffer } from "micro";
+import { env } from "@/env.mjs";
 import { prisma } from "@/lib/prisma";
 import { generateRandomString } from "@/utils/generateRandom";
 
@@ -35,7 +35,7 @@ router.post(async (req, res) => {
 
   try {
     msg = wh.verify(payload, headers) as WebhookEvent;
-  } catch (_) {
+  } catch {
     return res
       .status(400)
       .json({ error: "Invalid webhook signature", status: 400 });

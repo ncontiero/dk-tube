@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createRouter } from "next-connect";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import {
-  searchedVideoFormatter,
   searchedUserFormatter,
+  searchedVideoFormatter,
 } from "@/utils/formatters";
-import { z } from "zod";
 import { catchError } from "@/utils/errors";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
@@ -24,12 +24,12 @@ router.get(async (req, res) => {
       include: { user: true },
       where: { title: { contains: search, mode: "insensitive" } },
     });
-    const videosFormatted = videos.map(searchedVideoFormatter);
+    const videosFormatted = videos.map((v) => searchedVideoFormatter(v));
 
     const users = await prisma.user.findMany({
       where: { username: { contains: search, mode: "insensitive" } },
     });
-    const usersFormatted = users.map(searchedUserFormatter);
+    const usersFormatted = users.map((u) => searchedUserFormatter(u));
 
     const searchItems = [...videosFormatted, ...usersFormatted];
 
@@ -53,8 +53,8 @@ router.get(async (req, res) => {
     }
 
     res.status(200).json(searchReturn.slice(0, limit || searchReturn.length));
-  } catch (err) {
-    const response = catchError(err);
+  } catch (error) {
+    const response = catchError(error);
     res.status(response.status).json(response);
   }
 });

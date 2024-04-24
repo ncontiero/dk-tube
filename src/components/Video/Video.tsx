@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import ReactPlayer from "react-player/youtube";
 
 export type VideoProps = {
-  videoId: string;
+  readonly videoId: string;
 };
 
 export function Video({ videoId }: VideoProps) {
@@ -14,11 +14,10 @@ export function Video({ videoId }: VideoProps) {
   const videoRef = useRef<ReactPlayer>(null);
   const ambilightVideoRef = useRef<ReactPlayer>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const optimizeAmbilight = useCallback((player?: Record<string, any>) => {
     if (!player || !player.getAvailableQualityLevels) return;
     const qualityLevels: string[] = [...player.getAvailableQualityLevels()];
-    if (qualityLevels && qualityLevels.length && qualityLevels.length > 0) {
+    if (qualityLevels && qualityLevels.length > 0 && qualityLevels.length > 0) {
       qualityLevels.reverse();
       const lowestLevel =
         qualityLevels[qualityLevels.findIndex((q) => q !== "auto")];
@@ -34,8 +33,8 @@ export function Video({ videoId }: VideoProps) {
   }, [optimizeAmbilight, videoCurrentTime]);
 
   return (
-    <div className="relative flex h-full w-full justify-center">
-      <div id="video" className="z-[999] aspect-video h-full w-full rounded-lg">
+    <div className="relative flex size-full justify-center">
+      <div id="video" className="z-[999] aspect-video size-full rounded-lg">
         <ReactPlayer
           ref={videoRef}
           url={`https://www.youtube.com/watch?v=${videoId}`}
@@ -54,7 +53,7 @@ export function Video({ videoId }: VideoProps) {
       </div>
       <motion.div
         id="ambilight-video"
-        className="pointer-events-none absolute left-0 top-0 -z-[1] h-full w-full shadow-[0_0_120px_rgba(0,0,0,0)] blur-[80px] saturate-[300%]"
+        className="pointer-events-none absolute left-0 top-0 z-[-1] size-full shadow-[0_0_120px_rgba(0,0,0,0)] blur-[80px] saturate-[300%]"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 0.5, scale: 1.25 }}
         transition={{ duration: 0.3, delay: 1 }}

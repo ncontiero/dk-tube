@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createRouter } from "next-connect";
+import { z } from "zod";
+import { getAuth } from "@clerk/nextjs/server";
 import { queryParser } from "@/utils/queryParser";
 import { prisma } from "@/lib/prisma";
 import { videoFormatter } from "@/utils/formatters";
-import { z } from "zod";
 import { catchError } from "@/utils/errors";
 import { getMostQualityThumb } from "@/utils/getMostQualityThumb";
-import { getAuth } from "@clerk/nextjs/server";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
@@ -29,7 +29,7 @@ router.get(async (req, res) => {
       take: limit,
     });
 
-    res.status(200).json(videos.map(videoFormatter));
+    res.status(200).json(videos.map((v) => videoFormatter(v)));
   } catch (error) {
     res.status(500).json({
       error: "Internal server error",
@@ -65,8 +65,8 @@ router.post(async (req, res) => {
     });
 
     res.status(201).json(videoFormatter(video));
-  } catch (err) {
-    const response = catchError(err);
+  } catch (error) {
+    const response = catchError(error);
     res.status(response.status).json(response);
   }
 });

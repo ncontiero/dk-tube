@@ -3,12 +3,11 @@ import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { api } from "@/lib/axios";
 import { toast } from "react-toastify";
+import { Loader } from "lucide-react";
+import { api } from "@/lib/axios";
 
 import { Meta } from "@/components/Meta";
-
-import { Loader } from "lucide-react";
 
 const createVideoFormSchema = z.object({
   title: z.string().min(1, "O titulo é obrigatório"),
@@ -37,9 +36,9 @@ export default function CreateVideoPage() {
       await api.post("/videos", videoData);
       resetForm();
       toast.success("Vídeo criado com sucesso!");
-    } catch (err) {
+    } catch (error) {
       toast.error("Erro ao criar o vídeo, tente novamente mais tarde.");
-      console.error(err);
+      console.error(error);
     } finally {
       setCreatingVideo(false);
     }
@@ -63,11 +62,11 @@ export default function CreateVideoPage() {
               required
               {...register("title")}
             />
-            {errors.title && (
+            {errors.title ? (
               <span className="text-sm text-red-500">
                 {errors.title.message}
               </span>
-            )}
+            ) : null}
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="youtubeId">Youtube ID</label>
@@ -79,11 +78,11 @@ export default function CreateVideoPage() {
               required
               {...register("youtubeId")}
             />
-            {errors.youtubeId && (
+            {errors.youtubeId ? (
               <span className="text-sm text-red-500">
                 {errors.youtubeId.message}
               </span>
-            )}
+            ) : null}
           </div>
 
           <button

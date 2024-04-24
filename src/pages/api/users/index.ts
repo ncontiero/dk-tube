@@ -28,7 +28,7 @@ router.get(async (req, res) => {
       take: limit,
     });
 
-    res.status(200).json(users.map(userWithVideosFormatter));
+    res.status(200).json(users.map((u) => userWithVideosFormatter(u)));
   } catch (error) {
     res.status(500).json({
       error: "Internal server error",

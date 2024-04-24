@@ -1,10 +1,9 @@
-import { env } from "@/env.mjs";
-
 import Head from "next/head";
 import Link from "next/link";
+import { env } from "@/env.mjs";
 
 interface PageErrorProps {
-  title?: string;
+  readonly title?: string;
 }
 
 export function PageError({

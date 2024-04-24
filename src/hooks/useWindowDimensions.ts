@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function useWindowDimensions() {
   const hasWindow = typeof window !== "undefined";
@@ -24,7 +24,6 @@ export function useWindowDimensions() {
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasWindow]);
 
   return windowDimensions;

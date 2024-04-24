@@ -3,12 +3,10 @@ import type { VideoWithUser } from "@/utils/types";
 import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useWindowDimensions } from "@/hooks/useWindowDimensions";
-
-import { api } from "@/lib/axios";
-
 import Link from "next/link";
 import Image from "next/image";
+import { useWindowDimensions } from "@/hooks/useWindowDimensions";
+import { api } from "@/lib/axios";
 import { Video } from "@/components/Video";
 import { VideoCard } from "@/components/VideoCard";
 import { Meta } from "@/components/Meta";
@@ -54,12 +52,12 @@ export default function WatchPage() {
 
   return isFetchingVideo || isFetchingVideos ? (
     <div className="grid grid-cols-1 px-0 md:px-20 xl:grid-cols-3">
-      <div className="col-span-2 flex w-full flex-col items-center pt-6 mdlg:pb-0 mdlg:pr-6">
-        <div className="fixed inset-x-0 top-14 z-20 h-screen max-h-[30%] w-full animate-pulse bg-zinc-800 xs:max-h-[40%] sm:top-16 md:relative md:inset-x-auto md:top-auto md:z-auto md:mt-0 md:max-h-[50%] lg:max-h-[60%]" />
-        {screenWidth < 768 && <div className="mt-[235px] xs:mt-[320px]" />}
-        <div className="mb-6 mt-4 flex w-full flex-col justify-start px-4 mdlg:px-0">
+      <div className="mdlg:pb-0 mdlg:pr-6 col-span-2 flex w-full flex-col items-center pt-6">
+        <div className="xs:max-h-[40%] fixed inset-x-0 top-14 z-20 h-screen max-h-[30%] w-full animate-pulse bg-zinc-800 sm:top-16 md:relative md:inset-x-auto md:top-auto md:z-auto md:mt-0 md:max-h-[50%] lg:max-h-[60%]" />
+        {screenWidth < 768 && <div className="xs:mt-[320px] mt-[235px]" />}
+        <div className="mdlg:px-0 mb-6 mt-4 flex w-full flex-col justify-start px-4">
           <span className="h-8 w-1/2 animate-pulse bg-zinc-800" />
-          <div className="mt-3.5 flex gap-2 overflow-hidden mdlg:gap-4">
+          <div className="mdlg:gap-4 mt-3.5 flex gap-2 overflow-hidden">
             <div
               style={{
                 width: screenWidth > 778 ? 48 : 34,
@@ -67,20 +65,16 @@ export default function WatchPage() {
               }}
               className="aspect-square animate-pulse rounded-full bg-zinc-800 object-cover"
             />
-            <span className="h-8 w-[15%] animate-pulse self-center bg-zinc-800 mdlg:self-auto" />
+            <span className="mdlg:self-auto h-8 w-[15%] animate-pulse self-center bg-zinc-800" />
           </div>
         </div>
       </div>
       {(screenWidth < 768 || screenWidth > 1279) && (
         <div
-          className={`h-full w-full pt-0.5 ${
-            screenWidth > 580 && "px-4 md:px-0"
-          }`}
+          className={`size-full pt-0.5 ${screenWidth > 580 && "px-4 md:px-0"}`}
         >
           <div
-            className={`h-full w-full pt-4 ${
-              screenWidth > 580 && "px-4 md:px-0"
-            }`}
+            className={`size-full pt-4 ${screenWidth > 580 && "px-4 md:px-0"}`}
           >
             {skeletonItems.map((item) => (
               <VideoCard
@@ -103,14 +97,14 @@ export default function WatchPage() {
         image={{ src: video.thumb, alt: video.title, isExternalImage: true }}
       />
       <div className="grid grid-cols-1 px-0 md:px-20 xl:grid-cols-3">
-        <div className="col-span-2 flex w-full flex-col items-center justify-center pt-6 mdlg:pb-0 mdlg:pr-6">
+        <div className="mdlg:pb-0 mdlg:pr-6 col-span-2 flex w-full flex-col items-center justify-center pt-6">
           <div
-            className={`relative -mt-6 md:mt-0 md:h-full md:w-full`}
+            className={`relative -mt-6 md:mt-0 md:size-full`}
             style={
               screenWidth <= 778
                 ? {
-                    height: ref.current?.offsetHeight || 100 + "px",
-                    width: screenWidth + "px",
+                    height: ref.current?.offsetHeight || `${100}px`,
+                    width: `${screenWidth}px`,
                   }
                 : {}
             }
@@ -122,10 +116,10 @@ export default function WatchPage() {
               <Video videoId={video.youtubeId} />
             </div>
           </div>
-          <div className="mb-6 mt-4 flex w-full flex-col justify-start px-4 mdlg:px-0">
+          <div className="mdlg:px-0 mb-6 mt-4 flex w-full flex-col justify-start px-4">
             <h1 className="text-2xl font-semibold">{video.title}</h1>
             <div>
-              <div className="mt-3.5 flex gap-2 overflow-hidden mdlg:gap-4">
+              <div className="mdlg:gap-4 mt-3.5 flex gap-2 overflow-hidden">
                 <Link
                   href={`/channel/${video.user.id}`}
                   className="outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2"
@@ -140,7 +134,7 @@ export default function WatchPage() {
                 </Link>
                 <Link
                   href={`/channel/${video.user.id}`}
-                  className="self-center truncate text-lg outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2 mdlg:self-auto mdlg:text-xl mdlg:font-semibold"
+                  className="mdlg:self-auto mdlg:text-xl mdlg:font-semibold self-center truncate text-lg outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2"
                 >
                   {video.user.username}
                 </Link>
@@ -149,21 +143,20 @@ export default function WatchPage() {
           </div>
         </div>
         <div
-          className={`h-full w-full pt-4 ${
-            screenWidth > 580 && "px-4 md:px-0"
-          }`}
+          className={`size-full pt-4 ${screenWidth > 580 && "px-4 md:px-0"}`}
         >
-          {videos &&
-            videos.map(
-              (v) =>
-                v.id !== video.id && (
-                  <VideoCard
-                    key={v.id}
-                    video={v}
-                    variant={screenWidth > 580 ? "medium" : "largeVertical"}
-                  />
-                ),
-            )}
+          {videos
+            ? videos.map(
+                (v) =>
+                  v.id !== video.id && (
+                    <VideoCard
+                      key={v.id}
+                      video={v}
+                      variant={screenWidth > 580 ? "medium" : "largeVertical"}
+                    />
+                  ),
+              )
+            : null}
         </div>
       </div>
     </>

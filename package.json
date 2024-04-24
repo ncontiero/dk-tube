@@ -1,8 +1,8 @@
 {
   "name": "dk-tube",
   "version": "0.1.0",
-  "packageManager": "pnpm@9.0.6",
   "private": true,
+  "packageManager": "pnpm@9.0.6",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,8 +10,8 @@
     "vercel:build": "prisma migrate deploy && next build",
     "postinstall": "prisma generate",
     "prisma:seed": "tsx prisma/seed.ts",
-    "lint": "next lint --dir . && eslint . && prettier . -c",
-    "lint:fix": "eslint --fix . && prettier . -w"
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix"
   },
   "dependencies": {
     "@clerk/localizations": "^2.1.0",
@@ -38,7 +38,7 @@
     "zod": "^3.23.4"
   },
   "devDependencies": {
-    "@dkshs/eslint-config": "1.5.0",
+    "@dkshs/eslint-config": "2.3.2",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",

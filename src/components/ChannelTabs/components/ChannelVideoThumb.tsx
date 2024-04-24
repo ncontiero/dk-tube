@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface ChannelVideoThumbProps {
-  video: VideoWithUser;
-  variant?: ChannelVideoCardVariant;
+  readonly video: VideoWithUser;
+  readonly variant?: ChannelVideoCardVariant;
 }
 
 export function ChannelVideoThumb({
@@ -20,7 +20,7 @@ export function ChannelVideoThumb({
         variant === "large"
           ? "xs:rounded-xl"
           : variant === "small"
-            ? "h-[90px] w-40 xs:h-[118px] xs:w-[220px]"
+            ? "xs:h-[118px] xs:w-[220px] h-[90px] w-40"
             : "h-[138px] w-[246px]"
       } outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2`}
     >
@@ -30,7 +30,7 @@ export function ChannelVideoThumb({
           alt={video.title}
           width={360}
           height={200}
-          className="aspect-video w-full object-cover xs:rounded-xl"
+          className="xs:rounded-xl aspect-video w-full object-cover"
         />
       ) : variant === "small" ? (
         <Image
@@ -38,7 +38,7 @@ export function ChannelVideoThumb({
           alt={video.title}
           width={220}
           height={118}
-          className="aspect-video h-[90px] w-40 rounded-md object-cover xs:h-[118px] xs:w-[220px]"
+          className="xs:h-[118px] xs:w-[220px] aspect-video h-[90px] w-40 rounded-md object-cover"
         />
       ) : (
         <Image

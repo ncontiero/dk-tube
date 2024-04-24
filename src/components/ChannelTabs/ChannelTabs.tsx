@@ -1,19 +1,17 @@
 import type { UserWithVideosAndPlaylists, VideoWithUser } from "@/utils/types";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import * as Tabs from "@radix-ui/react-tabs";
+import { ChevronDown } from "lucide-react";
+import { ChannelVideoCard } from "./components";
 import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 import { useSafePush } from "@/hooks/useSafePush";
 import { userFormatter } from "@/utils/formatters";
 
-import Link from "next/link";
-import * as Tabs from "@radix-ui/react-tabs";
-import { ChannelVideoCard } from "./components";
-
-import { ChevronDown } from "lucide-react";
-
 interface ChannelTabsProps {
-  user: UserWithVideosAndPlaylists;
+  readonly user: UserWithVideosAndPlaylists;
 }
 
 function TabsContent({ className, ...props }: Tabs.TabsContentProps) {
@@ -29,7 +27,7 @@ function TriggerButton({
   className,
   text,
   ...props
-}: Tabs.TabsTriggerProps & { text: string }) {
+}: Tabs.TabsTriggerProps & { readonly text: string }) {
   return (
     <Tabs.Trigger
       className={`rounded-t-lg border-b-2 border-transparent px-6 py-4 text-sm font-medium uppercase text-zinc-400 ring-purple-500 duration-200 hover:bg-zinc-800 hover:text-inherit focus:outline-none focus:ring-2 data-[state=active]:border-zinc-300 ${className}`}
@@ -41,12 +39,15 @@ function TriggerButton({
 }
 
 export function ChannelTabs({ user }: ChannelTabsProps) {
-  const [userVideos] = useState([
-    ...(user.videos.map((video) => ({
-      ...video,
-      user: userFormatter(user),
-    })) as VideoWithUser[]),
-  ]);
+  const userVideos = useMemo(
+    () => [
+      ...(user.videos.map((video) => ({
+        ...video,
+        user: userFormatter(user),
+      })) as VideoWithUser[]),
+    ],
+    [user],
+  );
   const {
     query: { tab },
   } = useRouter();
@@ -71,15 +72,15 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
       value={currentTab}
     >
       <Tabs.List className="border-b border-gray-500">
-        <div className="relative mx-auto flex w-full max-w-screen-2xl xs:px-2">
+        <div className="xs:px-2 relative mx-auto flex w-full max-w-screen-2xl">
           {tabs.map((tab) => (
             <TriggerButton value={tab.value} text={tab.text} key={tab.value} />
           ))}
         </div>
       </Tabs.List>
-      <div className="mx-auto flex w-full max-w-screen-2xl xs:px-2">
+      <div className="xs:px-2 mx-auto flex w-full max-w-screen-2xl">
         <TabsContent value="home">
-          <div className="w-full pb-6 xs:max-w-5xl xs:pt-3">
+          <div className="xs:max-w-5xl xs:pt-3 w-full pb-6">
             <ChannelVideoCard
               video={userVideos[0]}
               variant={screenWidth > 590 ? "main" : "large"}
@@ -92,7 +93,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
             >
               Vídeos
             </Link>
-            <div className="relative mt-3 flex w-full snap-x snap-mandatory flex-col gap-2 overflow-x-auto pb-6 xs:flex-row xs:gap-3 xs:pt-3">
+            <div className="xs:flex-row xs:gap-3 xs:pt-3 relative mt-3 flex w-full snap-x snap-mandatory flex-col gap-2 overflow-x-auto pb-6">
               {userVideos
                 .filter((video) => video.id !== userVideos[0].id)
                 .slice(0, screenWidth < 590 ? amountOfVideos : 12)
@@ -108,6 +109,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
                   type="button"
                   className="flex items-center self-center rounded-full bg-zinc-900 p-2 duration-200 hover:bg-zinc-700 focus:bg-zinc-500 focus:outline-none"
                   onClick={() => setAmountOfVideos((prev) => prev + 3)}
+                  aria-label="Carregar mais vídeos"
                 >
                   <ChevronDown />
                 </button>
@@ -116,14 +118,14 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
           </div>
         </TabsContent>
         <TabsContent value="videos">
-          <div className="flex w-full grid-cols-2 flex-col gap-7 pb-6 xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4">
+          <div className="xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4 flex w-full grid-cols-2 flex-col gap-7 pb-6">
             {userVideos.map((video) => (
               <ChannelVideoCard key={video.id} video={video} variant="large" />
             ))}
           </div>
         </TabsContent>
         <TabsContent value="playlists">
-          <div className="flex w-full grid-cols-2 flex-col gap-7 pb-6 xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4">
+          <div className="xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4 flex w-full grid-cols-2 flex-col gap-7 pb-6">
             {user.playlists.map((playlist) => (
               <div key={playlist.id} className="h-full">
                 <h3>{playlist.name}</h3>

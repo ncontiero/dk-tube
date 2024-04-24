@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface ThumbnailProps {
-  video: VideoWithUser;
-  variant?: VideoCardVariant;
+  readonly video: VideoWithUser;
+  readonly variant?: VideoCardVariant;
 }
 
 export function Thumbnail({ video, variant }: ThumbnailProps) {
@@ -16,7 +16,7 @@ export function Thumbnail({ video, variant }: ThumbnailProps) {
       className={`z-10 w-full ${
         variant === "large" || variant === "largeVertical"
           ? "xs:rounded-xl"
-          : "h-24 w-40 xs:rounded-md"
+          : "xs:rounded-md h-24 w-40"
       } outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2`}
     >
       {variant === "large" || variant === "largeVertical" ? (

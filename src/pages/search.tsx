@@ -2,13 +2,13 @@ import type { SearchResult } from "@/utils/types";
 
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { api } from "@/lib/axios";
 import { toast } from "react-toastify";
+import Link from "next/link";
+import Image from "next/image";
+import { api } from "@/lib/axios";
 
 import { PageError } from "@/components/PageError";
 import { Meta } from "@/components/Meta";
-import Link from "next/link";
-import Image from "next/image";
 
 export default function SearchPage() {
   const {
@@ -27,7 +27,7 @@ export default function SearchPage() {
         });
         return data || [];
       } catch (error) {
-        console.log(error);
+        console.error(error);
         toast.dismiss(toastLoading);
         toast.error("Algo deu errado!");
         return [];
@@ -91,7 +91,7 @@ export default function SearchPage() {
                 >
                   {result.label}
                 </Link>
-                {result.user && (
+                {result.user ? (
                   <div className="mt-3 flex items-center gap-2">
                     <Link
                       href={`/channel/${result.user.id}`}
@@ -112,7 +112,7 @@ export default function SearchPage() {
                       {result.user.username}
                     </Link>
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
           ))}

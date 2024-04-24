@@ -1,5 +1,5 @@
-import { Meta } from "@/components/Meta";
 import { SignUp } from "@clerk/nextjs";
+import { Meta } from "@/components/Meta";
 
 export default function SignUpPage() {
   return (

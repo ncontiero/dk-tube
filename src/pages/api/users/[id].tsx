@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createRouter } from "next-connect";
-import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+import { prisma } from "@/lib/prisma";
 import { userWithVideosFormatter } from "@/utils/formatters";
 import { catchError } from "@/utils/errors";
 
@@ -28,8 +28,8 @@ router.get(async (req, res) => {
     }
 
     return res.status(200).json(userWithVideosFormatter(user));
-  } catch (err: unknown) {
-    const response = catchError(err);
+  } catch (error: unknown) {
+    const response = catchError(error);
     return res.status(response.status).json(response);
   }
 });

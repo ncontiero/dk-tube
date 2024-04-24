@@ -1,9 +1,9 @@
 import type { User, Video } from "@prisma/client";
 import type {
   PlaylistWithUser,
+  PlaylistWithVideos,
   UserWithVideosAndPlaylists,
   VideoWithUser,
-  PlaylistWithVideos,
 } from "./types";
 
 export function userFormatter(user: User) {
@@ -31,7 +31,7 @@ export function playlistFormatter(playlist: PlaylistWithUser) {
     name: playlist.name,
     isPublic: playlist.isPublic,
     user: userFormatter(playlist.user),
-    videos: playlist.videos.map(videoFormatter),
+    videos: playlist.videos.map((v) => videoFormatter(v)),
     createdAt: playlist.createdAt,
   };
 }
@@ -41,7 +41,7 @@ function simplePlaylistFormatter(playlist: PlaylistWithVideos) {
     id: playlist.id,
     name: playlist.name,
     isPublic: playlist.isPublic,
-    videos: playlist.videos.map(videoFormatter),
+    videos: playlist.videos.map((v) => videoFormatter(v)),
     createdAt: playlist.createdAt,
   };
 }
@@ -61,8 +61,8 @@ export function userWithVideosFormatter(user: UserWithVideosAndPlaylists) {
     id: user.id,
     username: user.username,
     image: user.image,
-    videos: user.videos.map(simpleVideoFormatter),
-    playlists: user.playlists.map(simplePlaylistFormatter),
+    videos: user.videos.map((v) => simpleVideoFormatter(v)),
+    playlists: user.playlists.map((p) => simplePlaylistFormatter(p)),
   };
 }
 

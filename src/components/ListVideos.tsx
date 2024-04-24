@@ -2,9 +2,9 @@ import type { VideoWithUser } from "@/utils/types";
 import { VideoCard, type VideoCardVariant } from "./VideoCard";
 
 interface ListVideosProps {
-  videos?: VideoWithUser[];
-  isFetching?: boolean;
-  videoCardVariant?: VideoCardVariant;
+  readonly videos?: VideoWithUser[];
+  readonly isFetching?: boolean;
+  readonly videoCardVariant?: VideoCardVariant;
 }
 
 export function ListVideos({
@@ -15,23 +15,23 @@ export function ListVideos({
   const skeletonItems = [1, 2, 3, 4, 5, 6];
 
   return (
-    <div className="flex w-full grid-cols-2 flex-col gap-4 xs:grid xs:px-4 mdlg:grid-cols-3 xl:grid-cols-4">
+    <div className="xs:grid xs:px-4 mdlg:grid-cols-3 flex w-full grid-cols-2 flex-col gap-4 xl:grid-cols-4">
       {isFetching || !videos
         ? skeletonItems.map((item) => (
             <div
               key={item}
-              className={`relative flex w-full flex-col items-center xs:mb-4 md:mb-10 xl:max-w-[360px]`}
+              className={`xs:mb-4 relative flex w-full flex-col items-center md:mb-10 xl:max-w-[360px]`}
             >
-              <div className={`z-10 w-full xs:rounded-xl`}>
+              <div className={`xs:rounded-xl z-10 w-full`}>
                 <div
-                  className={`h-60 animate-pulse rounded-xl bg-zinc-800 xs:h-[200px] xs:max-w-[360px]`}
+                  className={`xs:h-[200px] xs:max-w-[360px] h-60 animate-pulse rounded-xl bg-zinc-800`}
                 />
               </div>
               <div
-                className={`flex w-full gap-3 truncate px-2 xs:pl-0 xs:pr-6`}
+                className={`xs:pl-0 xs:pr-6 flex w-full gap-3 truncate px-2`}
               >
                 <div className="mt-3">
-                  <div className="relative z-10 flex h-9 w-9 rounded-full">
+                  <div className="relative z-10 flex size-9 rounded-full">
                     <div className="aspect-square animate-pulse rounded-full bg-zinc-800 object-cover" />
                   </div>
                 </div>
