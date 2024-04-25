@@ -5,10 +5,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ChevronDown } from "lucide-react";
-import { ChannelVideoCard } from "./components";
 import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 import { useSafePush } from "@/hooks/useSafePush";
 import { userFormatter } from "@/utils/formatters";
+import { ChannelVideoCard } from "./components";
 
 interface ChannelTabsProps {
   readonly user: UserWithVideosAndPlaylists;

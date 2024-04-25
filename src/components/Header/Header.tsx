@@ -9,9 +9,9 @@ import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import { FilePlus, Search } from "lucide-react";
+import { useSafePush } from "@/hooks/useSafePush";
 import { Logo } from "../Logo";
 import { SearchBar } from "./SearchBar";
-import { useSafePush } from "@/hooks/useSafePush";
 
 const submitSearchFormSchema = z.object({
   query: z.string().min(1, "Digite um termo para buscar."),
