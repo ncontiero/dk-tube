@@ -21,6 +21,10 @@
       "automerge": true,
       "matchPackagePatterns": ["^@types/"],
       "matchUpdateTypes": ["patch", "minor"]
+    },
+    {
+      "groupName": "clerk packages",
+      "matchPackagePatterns": ["^@clerk/"]
     }
   ]
 }
