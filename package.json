@@ -35,7 +35,7 @@
     "react-player": "^2.16.0",
     "react-toastify": "^10.0.5",
     "svix": "^1.22.0",
-    "zod": "^3.23.5"
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@dkshs/eslint-config": "2.3.3",
