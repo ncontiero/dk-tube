@@ -33,8 +33,8 @@ importers:
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.4.5)(zod@3.23.6)
       '@tanstack/react-query':
-        specifier: ^5.32.1
-        version: 5.32.1(react@18.3.1)
+        specifier: ^5.34.2
+        version: 5.34.2(react@18.3.1)
       axios:
         specifier: ^1.6.8
         version: 1.6.8
@@ -730,11 +730,11 @@ packages:
       typescript:
         optional: true
 
-  '@tanstack/query-core@5.32.1':
-    resolution: {integrity: sha512-mCWa1wdGb1jiny4+qYegbSeadcFj+Nq65KFSs4A1DRveoIq7SrTwUhqu7hrB6d54cQH5x59DfJvxusn3w1Cj/g==}
+  '@tanstack/query-core@5.34.2':
+    resolution: {integrity: sha512-FM1UXldYcoMiWmVbpewV14EVpnr/ETBbdF84tmCktx29e2bXBFhGtAfyDHUD4X1FehaV5tC9GkXZUMZRQV3lcA==}
 
-  '@tanstack/react-query@5.32.1':
-    resolution: {integrity: sha512-+nXLMB0JK0XwTJ+lQt49DPNLrbSppni9N5W5yMR085yW3YaRKRUFhfVTER3TvQd1UycHpoGPFnt1gHiijXERAg==}
+  '@tanstack/react-query@5.34.2':
+    resolution: {integrity: sha512-5L9W9XQ/lRcyhlVN0xrOkPZE9PJxZWw7BdJR244j3G7sxMfSreZWvxx13DJt08M5DWn9B5VstpKgqpIIQOIJKA==}
     peerDependencies:
       react: ^18.0.0
 
@@ -3614,11 +3614,11 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  '@tanstack/query-core@5.32.1': {}
+  '@tanstack/query-core@5.34.2': {}
 
-  '@tanstack/react-query@5.32.1(react@18.3.1)':
+  '@tanstack/react-query@5.34.2(react@18.3.1)':
     dependencies:
-      '@tanstack/query-core': 5.32.1
+      '@tanstack/query-core': 5.34.2
       react: 18.3.1
 
   '@tsconfig/node16@1.0.4': {}
