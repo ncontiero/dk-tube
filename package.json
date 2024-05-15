@@ -14,9 +14,9 @@
     "lint:fix": "pnpm lint --fix"
   },
   "dependencies": {
-    "@clerk/localizations": "^2.4.0",
-    "@clerk/nextjs": "^5.0.9",
-    "@clerk/themes": "^2.1.4",
+    "@clerk/localizations": "^2.4.1",
+    "@clerk/nextjs": "^5.0.11",
+    "@clerk/themes": "^2.1.5",
     "@hookform/resolvers": "^3.4.0",
     "@prisma/client": "^5.14.0",
     "@radix-ui/react-dialog": "^1.0.5",
