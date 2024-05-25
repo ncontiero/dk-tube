@@ -9,7 +9,7 @@ import { catchError } from "@/utils/errors";
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
 const paramsSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string().cuid(),
 });
 
 router.get(async (req, res) => {
