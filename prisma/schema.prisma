@@ -3,18 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL") // uses connection pooling
-  directUrl         = env("DATABASE_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // uses connection pooling
+  directUrl = env("DATABASE_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
-  id         String   @id @default(uuid())
-  externalId String   @unique
+  id         String   @id @default(cuid())
+  externalId String   @unique @map("external_id")
   username   String   @unique
   email      String   @unique
   image      String   @default("https://img.clerk.com/preview.png")
-  createdAt  DateTime @default(now())
+  createdAt  DateTime @default(now()) @map("created_at")
 
   videos    Video[]
   playlists Playlist[]
@@ -23,30 +23,28 @@ model User {
 }
 
 model Video {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
   title     String
   thumb     String
-  youtubeId String
-  createdAt DateTime @default(now())
+  youtubeId String   @map("youtube_id")
+  createdAt DateTime @default(now()) @map("created_at")
 
+  user      User       @relation(fields: [userId], references: [id])
   playlists Playlist[]
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
 
   @@map("videos")
 }
 
 model Playlist {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
   name      String
-  isPublic  Boolean  @default(true)
-  createdAt DateTime @default(now())
+  isPublic  Boolean  @default(true) @map("is_public")
+  createdAt DateTime @default(now()) @map("created_at")
 
+  user   User    @relation(fields: [userId], references: [id])
   videos Video[]
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
 
   @@map("playlists")
 }
