@@ -75,11 +75,23 @@ router.post(async (req, res) => {
             .json({ error: "No email address found", status: 400 });
         }
 
-        await prisma.user.update({
-          where: {
-            externalId: msg.data.id,
-          },
+        const user = await prisma.user.findUnique({
+          where: { externalId: msg.data.id },
+        });
+        if (user) {
+          await prisma.user.update({
+            where: { externalId: msg.data.id },
+            data: {
+              email: emails[0].email_address,
+              username,
+              image: msg.data.image_url,
+            },
+          });
+          break;
+        }
+        await prisma.user.create({
           data: {
+            externalId: msg.data.id,
             email: emails[0].email_address,
             username,
             image: msg.data.image_url,
