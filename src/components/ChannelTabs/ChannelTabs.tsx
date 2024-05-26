@@ -80,48 +80,66 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
       </Tabs.List>
       <div className="xs:px-2 mx-auto flex w-full max-w-screen-2xl">
         <TabsContent value="home">
-          <div className="xs:max-w-5xl xs:pt-3 w-full pb-6">
-            <ChannelVideoCard
-              video={userVideos[0]}
-              variant={screenWidth > 590 ? "main" : "large"}
-            />
-          </div>
-          <div className="overflow-hidden border-t border-zinc-700 px-3 pt-6">
-            <Link
-              className="font-semibold outline-none ring-purple-500 duration-200 focus-visible:ring-2"
-              href={`/channel/${user.id}?tab=videos`}
-            >
-              Vídeos
-            </Link>
-            <div className="xs:flex-row xs:gap-3 xs:pt-3 relative mt-3 flex w-full snap-x snap-mandatory flex-col gap-2 overflow-x-auto pb-6">
-              {userVideos
-                .filter((video) => video.id !== userVideos[0].id)
-                .slice(0, screenWidth < 590 ? amountOfVideos : 12)
-                .map((video) => (
-                  <ChannelVideoCard
-                    key={video.id}
-                    video={video}
-                    variant="small"
-                  />
-                ))}
-              {screenWidth < 590 && userVideos.length > amountOfVideos && (
-                <button
-                  type="button"
-                  className="flex items-center self-center rounded-full bg-zinc-900 p-2 duration-200 hover:bg-zinc-700 focus:bg-zinc-500 focus:outline-none"
-                  onClick={() => setAmountOfVideos((prev) => prev + 3)}
-                  aria-label="Carregar mais vídeos"
-                >
-                  <ChevronDown />
-                </button>
-              )}
+          {userVideos.length === 0 ? (
+            <div className="flex flex-col items-center justify-center gap-2 py-6 text-center">
+              <h2 className="text-2xl font-semibold">
+                {user.username} não possui vídeos
+              </h2>
+              <p className="text-sm text-zinc-400">
+                {user.username} não possui vídeos.
+              </p>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="xs:max-w-5xl xs:pt-3 w-full pb-6">
+                <ChannelVideoCard
+                  video={userVideos[0]}
+                  variant={screenWidth > 590 ? "main" : "large"}
+                />
+              </div>
+              <div className="overflow-hidden border-t border-zinc-700 px-3 pt-6">
+                <Link
+                  className="font-semibold outline-none ring-purple-500 duration-200 focus-visible:ring-2"
+                  href={`/channel/${user.id}?tab=videos`}
+                >
+                  Vídeos
+                </Link>
+                <div className="xs:flex-row xs:gap-3 xs:pt-3 relative mt-3 flex w-full snap-x snap-mandatory flex-col gap-2 overflow-x-auto pb-6">
+                  {userVideos
+                    .filter((video) => video.id !== userVideos[0].id)
+                    .slice(0, screenWidth < 590 ? amountOfVideos : 12)
+                    .map((video) => (
+                      <ChannelVideoCard
+                        key={video.id}
+                        video={video}
+                        variant="small"
+                      />
+                    ))}
+                  {screenWidth < 590 && userVideos.length > amountOfVideos && (
+                    <button
+                      type="button"
+                      className="flex items-center self-center rounded-full bg-zinc-900 p-2 duration-200 hover:bg-zinc-700 focus:bg-zinc-500 focus:outline-none"
+                      onClick={() => setAmountOfVideos((prev) => prev + 3)}
+                      aria-label="Carregar mais vídeos"
+                    >
+                      <ChevronDown />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </TabsContent>
         <TabsContent value="videos">
           <div className="xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4 flex w-full grid-cols-2 flex-col gap-7 pb-6">
-            {userVideos.map((video) => (
-              <ChannelVideoCard key={video.id} video={video} variant="large" />
-            ))}
+            {userVideos.length > 0 &&
+              userVideos.map((video) => (
+                <ChannelVideoCard
+                  key={video.id}
+                  video={video}
+                  variant="large"
+                />
+              ))}
           </div>
         </TabsContent>
         <TabsContent value="playlists">

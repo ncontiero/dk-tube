@@ -31,8 +31,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<{
   user: UserWithVideosAndPlaylists;
 }> = async ({ params }) => {
+  if (!params?.id) {
+    return {
+      notFound: true,
+    };
+  }
   const user = (await prisma.user.findUnique({
-    where: { id: params?.id as string },
+    where: { id: typeof params.id === "string" ? params.id : params.id[0] },
     include: {
       playlists: { include: { videos: { include: { user: true } } } },
       videos: true,
