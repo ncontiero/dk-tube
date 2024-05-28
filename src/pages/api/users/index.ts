@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createRouter } from "next-connect";
-import { queryParser } from "@/utils/queryParser";
+import { queryParser } from "@/utils/parser";
 import { prisma } from "@/lib/prisma";
 import { userWithVideosFormatter } from "@/utils/formatters";
 

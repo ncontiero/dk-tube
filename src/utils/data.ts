@@ -1,5 +1,13 @@
 import { api } from "@/lib/axios";
 
+export function transformData(data?: string) {
+  if (!data) return undefined;
+  const valueArray = data.split(".");
+  const key = valueArray[0];
+  const value = valueArray[1];
+  return { column: key, value };
+}
+
 export async function getMostQualityThumb(youtubeId: string) {
   const baseThumbUrl = `https://i.ytimg.com/vi/${youtubeId}/`;
   const thumbQuality = [

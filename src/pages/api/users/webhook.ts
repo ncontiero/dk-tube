@@ -7,7 +7,7 @@ import { Webhook, type WebhookRequiredHeaders } from "svix";
 import { buffer } from "micro";
 import { env } from "@/env.mjs";
 import { prisma } from "@/lib/prisma";
-import { generateRandomString } from "@/utils/generateRandom";
+import { generateRandomString } from "@/utils/strings";
 
 type NextApiRequestWithSvixRequiredHeaders = NextApiRequest & {
   headers: IncomingHttpHeaders & WebhookRequiredHeaders;

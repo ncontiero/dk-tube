@@ -1,7 +1,7 @@
 import type { NextApiRequest } from "next";
 
 import { z } from "zod";
-import { transformData } from "./transformData";
+import { transformData } from "./data";
 
 const querySchema = z.object({
   limit: z.string().transform(Number).optional(),
