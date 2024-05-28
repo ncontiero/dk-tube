@@ -16,7 +16,7 @@ export function Thumbnail({ video, variant }: ThumbnailProps) {
       className={`z-10 w-full ${
         variant === "large" || variant === "largeVertical"
           ? "xs:rounded-xl"
-          : "xs:rounded-md h-24 w-40"
+          : "h-24 w-40 xs:rounded-md"
       } outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2`}
     >
       {variant === "large" || variant === "largeVertical" ? (

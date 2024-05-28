@@ -72,13 +72,13 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
       value={currentTab}
     >
       <Tabs.List className="border-b border-gray-500">
-        <div className="xs:px-2 relative mx-auto flex w-full max-w-screen-2xl">
+        <div className="relative mx-auto flex w-full max-w-screen-2xl xs:px-2">
           {tabs.map((tab) => (
             <TriggerButton value={tab.value} text={tab.text} key={tab.value} />
           ))}
         </div>
       </Tabs.List>
-      <div className="xs:px-2 mx-auto flex w-full max-w-screen-2xl">
+      <div className="mx-auto flex w-full max-w-screen-2xl xs:px-2">
         <TabsContent value="home">
           {userVideos.length === 0 ? (
             <div className="flex flex-col items-center justify-center gap-2 py-6 text-center">
@@ -91,7 +91,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
             </div>
           ) : (
             <>
-              <div className="xs:max-w-5xl xs:pt-3 w-full pb-6">
+              <div className="w-full pb-6 xs:max-w-5xl xs:pt-3">
                 <ChannelVideoCard
                   video={userVideos[0]}
                   variant={screenWidth > 590 ? "main" : "large"}
@@ -104,7 +104,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
                 >
                   Vídeos
                 </Link>
-                <div className="xs:flex-row xs:gap-3 xs:pt-3 relative mt-3 flex w-full snap-x snap-mandatory flex-col gap-2 overflow-x-auto pb-6">
+                <div className="relative mt-3 flex w-full snap-x snap-mandatory flex-col gap-2 overflow-x-auto pb-6 xs:flex-row xs:gap-3 xs:pt-3">
                   {userVideos
                     .filter((video) => video.id !== userVideos[0].id)
                     .slice(0, screenWidth < 590 ? amountOfVideos : 12)
@@ -131,7 +131,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
           )}
         </TabsContent>
         <TabsContent value="videos">
-          <div className="xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4 flex w-full grid-cols-2 flex-col gap-7 pb-6">
+          <div className="flex w-full grid-cols-2 flex-col gap-7 pb-6 xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4">
             {userVideos.length > 0 &&
               userVideos.map((video) => (
                 <ChannelVideoCard
@@ -143,7 +143,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
           </div>
         </TabsContent>
         <TabsContent value="playlists">
-          <div className="xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4 flex w-full grid-cols-2 flex-col gap-7 pb-6">
+          <div className="flex w-full grid-cols-2 flex-col gap-7 pb-6 xs:grid xs:gap-4 xs:pl-1 xs:pt-3 mdlg:grid-cols-4">
             {user.playlists.map((playlist) => (
               <div key={playlist.id} className="h-full">
                 <h3>{playlist.name}</h3>

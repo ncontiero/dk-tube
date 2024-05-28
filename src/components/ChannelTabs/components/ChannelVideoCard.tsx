@@ -18,26 +18,26 @@ export function ChannelVideoCard({
     <div
       className={`relative flex w-full ${
         variant === "large"
-          ? "xs:mb-4 flex-col md:mb-10 xl:max-w-[360px]"
+          ? "flex-col xs:mb-4 md:mb-10 xl:max-w-[360px]"
           : variant === "small"
-            ? "xs:max-w-[220px] xs:flex-col w-full"
+            ? "w-full xs:max-w-[220px] xs:flex-col"
             : "mt-2 gap-2"
       } items-center`}
     >
       <Link
         href={`/watch?v=${video.id}`}
-        className={`xs:-m-1 absolute z-[5] ${
+        className={`absolute z-[5] xs:-m-1 ${
           variant === "large"
-            ? "xs:h-[108%] xs:rounded-xl h-[105%] w-[102%] sm:h-[110%] md:h-[115%]"
+            ? "h-[105%] w-[102%] xs:h-[108%] xs:rounded-xl sm:h-[110%] md:h-[115%]"
             : variant === "small"
-              ? "xs:h-[115%] xs:w-[103%] -ml-1 h-[110%] w-full rounded-xl"
-              : "xs:rounded-xl h-[105%] w-full"
+              ? "-ml-1 h-[110%] w-full rounded-xl xs:h-[115%] xs:w-[103%]"
+              : "h-[105%] w-full xs:rounded-xl"
         } outline-none duration-200 focus:bg-zinc-600/30`}
       />
       {variant === "large" ? (
         <ChannelVideoThumb video={video} variant="large" />
       ) : variant === "small" ? (
-        <div className="xs:min-h-[118px] xs:min-w-[200px] z-10 min-h-[90px] min-w-[160px]">
+        <div className="z-10 min-h-[90px] min-w-[160px] xs:min-h-[118px] xs:min-w-[200px]">
           <ChannelVideoThumb video={video} variant="small" />
         </div>
       ) : (
@@ -52,7 +52,7 @@ export function ChannelVideoCard({
       >
         <Link
           href={`/watch?v=${video.id}`}
-          className="xs:px-0 z-10 w-full px-2 outline-none ring-purple-400 duration-200 hover:opacity-80 focus:ring-2"
+          className="z-10 w-full px-2 outline-none ring-purple-400 duration-200 hover:opacity-80 focus:ring-2 xs:px-0"
         >
           <h3
             className={`truncate ${

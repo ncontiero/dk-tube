@@ -69,8 +69,8 @@ export default function ChannelPage({
   return (
     <div className="flex flex-col gap-4">
       <Meta path={`/channel/${user.id}`} title={user.username} />
-      <div className="xs:flex-row xs:items-start mx-auto mt-4 flex w-full max-w-screen-2xl flex-col items-center px-4 pt-4">
-        <div className="xs:mb-3 xs:mr-6 xs:size-auto size-14 max-w-max">
+      <div className="mx-auto mt-4 flex w-full max-w-screen-2xl flex-col items-center px-4 pt-4 xs:flex-row xs:items-start">
+        <div className="size-14 max-w-max xs:mb-3 xs:mr-6 xs:size-auto">
           <Image
             src={user.image}
             alt={user.username}
@@ -79,7 +79,7 @@ export default function ChannelPage({
             className="aspect-square rounded-full object-cover"
           />
         </div>
-        <div className="xs:mt-4 xs:items-start mt-2 flex flex-col items-center">
+        <div className="mt-2 flex flex-col items-center xs:mt-4 xs:items-start">
           <div>
             <h1 className="text-2xl font-semibold">{user.username}</h1>
           </div>

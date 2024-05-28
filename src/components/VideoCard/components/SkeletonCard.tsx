@@ -10,13 +10,13 @@ function SkeletonThumbnail({ variant = "medium" }: SkeletonCardProps) {
       className={`z-10 aspect-video size-full ${
         variant === "large" || variant === "largeVertical"
           ? "xs:rounded-xl"
-          : "xs:rounded-md h-24 w-40"
+          : "h-24 w-40 xs:rounded-md"
       } animate-pulse bg-zinc-800`}
     >
       {variant === "large" || variant === "largeVertical" ? (
         <div className="h-[200px] w-[360px] rounded-xl" />
       ) : (
-        <div className={`xs:h-24 mr-0 h-full w-40 rounded-md`} />
+        <div className={`mr-0 h-full w-40 rounded-md xs:h-24`} />
       )}
     </div>
   );
@@ -28,7 +28,7 @@ export function SkeletonCard({ variant = "medium" }: SkeletonCardProps) {
       {variant === "large" || variant === "largeVertical" ? (
         <SkeletonThumbnail variant={variant} />
       ) : (
-        <div className="xs:h-24 xs:w-1/2 z-10 h-52 w-full min-w-[160px]">
+        <div className="z-10 h-52 w-full min-w-[160px] xs:h-24 xs:w-1/2">
           <SkeletonThumbnail variant={variant} />
         </div>
       )}
@@ -36,8 +36,8 @@ export function SkeletonCard({ variant = "medium" }: SkeletonCardProps) {
         className={`flex w-full gap-3 ${
           variant !== "large" &&
           variant !== "largeVertical" &&
-          "xs:mt-0.5 mt-4 self-start"
-        } xs:pl-0 xs:pr-6 px-2`}
+          "mt-4 self-start xs:mt-0.5"
+        } px-2 xs:pl-0 xs:pr-6`}
       >
         {(variant === "large" || variant === "largeVertical") && (
           <div className="mt-3">

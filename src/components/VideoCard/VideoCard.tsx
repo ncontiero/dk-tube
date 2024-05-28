@@ -21,7 +21,7 @@ export function VideoCard({
     <div
       className={`relative flex w-full ${
         variant === "large" || variant === "largeVertical"
-          ? "xs:mb-4 flex-col md:mb-10 xl:max-w-[360px]"
+          ? "flex-col xs:mb-4 md:mb-10 xl:max-w-[360px]"
           : "mt-2 gap-2"
       } ${variant === "largeVertical" && "mb-7"} items-center`}
     >
@@ -34,11 +34,11 @@ export function VideoCard({
               href={`/watch?v=${video.id}`}
               className={`absolute z-[5] -m-1 ${
                 variant === "large"
-                  ? "xs:h-[108%] h-[103%] sm:h-[110%] md:h-[115%]"
+                  ? "h-[103%] xs:h-[108%] sm:h-[110%] md:h-[115%]"
                   : variant === "largeVertical"
                     ? "h-[104%]"
                     : "h-[108%]"
-              } xs:-mt-1 w-[102%] rounded-xl outline-none duration-200 focus:bg-zinc-600/30`}
+              } w-[102%] rounded-xl outline-none duration-200 focus:bg-zinc-600/30 xs:-mt-1`}
             />
             {variant === "large" || variant === "largeVertical" ? (
               <Thumbnail video={video} variant={variant} />
@@ -52,7 +52,7 @@ export function VideoCard({
                 variant !== "large" &&
                 variant !== "largeVertical" &&
                 "mt-0.5 self-start"
-              } xs:pl-0 xs:pr-6 truncate px-2`}
+              } truncate px-2 xs:pl-0 xs:pr-6`}
             >
               {(variant === "large" || variant === "largeVertical") && (
                 <div className="mt-3">
