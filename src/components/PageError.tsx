@@ -15,12 +15,12 @@ export function PageError({
         <title>{title}</title>
       </Head>
       <section className="flex w-full flex-col text-center">
-        <h1 className="mb-2 pt-10 text-2xl">{title}</h1>
+        <h1 className="mb-2 pt-10 text-2xl font-bold">{title}</h1>
         <p className="mt-2 text-lg">
           Por favor, volte para a{" "}
           <Link
             href="/"
-            className="text-blue-300 underline-offset-2 hover:text-blue-200 hover:underline active:opacity-70"
+            className="text-primary underline-offset-2 hover:text-primary/80 hover:underline active:opacity-70"
           >
             página inicial do {env.NEXT_PUBLIC_SITE_NAME}
           </Link>

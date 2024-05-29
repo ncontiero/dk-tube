@@ -17,7 +17,7 @@ export function Thumbnail({ video, variant }: ThumbnailProps) {
         variant === "large" || variant === "largeVertical"
           ? "xs:rounded-xl"
           : "h-24 w-40 xs:rounded-md"
-      } outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2`}
+      } outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2`}
     >
       {variant === "large" || variant === "largeVertical" ? (
         <Image
@@ -25,13 +25,13 @@ export function Thumbnail({ video, variant }: ThumbnailProps) {
           alt={video.title}
           width={360}
           height={200}
-          className={`aspect-video w-full rounded-xl object-cover`}
+          className="aspect-video w-full rounded-xl object-cover"
         />
       ) : (
         <Image
           src={video.thumb}
           alt={video.title}
-          className={`mr-0 aspect-video h-24 w-40 rounded-md object-cover`}
+          className="mr-0 aspect-video h-24 w-40 rounded-md object-cover"
           width={168}
           height={94}
         />

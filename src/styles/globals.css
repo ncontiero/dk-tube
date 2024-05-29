@@ -2,45 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply selection:bg-violet-600/30;
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 210 20% 98%;
+
+    --card: 0 0% 0%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 0 0% 0%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 262 83% 60%;
+    --primary-foreground: 210 20% 98%;
+
+    --secondary: 240 6% 10%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 240 6% 10%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+
+    --accent: 240 6% 10%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 240 6% 10%;
+    --input: 240 6% 10%;
+    --ring: 262 83% 60%;
+
+    --radius: 0.5rem;
+  }
 }
 
-body {
-  @apply relative min-h-screen scroll-smooth bg-black font-inter text-gray-100;
+@layer base {
+  * {
+    @apply border-border selection:bg-primary/30;
+  }
+  html {
+    @apply scroll-smooth;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background font-inter text-foreground;
+  }
 }
 
-body {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+/* Toastify */
+.Toastify__toast-container {
+  @apply z-[99999] !important;
 }
-
-body::-webkit-scrollbar {
-  @apply h-2 w-2;
+.Toastify__toast-body {
+  @apply font-inter text-foreground !important;
 }
-body::-webkit-scrollbar-track {
-  @apply bg-violet-600 bg-gradient-to-b from-black/60 to-zinc-900;
-}
-body::-webkit-scrollbar-thumb {
-  @apply rounded-md bg-zinc-400/50 backdrop-blur hover:bg-zinc-500/50;
-}
-
-*::-webkit-scrollbar {
-  @apply h-3 w-3;
-}
-*::-webkit-scrollbar-track {
-  @apply rounded-md bg-violet-600 bg-gradient-to-l from-black/60 to-zinc-900;
-}
-*::-webkit-scrollbar-thumb {
-  @apply rounded-md bg-zinc-400/50 backdrop-blur hover:bg-zinc-500/50;
-}
-
-.cl-pageScrollBox::-webkit-scrollbar {
-  @apply h-2 w-2;
-}
-.cl-pageScrollBox::-webkit-scrollbar-track {
-  @apply rounded-md bg-violet-600 bg-gradient-to-b from-black/60 to-zinc-900;
-}
-.cl-pageScrollBox::-webkit-scrollbar-thumb {
-  @apply rounded-md bg-zinc-400/20 backdrop-blur hover:bg-zinc-500/50;
+.Toastify__toast {
+  @apply bg-background !important;
 }

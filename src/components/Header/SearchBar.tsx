@@ -30,7 +30,7 @@ export function SearchBar({
       >
         <button
           type="button"
-          className="p-3 outline-purple-400 duration-200"
+          className="p-3 outline-ring duration-200"
           title="Buscar"
           aria-label="Buscar"
         >
@@ -40,7 +40,7 @@ export function SearchBar({
       <AnimatePresence>
         {hasSearchBar ? (
           <Dialog.Portal forceMount>
-            <Dialog.Overlay className="fixed inset-0 z-[999] bg-black/50 backdrop-blur-sm" />
+            <Dialog.Overlay className="fixed inset-0 z-[999] bg-background/50 backdrop-blur-sm" />
             <Dialog.Content className="fixed top-0 z-[9999] h-14 w-full sm:h-16">
               <motion.form
                 initial={{ opacity: 0 }}
@@ -50,11 +50,11 @@ export function SearchBar({
                 className="size-full"
                 onSubmit={handleSubmit(submitSearch)}
               >
-                <div className="flex size-full bg-zinc-800">
+                <div className="flex size-full bg-secondary">
                   <Dialog.Close asChild>
                     <button
                       type="button"
-                      className="flex items-center px-3 py-2 outline-purple-400"
+                      className="flex items-center px-3 py-2 outline-ring"
                       title="Voltar"
                       aria-label="Voltar"
                     >
@@ -62,18 +62,18 @@ export function SearchBar({
                     </button>
                   </Dialog.Close>
                   <div className="w-full py-2 pr-4">
-                    <div className="flex w-full rounded-3xl bg-zinc-700">
+                    <div className="flex w-full rounded-3xl border border-foreground/20 bg-card">
                       <input
                         type="text"
                         placeholder="Buscar videos..."
-                        className="w-full rounded-l-3xl bg-transparent px-3 py-2 outline-none duration-200 focus:border-purple-400"
+                        className="w-full rounded-l-3xl bg-transparent px-3 py-2 outline-none duration-200 focus:border-ring"
                         // eslint-disable-next-line jsx-a11y/no-autofocus
                         autoFocus={hasSearchBar}
                         {...register("query")}
                       />
                       <button
                         type="submit"
-                        className="rounded-r-3xl px-4 py-2 outline-purple-400 duration-200"
+                        className="rounded-r-3xl px-4 py-2 outline-ring duration-200"
                         title="Buscar"
                         aria-label="Buscar"
                       >

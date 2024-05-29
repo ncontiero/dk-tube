@@ -58,7 +58,7 @@ export function VideoCard({
                 <div className="mt-3">
                   <Link
                     href={`/channel/${video.user.id}`}
-                    className="relative z-10 flex size-9 rounded-full outline-none ring-purple-400 duration-200 hover:opacity-80 focus:ring-2"
+                    className="relative z-10 flex size-9 rounded-full outline-none ring-ring duration-200 hover:opacity-80 focus:ring-2"
                   >
                     <Image
                       src={video.user.image}
@@ -72,7 +72,7 @@ export function VideoCard({
               <div className="flex flex-col truncate">
                 <Link
                   href={`/watch?v=${video.id}`}
-                  className="z-10 outline-none ring-purple-400 duration-200 hover:opacity-80 focus:ring-2"
+                  className="z-10 outline-none ring-ring duration-200 hover:opacity-80 focus:ring-2"
                 >
                   <h3
                     className={`mb-1 ${
@@ -84,7 +84,7 @@ export function VideoCard({
                   </h3>
                 </Link>
                 <Link
-                  className="z-10 opacity-60 outline-none ring-purple-400 duration-200 hover:opacity-100 focus:ring-2"
+                  className="z-10 opacity-60 outline-none ring-ring duration-200 hover:opacity-100 focus:ring-2"
                   href={`/channel/${video.user.id}`}
                 >
                   {video.user.username}

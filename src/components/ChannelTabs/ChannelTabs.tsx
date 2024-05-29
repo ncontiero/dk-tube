@@ -17,7 +17,7 @@ interface ChannelTabsProps {
 function TabsContent({ className, ...props }: Tabs.TabsContentProps) {
   return (
     <Tabs.Content
-      className={`w-full outline-none ring-purple-500 focus-visible:ring-2 ${className}`}
+      className={`w-full outline-none ring-ring focus-visible:ring-2 ${className}`}
       {...props}
     />
   );
@@ -30,7 +30,7 @@ function TriggerButton({
 }: Tabs.TabsTriggerProps & { readonly text: string }) {
   return (
     <Tabs.Trigger
-      className={`rounded-t-lg border-b-2 border-transparent px-6 py-4 text-sm font-medium uppercase text-zinc-400 ring-purple-500 duration-200 hover:bg-zinc-800 hover:text-inherit focus:outline-none focus:ring-2 data-[state=active]:border-zinc-300 ${className}`}
+      className={`rounded-t-lg border-b border-transparent px-6 py-4 text-sm font-medium uppercase text-foreground/80 ring-ring duration-200 hover:bg-secondary hover:text-foreground focus:outline-none focus:ring-2 data-[state=active]:border-foreground ${className}`}
       {...props}
     >
       {text}
@@ -71,7 +71,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
       onValueChange={(tab) => safePush(`/channel/${user.id}?tab=${tab}`)}
       value={currentTab}
     >
-      <Tabs.List className="border-b border-gray-500">
+      <Tabs.List className="border-b border-secondary">
         <div className="relative mx-auto flex w-full max-w-screen-2xl xs:px-2">
           {tabs.map((tab) => (
             <TriggerButton value={tab.value} text={tab.text} key={tab.value} />
@@ -85,7 +85,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
               <h2 className="text-2xl font-semibold">
                 {user.username} não possui vídeos
               </h2>
-              <p className="text-sm text-zinc-400">
+              <p className="text-sm text-foreground/80">
                 {user.username} não possui vídeos.
               </p>
             </div>
@@ -97,9 +97,9 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
                   variant={screenWidth > 590 ? "main" : "large"}
                 />
               </div>
-              <div className="overflow-hidden border-t border-zinc-700 px-3 pt-6">
+              <div className="overflow-hidden border-t border-foreground/20 px-3 pt-6">
                 <Link
-                  className="font-semibold outline-none ring-purple-500 duration-200 focus-visible:ring-2"
+                  className="font-semibold outline-none ring-ring duration-200 focus-visible:ring-2"
                   href={`/channel/${user.id}?tab=videos`}
                 >
                   Vídeos
@@ -118,7 +118,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
                   {screenWidth < 590 && userVideos.length > amountOfVideos && (
                     <button
                       type="button"
-                      className="flex items-center self-center rounded-full bg-zinc-900 p-2 duration-200 hover:bg-zinc-700 focus:bg-zinc-500 focus:outline-none"
+                      className="flex items-center self-center rounded-full bg-secondary p-2 duration-200 hover:bg-secondary/80 focus:bg-secondary/60 focus:outline-none"
                       onClick={() => setAmountOfVideos((prev) => prev + 3)}
                       aria-label="Carregar mais vídeos"
                     >

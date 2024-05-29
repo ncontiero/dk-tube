@@ -16,7 +16,7 @@ function SkeletonThumbnail({ variant = "medium" }: SkeletonCardProps) {
       {variant === "large" || variant === "largeVertical" ? (
         <div className="h-[200px] w-[360px] rounded-xl" />
       ) : (
-        <div className={`mr-0 h-full w-40 rounded-md xs:h-24`} />
+        <div className="mr-0 h-full w-40 rounded-md xs:h-24" />
       )}
     </div>
   );
@@ -42,17 +42,17 @@ export function SkeletonCard({ variant = "medium" }: SkeletonCardProps) {
         {(variant === "large" || variant === "largeVertical") && (
           <div className="mt-3">
             <span className="relative z-10 flex size-9 rounded-full">
-              <span className="aspect-square size-full animate-pulse rounded-full bg-zinc-800 object-cover" />
+              <span className="aspect-square size-full animate-pulse rounded-full bg-secondary object-cover" />
             </span>
           </div>
         )}
         <div className="flex w-3/4 flex-col">
           <span
-            className={`z-10 mb-2 h-6 w-full animate-pulse bg-zinc-800 ${
+            className={`z-10 mb-2 h-6 w-full animate-pulse bg-secondary ${
               (variant === "large" || variant === "largeVertical") && "mt-3"
             }`}
           />
-          <span className="z-10 h-6 w-4/5 animate-pulse bg-zinc-800 opacity-60" />
+          <span className="z-10 h-6 w-4/5 animate-pulse bg-secondary opacity-60" />
         </div>
       </div>
     </>

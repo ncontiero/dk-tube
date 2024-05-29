@@ -53,19 +53,19 @@ export default function WatchPage() {
   return isFetchingVideo || isFetchingVideos ? (
     <div className="grid grid-cols-1 px-0 md:px-20 xl:grid-cols-3">
       <div className="col-span-2 flex w-full flex-col items-center pt-6 mdlg:pb-0 mdlg:pr-6">
-        <div className="fixed inset-x-0 top-14 z-20 h-screen max-h-[30%] w-full animate-pulse bg-zinc-800 xs:max-h-[40%] sm:top-16 md:relative md:inset-x-auto md:top-auto md:z-auto md:mt-0 md:max-h-[50%] lg:max-h-[60%]" />
+        <div className="fixed inset-x-0 top-14 z-20 h-screen max-h-[30%] w-full animate-pulse bg-secondary xs:max-h-[40%] sm:top-16 md:relative md:inset-x-auto md:top-auto md:z-auto md:mt-0 md:max-h-[50%] lg:max-h-[60%]" />
         {screenWidth < 768 && <div className="mt-[235px] xs:mt-[320px]" />}
         <div className="mb-6 mt-4 flex w-full flex-col justify-start px-4 mdlg:px-0">
-          <span className="h-8 w-1/2 animate-pulse bg-zinc-800" />
+          <span className="h-8 w-1/2 animate-pulse bg-secondary" />
           <div className="mt-3.5 flex gap-2 overflow-hidden mdlg:gap-4">
             <div
               style={{
                 width: screenWidth > 778 ? 48 : 34,
                 height: screenWidth > 778 ? 48 : 34,
               }}
-              className="aspect-square animate-pulse rounded-full bg-zinc-800 object-cover"
+              className="aspect-square animate-pulse rounded-full bg-secondary object-cover"
             />
-            <span className="h-8 w-[15%] animate-pulse self-center bg-zinc-800 mdlg:self-auto" />
+            <span className="h-8 w-[15%] animate-pulse self-center bg-secondary mdlg:self-auto" />
           </div>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function WatchPage() {
               <div className="mt-3.5 flex gap-2 overflow-hidden mdlg:gap-4">
                 <Link
                   href={`/channel/${video.user.id}`}
-                  className="outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2"
+                  className="outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2"
                 >
                   <Image
                     src={video.user.image}
@@ -134,7 +134,7 @@ export default function WatchPage() {
                 </Link>
                 <Link
                   href={`/channel/${video.user.id}`}
-                  className="self-center truncate text-lg outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2 mdlg:self-auto mdlg:text-xl mdlg:font-semibold"
+                  className="self-center truncate text-lg outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2 mdlg:self-auto mdlg:text-xl mdlg:font-semibold"
                 >
                   {video.user.username}
                 </Link>

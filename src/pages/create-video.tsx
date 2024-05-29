@@ -57,7 +57,7 @@ export default function CreateVideoPage() {
             <input
               type="text"
               id="title"
-              className="rounded bg-zinc-900 px-4 py-2 outline-none ring-purple-400 duration-200 focus:ring-2 hover:[:not(:focus)&]:bg-zinc-700"
+              className="rounded bg-input px-4 py-2 outline-none ring-ring duration-200 focus:ring-2"
               placeholder="Digite o titulo do vídeo..."
               required
               {...register("title")}
@@ -73,7 +73,7 @@ export default function CreateVideoPage() {
             <input
               type="text"
               id="youtubeId"
-              className="rounded bg-zinc-900 px-4 py-2 outline-none ring-purple-400 duration-200 focus:ring-2 hover:[:not(:focus)&]:bg-zinc-700"
+              className="rounded bg-input px-4 py-2 outline-none ring-ring duration-200 focus:ring-2"
               placeholder="Digite o id do vídeo do Youtube..."
               required
               {...register("youtubeId")}
@@ -87,7 +87,7 @@ export default function CreateVideoPage() {
 
           <button
             type="submit"
-            className="mt-4 flex justify-center rounded-lg bg-purple-600 p-2.5 outline-none ring-purple-400 ring-offset-2 ring-offset-black duration-200 focus:ring-2 disabled:cursor-not-allowed disabled:opacity-70 hover:[:not(:disabled)&]:bg-purple-500"
+            className="mt-4 flex justify-center rounded-lg bg-primary p-2.5 outline-none ring-ring ring-offset-2 ring-offset-background duration-200 focus:ring-2 disabled:cursor-not-allowed disabled:opacity-70 hover:[:not(:disabled)&]:bg-primary/80"
             disabled={
               creatingVideo ||
               !!errors.title ||

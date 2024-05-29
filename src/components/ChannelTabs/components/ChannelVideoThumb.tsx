@@ -22,7 +22,7 @@ export function ChannelVideoThumb({
           : variant === "small"
             ? "h-[90px] w-40 xs:h-[118px] xs:w-[220px]"
             : "h-[138px] w-[246px]"
-      } outline-none ring-purple-400 duration-200 hover:opacity-90 focus:ring-2`}
+      } outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2`}
     >
       {variant === "large" ? (
         <Image

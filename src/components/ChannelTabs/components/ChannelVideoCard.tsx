@@ -32,7 +32,7 @@ export function ChannelVideoCard({
             : variant === "small"
               ? "-ml-1 h-[110%] w-full rounded-xl xs:h-[115%] xs:w-[103%]"
               : "h-[105%] w-full xs:rounded-xl"
-        } outline-none duration-200 focus:bg-zinc-600/30`}
+        } outline-none duration-200 focus:bg-secondary`}
       />
       {variant === "large" ? (
         <ChannelVideoThumb video={video} variant="large" />
@@ -52,7 +52,7 @@ export function ChannelVideoCard({
       >
         <Link
           href={`/watch?v=${video.id}`}
-          className="z-10 w-full px-2 outline-none ring-purple-400 duration-200 hover:opacity-80 focus:ring-2 xs:px-0"
+          className="z-10 w-full px-2 text-foreground/80 outline-none ring-ring duration-200 hover:text-foreground focus:ring-2 xs:px-0"
         >
           <h3
             className={`truncate ${
@@ -66,7 +66,7 @@ export function ChannelVideoCard({
         </Link>
         {variant !== "large" && variant !== "small" && (
           <Link
-            className="z-10 max-w-max truncate text-sm font-medium text-zinc-400 outline-none ring-purple-400 duration-200 hover:text-zinc-200 focus:ring-2"
+            className="z-10 max-w-max truncate text-sm font-medium text-foreground/60 outline-none ring-ring duration-200 hover:text-foreground focus:ring-2"
             href={`/channel/${video.user.id}`}
           >
             {video.user.username}

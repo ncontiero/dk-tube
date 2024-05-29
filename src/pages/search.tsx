@@ -54,13 +54,13 @@ export default function SearchPage() {
                 href={`/${
                   !result.user ? `channel/${result.id}` : `watch?v=${result.id}`
                 }`}
-                className="absolute z-[5] -m-1 h-[105%] w-[102%] rounded-xl outline-none duration-200 focus:bg-zinc-600/30"
+                className="absolute z-[5] -m-1 h-[105%] w-[102%] rounded-xl outline-none duration-200 focus:bg-secondary"
               />
               <Link
                 href={`/${
                   !result.user ? `channel/${result.id}` : `watch?v=${result.id}`
                 }`}
-                className="z-10 flex h-[180px] w-80 items-center justify-center rounded-lg outline-none ring-purple-400 duration-200 focus:ring-2"
+                className="z-10 flex h-[180px] w-80 items-center justify-center rounded-lg outline-none ring-ring duration-200 focus:ring-2"
               >
                 {result.user ? (
                   <Image
@@ -87,7 +87,7 @@ export default function SearchPage() {
                       ? `channel/${result.id}`
                       : `watch?v=${result.id}`
                   }`}
-                  className="z-20 text-lg font-semibold text-zinc-300 outline-none ring-purple-400 duration-200 hover:text-zinc-100 focus:ring-2"
+                  className="z-20 text-lg font-semibold text-foreground/80 outline-none ring-ring duration-200 hover:text-foreground focus:ring-2"
                 >
                   {result.label}
                 </Link>
@@ -95,7 +95,7 @@ export default function SearchPage() {
                   <div className="mt-3 flex items-center gap-2">
                     <Link
                       href={`/channel/${result.user.id}`}
-                      className="z-10 rounded-full outline-none ring-purple-400 duration-200 focus:ring-2"
+                      className="z-10 rounded-full outline-none ring-ring duration-200 focus:ring-2"
                     >
                       <Image
                         alt={result.user.username}
@@ -107,7 +107,7 @@ export default function SearchPage() {
                     </Link>
                     <Link
                       href={`/channel/${result.user.id}`}
-                      className="z-10 text-zinc-400 outline-none ring-purple-400 duration-200 hover:text-gray-100 focus:ring-2"
+                      className="z-10 text-foreground/80 outline-none ring-ring duration-200 hover:text-foreground focus:ring-2"
                     >
                       {result.user.username}
                     </Link>
