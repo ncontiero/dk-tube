@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { env } from "@/env.mjs";
+import { env } from "@/env.js";
 
 interface PageErrorProps {
   readonly title?: string;

@@ -1,6 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
 import Head from "next/head";
-import { env } from "@/env.mjs";
+import { env } from "@/env.js";
 
 export interface MetaProps {
   readonly title?: string;
