@@ -48,7 +48,7 @@ router.post(async (req, res) => {
           msg.data.username || `user_${generateRandomString(25)}`;
         const emails = msg.data.email_addresses;
 
-        if (emails.length === 0) {
+        if (emails.length === 0 || !emails[0]?.email_address) {
           return res
             .status(400)
             .json({ error: "No email address found", status: 400 });
@@ -69,7 +69,7 @@ router.post(async (req, res) => {
           msg.data.username || `user_${generateRandomString(25)}`;
         const emails = msg.data.email_addresses;
 
-        if (emails.length === 0) {
+        if (emails.length === 0 || !emails[0]?.email_address) {
           return res
             .status(400)
             .json({ error: "No email address found", status: 400 });

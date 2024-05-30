@@ -80,7 +80,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
       </Tabs.List>
       <div className="mx-auto flex w-full max-w-screen-2xl xs:px-2">
         <TabsContent value="home">
-          {userVideos.length === 0 ? (
+          {userVideos.length === 0 || !userVideos[0] ? (
             <div className="flex flex-col items-center justify-center gap-2 py-6 text-center">
               <h2 className="text-2xl font-semibold">
                 {user.username} não possui vídeos
@@ -106,7 +106,7 @@ export function ChannelTabs({ user }: ChannelTabsProps) {
                 </Link>
                 <div className="relative mt-3 flex w-full snap-x snap-mandatory flex-col gap-2 overflow-x-auto pb-6 xs:flex-row xs:gap-3 xs:pt-3">
                   {userVideos
-                    .filter((video) => video.id !== userVideos[0].id)
+                    .filter((video) => video.id !== userVideos[0]?.id)
                     .slice(0, screenWidth < 590 ? amountOfVideos : 12)
                     .map((video) => (
                       <ChannelVideoCard

@@ -5,7 +5,7 @@ export function catchError(error: unknown) {
   let status = 500;
 
   if (error instanceof z.ZodError) {
-    if (error.issues[0].message === "Invalid cuid") {
+    if (error.issues[0]?.message === "Invalid cuid") {
       message = "Invalid cuid";
     }
     message = "Invalid parameters";
