@@ -29,7 +29,7 @@
     "@tanstack/react-query": "^5.40.1",
     "axios": "^1.7.2",
     "framer-motion": "^11.2.10",
-    "lucide-react": "^0.391.0",
+    "lucide-react": "^0.394.0",
     "micro": "^10.0.1",
     "next": "14.2.3",
     "next-connect": "^1.0.0",
