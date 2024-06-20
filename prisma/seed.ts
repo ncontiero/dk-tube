@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-top-level-await */
 /* eslint-disable no-console */
 import { PrismaClient } from "@prisma/client";
 
