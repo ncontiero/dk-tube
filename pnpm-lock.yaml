@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@clerk/localizations':
-        specifier: ^2.4.5
-        version: 2.4.5
+        specifier: ^2.4.6
+        version: 2.4.6
       '@clerk/nextjs':
         specifier: ^5.1.6
         version: 5.1.6(next@14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -153,8 +153,8 @@ packages:
       react: '>=18 || >=19.0.0-beta'
       react-dom: '>=18 || >=19.0.0-beta'
 
-  '@clerk/localizations@2.4.5':
-    resolution: {integrity: sha512-bwhbok+r4NfUC4fYQTFyCQyt3s5SfbiV3WrdymC3CkCqLWCtL3Lju8D0pG714+Q9VbLCNSGhG0KF5MsRLq/NLg==}
+  '@clerk/localizations@2.4.6':
+    resolution: {integrity: sha512-uRu8RJb7zBlmr61jDhnXwB+mZLYpjctdxeg2qD5jjFzWKIdF2xqdyzKd1jCF25aBHAzT9hvi+C/++rZuKcDklA==}
     engines: {node: '>=18.17.0'}
 
   '@clerk/nextjs@5.1.6':
@@ -3279,7 +3279,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.4.1
 
-  '@clerk/localizations@2.4.5':
+  '@clerk/localizations@2.4.6':
     dependencies:
       '@clerk/types': 4.6.1
 
