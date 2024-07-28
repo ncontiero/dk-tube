@@ -3,7 +3,7 @@ import type { IncomingHttpHeaders } from "node:http";
 import type { WebhookEvent } from "@clerk/nextjs/server";
 
 import { createRouter } from "next-connect";
-import { Webhook, type WebhookRequiredHeaders } from "svix";
+import { type WebhookRequiredHeaders, Webhook } from "svix";
 import { buffer } from "micro";
 import { env } from "@/env.js";
 import { prisma } from "@/lib/prisma";

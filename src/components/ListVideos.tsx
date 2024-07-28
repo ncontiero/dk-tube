@@ -1,5 +1,5 @@
 import type { VideoWithUser } from "@/utils/types";
-import { VideoCard, type VideoCardVariant } from "./VideoCard";
+import { type VideoCardVariant, VideoCard } from "./VideoCard";
 
 interface ListVideosProps {
   readonly videos?: VideoWithUser[];
