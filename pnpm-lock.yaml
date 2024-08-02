@@ -42,8 +42,8 @@ importers:
         specifier: ^11.3.21
         version: 11.3.21(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react:
-        specifier: ^0.419.0
-        version: 0.419.0(react@18.3.1)
+        specifier: ^0.423.0
+        version: 0.423.0(react@18.3.1)
       micro:
         specifier: ^10.0.1
         version: 10.0.1
@@ -2261,10 +2261,10 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lucide-react@0.419.0:
-    resolution: {integrity: sha512-YkOHuc1uGH2A4G0NRZyeCW6mMFGb8z3amep0fARuKIri68nveAT5C8OuXOPJXpb/iIgSfsjdMjjII7bnEtGkvw==}
+  lucide-react@0.423.0:
+    resolution: {integrity: sha512-QvFz6BvraP+gTBzPIwhyBRp76frmydoGqqBEDlVPtQGQJwwceCsgsTv7r5V/jGgK63sru3aKtGJGlkg/Bgu9CQ==}
     peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
   map-obj@4.3.0:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
@@ -5615,7 +5615,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lucide-react@0.419.0(react@18.3.1):
+  lucide-react@0.423.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
