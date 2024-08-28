@@ -18,9 +18,9 @@
     "pre-commit": "lint-staged"
   },
   "dependencies": {
-    "@clerk/localizations": "^2.6.3",
-    "@clerk/nextjs": "^5.3.5",
-    "@clerk/themes": "^2.1.23",
+    "@clerk/localizations": "^2.7.0",
+    "@clerk/nextjs": "^5.3.6",
+    "@clerk/themes": "^2.1.24",
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.19.0",
     "@radix-ui/react-dialog": "^1.1.1",
