@@ -67,7 +67,6 @@ export function SearchBar({
                         type="text"
                         placeholder="Buscar videos..."
                         className="w-full rounded-l-3xl bg-transparent px-3 py-2 outline-none duration-200 focus:border-ring"
-                        // eslint-disable-next-line jsx-a11y/no-autofocus
                         autoFocus={hasSearchBar}
                         {...register("query")}
                       />
