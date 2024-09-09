@@ -1,13 +1,11 @@
-import { useForm } from "react-hook-form";
 import { useState } from "react";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
-import { api } from "@/lib/axios";
-
+import { z } from "zod";
 import { Meta } from "@/components/Meta";
+import { api } from "@/lib/axios";
 
 const createVideoFormSchema = z.object({
   title: z.string().min(1, "O titulo é obrigatório"),

@@ -1,10 +1,10 @@
+import type { WebhookEvent } from "@clerk/nextjs/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { IncomingHttpHeaders } from "node:http";
-import type { WebhookEvent } from "@clerk/nextjs/server";
 
+import { buffer } from "micro";
 import { createRouter } from "next-connect";
 import { type WebhookRequiredHeaders, Webhook } from "svix";
-import { buffer } from "micro";
 import { env } from "@/env.js";
 import { prisma } from "@/lib/prisma";
 import { generateRandomString } from "@/utils/strings";

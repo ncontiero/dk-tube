@@ -1,10 +1,10 @@
-import type { VideoCardVariant } from "./types";
 import type { VideoWithUser } from "@/utils/types";
+import type { VideoCardVariant } from "./types";
 
 import Image from "next/image";
 import Link from "next/link";
-import { Thumbnail } from "./components/Thumbnail";
 import { SkeletonCard } from "./components/SkeletonCard";
+import { Thumbnail } from "./components/Thumbnail";
 
 interface VideoCardProps {
   readonly video: VideoWithUser | null;

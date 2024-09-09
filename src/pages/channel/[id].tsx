@@ -6,11 +6,10 @@ import type {
 import type { UserWithVideosAndPlaylists } from "@/utils/types";
 
 import Image from "next/image";
+import { ChannelTabs } from "@/components/ChannelTabs";
+import { Meta } from "@/components/Meta";
 import { prisma } from "@/lib/prisma";
 import { userWithVideosFormatter } from "@/utils/formatters";
-
-import { Meta } from "@/components/Meta";
-import { ChannelTabs } from "@/components/ChannelTabs";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const users = await prisma.user.findMany({

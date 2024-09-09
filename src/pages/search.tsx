@@ -1,14 +1,13 @@
 import type { SearchResult } from "@/utils/types";
 
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { api } from "@/lib/axios";
-
-import { PageError } from "@/components/PageError";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { Meta } from "@/components/Meta";
+import { PageError } from "@/components/PageError";
+import { api } from "@/lib/axios";
 
 export default function SearchPage() {
   const {
