@@ -1,5 +1,5 @@
-import type { ChannelVideoCardVariant } from "./types";
 import type { VideoWithUser } from "@/utils/types";
+import type { ChannelVideoCardVariant } from "./types";
 
 import Image from "next/image";
 import Link from "next/link";

@@ -1,10 +1,9 @@
 import type { VideoWithUser } from "@/utils/types";
 
 import { useQuery } from "@tanstack/react-query";
-import { api } from "@/lib/axios";
-
 import { ListVideos } from "@/components/ListVideos";
 import { Meta } from "@/components/Meta";
+import { api } from "@/lib/axios";
 
 export default function HomePage() {
   const { data: videos, isFetching: isFetchingVideos } = useQuery<

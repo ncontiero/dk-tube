@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { getAuth } from "@clerk/nextjs/server";
 import { createRouter } from "next-connect";
 import { z } from "zod";
-import { getAuth } from "@clerk/nextjs/server";
-import { queryParser } from "@/utils/parser";
 import { prisma } from "@/lib/prisma";
-import { videoFormatter } from "@/utils/formatters";
-import { catchError } from "@/utils/errors";
 import { getMostQualityThumb } from "@/utils/data";
+import { catchError } from "@/utils/errors";
+import { videoFormatter } from "@/utils/formatters";
+import { queryParser } from "@/utils/parser";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 

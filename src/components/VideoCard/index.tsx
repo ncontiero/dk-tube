@@ -1,2 +1,2 @@
-export { VideoCard } from "./VideoCard";
 export type { VideoCardVariant } from "./types";
+export { VideoCard } from "./VideoCard";

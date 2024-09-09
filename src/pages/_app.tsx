@@ -1,13 +1,14 @@
 import "react-toastify/dist/ReactToastify.min.css";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { ClerkProvider } from "@clerk/nextjs";
+
 import { ToastContainer } from "react-toastify";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { ptBR } from "@clerk/localizations";
+import { ClerkProvider } from "@clerk/nextjs";
 import { experimental_createTheme as createTheme, dark } from "@clerk/themes";
-import { queryClient } from "@/lib/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
+import { queryClient } from "@/lib/queryClient";
 
 export const clerkTheme = createTheme({
   baseTheme: dark,

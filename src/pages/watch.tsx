@@ -2,15 +2,15 @@ import type { VideoWithUser } from "@/utils/types";
 
 import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import Image from "next/image";
-import { useWindowDimensions } from "@/hooks/useWindowDimensions";
-import { api } from "@/lib/axios";
-import { Video } from "@/components/Video";
-import { VideoCard } from "@/components/VideoCard";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { Meta } from "@/components/Meta";
 import { PageError } from "@/components/PageError";
+import { Video } from "@/components/Video";
+import { VideoCard } from "@/components/VideoCard";
+import { useWindowDimensions } from "@/hooks/useWindowDimensions";
+import { api } from "@/lib/axios";
 
 export default function WatchPage() {
   const skeletonItems = [1, 2, 3, 4, 5, 6];

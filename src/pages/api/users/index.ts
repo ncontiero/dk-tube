@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createRouter } from "next-connect";
-import { queryParser } from "@/utils/parser";
 import { prisma } from "@/lib/prisma";
 import { userWithVideosFormatter } from "@/utils/formatters";
+import { queryParser } from "@/utils/parser";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 

@@ -1,12 +1,12 @@
 import type { UserWithVideosAndPlaylists, VideoWithUser } from "@/utils/types";
 
 import { useMemo, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ChevronDown } from "lucide-react";
-import { useWindowDimensions } from "@/hooks/useWindowDimensions";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useSafePush } from "@/hooks/useSafePush";
+import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 import { userFormatter } from "@/utils/formatters";
 import { ChannelVideoCard } from "./components";
 

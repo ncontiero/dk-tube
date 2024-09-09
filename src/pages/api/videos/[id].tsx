@@ -3,8 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from "next-connect";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { videoFormatter } from "@/utils/formatters";
 import { catchError } from "@/utils/errors";
+import { videoFormatter } from "@/utils/formatters";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 

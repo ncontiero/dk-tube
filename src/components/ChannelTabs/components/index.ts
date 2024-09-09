@@ -1,2 +1,2 @@
-export { ChannelVideoThumb } from "./ChannelVideoThumb";
 export { ChannelVideoCard } from "./ChannelVideoCard";
+export { ChannelVideoThumb } from "./ChannelVideoThumb";
