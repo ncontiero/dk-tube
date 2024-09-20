@@ -31,6 +31,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "skipLibCheck": true,
+    "plugins": [{ "name": "next" }]
   },
   "include": [
     "next-env.d.ts",
@@ -38,6 +39,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
