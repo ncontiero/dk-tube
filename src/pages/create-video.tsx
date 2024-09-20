@@ -8,7 +8,7 @@ import { Meta } from "@/components/Meta";
 import { api } from "@/lib/axios";
 
 const createVideoFormSchema = z.object({
-  title: z.string().min(1, "O titulo é obrigatório"),
+  title: z.string().min(1, "O título é obrigatório"),
   youtubeId: z.string().min(1, "O id do vídeo do Youtube é obrigatório"),
 });
 
@@ -48,15 +48,15 @@ export default function CreateVideoPage() {
       <div className="mt-20 flex justify-center">
         <form
           onSubmit={handleSubmit(createVideo)}
-          className="flex w-full max-w-2xl flex-col gap-4"
+          className="flex w-full max-w-xl flex-col gap-4 rounded-md border px-6 py-8"
         >
           <div className="flex flex-col gap-1">
-            <label htmlFor="title">Titulo</label>
+            <label htmlFor="title">Título</label>
             <input
               type="text"
               id="title"
               className="rounded bg-input px-4 py-2 outline-none ring-ring duration-200 focus:ring-2"
-              placeholder="Digite o titulo do vídeo..."
+              placeholder="Digite o título do vídeo..."
               required
               {...register("title")}
             />
