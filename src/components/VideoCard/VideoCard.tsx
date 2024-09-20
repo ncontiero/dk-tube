@@ -43,7 +43,7 @@ export function VideoCard({
             {variant === "large" || variant === "largeVertical" ? (
               <Thumbnail video={video} variant={variant} />
             ) : (
-              <div className="z-10 min-h-24 min-w-[160px]">
+              <div className="z-10 min-h-[94px] min-w-[168px]">
                 <Thumbnail video={video} variant={variant} />
               </div>
             )}
@@ -73,6 +73,7 @@ export function VideoCard({
                 <Link
                   href={`/watch?v=${video.id}`}
                   className="z-10 outline-none ring-ring duration-200 hover:opacity-80 focus:ring-2"
+                  title={video.title}
                 >
                   <h3
                     className={`mb-1 ${
@@ -86,6 +87,7 @@ export function VideoCard({
                 <Link
                   className="z-10 opacity-60 outline-none ring-ring duration-200 hover:opacity-100 focus:ring-2"
                   href={`/channel/${video.user.id}`}
+                  title={video.user.username}
                 >
                   {video.user.username}
                 </Link>

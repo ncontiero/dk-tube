@@ -31,7 +31,7 @@ export function Thumbnail({ video, variant }: ThumbnailProps) {
         <Image
           src={video.thumb}
           alt={video.title}
-          className="mr-0 aspect-video h-24 w-40 rounded-md object-cover"
+          className="mr-0 aspect-video h-[94px] w-[168px] rounded-md object-cover"
           width={168}
           height={94}
         />

@@ -96,14 +96,14 @@ export default function WatchPage() {
         description={video.title}
         image={{ src: video.thumb, alt: video.title, isExternalImage: true }}
       />
-      <div className="grid grid-cols-1 px-0 md:px-20 xl:grid-cols-3">
-        <div className="col-span-2 flex w-full flex-col items-center justify-center pt-6 mdlg:pb-0 mdlg:pr-6">
+      <div className="grid grid-cols-1 px-0 md:px-20 xl:grid-cols-4 xl:px-24">
+        <div className="col-span-3 flex w-full flex-col items-center justify-center pt-6 xl:pb-0 xl:pr-6">
           <div
-            className={`relative -mt-6 md:mt-0 md:size-full`}
+            className={`relative -mt-6 md:-mt-1 md:size-full`}
             style={
               screenWidth <= 778
                 ? {
-                    height: ref.current?.offsetHeight || `${100}px`,
+                    height: ref.current?.offsetHeight || "100px",
                     width: `${screenWidth}px`,
                   }
                 : {}
@@ -116,25 +116,25 @@ export default function WatchPage() {
               <Video videoId={video.youtubeId} />
             </div>
           </div>
-          <div className="mb-6 mt-4 flex w-full flex-col justify-start px-4 mdlg:px-0">
-            <h1 className="text-2xl font-semibold">{video.title}</h1>
+          <div className="mb-6 mt-3 flex w-full flex-col justify-start px-4 mdlg:px-0">
+            <h1 className="text-xl font-semibold">{video.title}</h1>
             <div>
-              <div className="mt-3.5 flex gap-2 overflow-hidden mdlg:gap-4">
+              <div className="mt-2 flex gap-2 mdlg:gap-4">
                 <Link
                   href={`/channel/${video.user.id}`}
-                  className="outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2"
+                  className="rounded-full outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2"
                 >
                   <Image
                     src={video.user.image}
                     alt={video.user.username}
-                    width={screenWidth > 778 ? 48 : 34}
-                    height={screenWidth > 778 ? 48 : 34}
+                    width={screenWidth > 778 ? 40 : 34}
+                    height={screenWidth > 778 ? 40 : 34}
                     className="aspect-square rounded-full object-cover"
                   />
                 </Link>
                 <Link
                   href={`/channel/${video.user.id}`}
-                  className="self-center truncate text-lg outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2 mdlg:self-auto mdlg:text-xl mdlg:font-semibold"
+                  className="size-fit self-center truncate text-base outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2 mdlg:self-auto mdlg:font-semibold"
                 >
                   {video.user.username}
                 </Link>

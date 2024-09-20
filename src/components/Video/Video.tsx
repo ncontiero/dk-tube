@@ -34,7 +34,10 @@ export function Video({ videoId }: VideoProps) {
 
   return (
     <div className="relative flex size-full justify-center">
-      <div id="video" className="z-[999] aspect-video size-full rounded-lg">
+      <div
+        id="video"
+        className="z-[999] aspect-video size-full overflow-hidden rounded-xl"
+      >
         <ReactPlayer
           ref={videoRef}
           url={`https://www.youtube.com/watch?v=${videoId}`}
