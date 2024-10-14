@@ -1,32 +1,25 @@
-import Head from "next/head";
 import Link from "next/link";
-import { env } from "@/env.js";
 
 interface PageErrorProps {
-  readonly title?: string;
+  readonly title: string;
+  readonly description: string;
 }
 
-export function PageError({
-  title = "Houve um erro ao carregar a página.",
-}: PageErrorProps) {
+export function PageError({ title, description }: PageErrorProps) {
   return (
-    <div className="flex flex-col justify-center text-center md:min-h-[280px] md:flex-row md:justify-start md:text-start">
-      <Head>
-        <title>{title}</title>
-      </Head>
-      <section className="flex w-full flex-col text-center">
-        <h1 className="mb-2 pt-10 text-2xl font-bold">{title}</h1>
-        <p className="mt-2 text-lg">
-          Por favor, volte para a{" "}
-          <Link
-            href="/"
-            className="text-primary underline-offset-2 hover:text-primary/80 hover:underline active:opacity-70"
-          >
-            página inicial do {env.NEXT_PUBLIC_SITE_NAME}
-          </Link>
-          .
-        </p>
-      </section>
-    </div>
+    <main className="mt-20 flex flex-col items-center justify-center text-center">
+      <h1 className="text-4xl font-bold tracking-wide">{title}</h1>
+      <p className="mt-4 text-lg">{description}</p>
+      <p className="mt-2 text-base">
+        Por favor, volte para a{" "}
+        <Link
+          href="/"
+          className="rounded-md text-primary underline-offset-2 ring-ring duration-200 hover:text-primary/80 hover:underline focus:outline-none focus:ring-2 active:opacity-70"
+        >
+          página inicial
+        </Link>
+        .
+      </p>
+    </main>
   );
 }

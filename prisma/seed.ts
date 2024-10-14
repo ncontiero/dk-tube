@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -29,7 +29,7 @@ async function createUser(params: createUserParams) {
       externalId,
       username,
       email,
-      image,
+      image: image || Prisma.skip,
     },
   });
 }
@@ -67,25 +67,25 @@ async function main() {
   console.log(`Created user with id: ${user1.id}`);
 
   const video1 = await createVideo({
-    title: "The Lost Soul Down (Slowed & Reverb)",
-    thumb: "https://i.ytimg.com/vi/HoqSbJ03zgo/maxresdefault.jpg",
-    youtubeId: "HoqSbJ03zgo",
+    title: "MAGIC FLUIDS HDR // 4K MACRO COLORS // HDR VISUALS // FLUID ART //",
+    thumb: "https://i.ytimg.com/vi/1MieluM0c6c/maxresdefault.jpg",
+    youtubeId: "1MieluM0c6c",
     userId: user1.id,
   });
   console.log(`Created video with id: ${video1.id}`);
 
   const video2 = await createVideo({
-    title: "Dreams of Polaris",
-    thumb: "https://i.ytimg.com/vi/ym88wdYzbPM/maxresdefault.jpg",
-    youtubeId: "ym88wdYzbPM",
+    title: "Fluid Sim Hue Test",
+    thumb: "https://i.ytimg.com/vi/qC0vDKVPCrw/maxresdefault.jpg",
+    youtubeId: "qC0vDKVPCrw",
     userId: user1.id,
   });
   console.log(`Created video with id: ${video2.id}`);
 
   const video3 = await createVideo({
-    title: "Fluid Sim Hue Test",
-    thumb: "https://i.ytimg.com/vi/qC0vDKVPCrw/maxresdefault.jpg",
-    youtubeId: "qC0vDKVPCrw",
+    title: "Fluid Sim Hue Test 2",
+    thumb: "https://i.ytimg.com/vi/Gt6wKDnG0xA/sddefault.jpg",
+    youtubeId: "Gt6wKDnG0xA",
     userId: user1.id,
   });
   console.log(`Created video with id: ${video3.id}`);

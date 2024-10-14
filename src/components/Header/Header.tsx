@@ -1,49 +1,26 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FilePlus, Search } from "lucide-react";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
+import { FilePlus } from "lucide-react";
+import { unstable_cache } from "next/cache";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { z } from "zod";
-import { useSafePush } from "@/hooks/useSafePush";
+import { prisma } from "@/lib/prisma";
 import { Logo } from "../Logo";
-import { SearchBar } from "./SearchBar";
+import { SearchForm } from "./SearchForm";
+import { UserButton } from "./UserButton";
 
-const submitSearchFormSchema = z.object({
-  query: z.string().min(1, "Digite um termo para buscar."),
-});
+const getChannel = unstable_cache(
+  async (externalId: string) => {
+    return await prisma.user.findUnique({
+      where: { externalId },
+    });
+  },
+  ["my-channel"],
+  { tags: ["my-channel"] },
+);
 
-type SubmitSearchFormData = z.infer<typeof submitSearchFormSchema>;
-
-export function Header() {
-  const { safePush } = useSafePush();
-  const pathname = usePathname();
-  const [hasSearchBar, setHasSearchBar] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SubmitSearchFormData>({
-    resolver: zodResolver(submitSearchFormSchema),
-  });
-
-  function submitSearch(data: SubmitSearchFormData) {
-    try {
-      safePush(`/search?query=${data.query}`);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setHasSearchBar(false);
-    }
-  }
-
-  useEffect(() => {
-    if (errors.query) {
-      toast.error(errors.query.message);
-    }
-  }, [errors.query]);
+export async function Header() {
+  const user = await currentUser();
+  const channel = user?.id ? await getChannel(user.id) : null;
 
   return (
     <header className="fixed top-0 z-[9999] flex h-14 w-full items-center border-b bg-secondary/60 pl-2 pr-3 backdrop-blur-md sm:h-16 sm:pl-4 sm:pr-6">
@@ -55,43 +32,12 @@ export function Header() {
         >
           <Logo />
         </Link>
-        {!hasSearchBar && (
-          <form
-            className="flex size-full max-w-lg items-center md:flex-1"
-            onSubmit={handleSubmit(submitSearch)}
-          >
-            <div className="hidden w-full rounded-3xl md:flex">
-              <input
-                type="text"
-                placeholder="Buscar videos..."
-                className="w-full rounded-l-3xl border border-foreground/20 bg-transparent px-3 py-2 outline-none duration-200 focus:border-ring"
-                {...register("query")}
-              />
-              <button
-                type="submit"
-                className="rounded-r-3xl border-y border-r border-foreground/20 bg-foreground/10 px-2 outline-ring duration-200 hover:bg-foreground/20 sm:px-4 sm:py-2"
-                title="Buscar"
-                aria-label="Buscar"
-              >
-                <Search className="mr-1" />
-              </button>
-            </div>
-          </form>
-        )}
-        <div className="flex items-center gap-4 md:gap-0">
-          <SearchBar
-            hasSearchBar={hasSearchBar}
-            setHasSearchBar={setHasSearchBar}
-            handleSubmit={handleSubmit}
-            register={register}
-            submitSearch={(data: SubmitSearchFormData) => submitSearch(data)}
-          />
+        <SearchForm />
+        <div className="flex items-center gap-2 md:gap-4">
           <SignedOut>
             <Link
               href="/sign-in"
-              className={`flex size-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase sm:w-auto sm:rounded-3xl sm:px-4 sm:py-2 ${
-                pathname === "/sign-in" ? "text-primary/80" : "text-inherit"
-              } ring-ring duration-200 hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70`}
+              className="flex size-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase ring-ring duration-200 hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70 sm:w-auto sm:rounded-3xl sm:px-4 sm:py-2"
             >
               Login
             </Link>
@@ -99,11 +45,12 @@ export function Header() {
           <SignedIn>
             <Link
               href="/create-video"
-              className="mr-5 rounded-full p-2 outline-none ring-ring duration-200 hover:bg-foreground/20 focus-visible:ring-2 active:bg-foreground/30"
+              title="Criar vídeo"
+              className="rounded-full p-2 outline-none ring-ring duration-200 hover:bg-foreground/20 focus-visible:ring-2 active:bg-foreground/30"
             >
               <FilePlus />
             </Link>
-            <UserButton userProfileMode="modal" />
+            <UserButton channelId={channel?.id || null} />
           </SignedIn>
         </div>
       </div>

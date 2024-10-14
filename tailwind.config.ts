@@ -1,8 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./src/pages/**/*.{ts,tsx}", "./src/components/**/*.{ts,tsx}"],
-  // prefix: "",
+  content: ["./src/components/**/*.{ts,tsx}", "./src/app/**/*.{ts,tsx}"],
   theme: {
     container: {
       center: true,
@@ -13,7 +12,7 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        inter: "Inter, sans-serif",
+        inter: "var(--font-inter)",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -75,7 +74,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  plugins: [require("tailwindcss-animate")],
 };
 
 export default config;
