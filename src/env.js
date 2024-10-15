@@ -15,7 +15,7 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
 
     // these variables are used for the site's SEO
-    SITE_NAME: z.string().default("DkBlog"),
+    SITE_NAME: z.string().default("DkTube"),
     SITE_LOCALE: z.string().default("en_US"),
     // URLs
     SITE_BASEURL: z.string().url().default("http://localhost:3000"),
