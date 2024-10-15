@@ -2,7 +2,6 @@
 
 import type { CNonNullable, LinkProps, VideoCardContextProps } from "./types";
 import {
-  type CSSProperties,
   type HTMLAttributes,
   createContext,
   forwardRef,
@@ -19,16 +18,10 @@ const useVideoCardContext = () => useContext(VideoCardContext);
 
 export interface VideoCardRootProps
   extends HTMLAttributes<HTMLDivElement>,
-    CNonNullable<VideoCardContextProps> {
-  readonly blurOpacity?: "0.5" | "0.75" | "1";
-  readonly blurClassName?: string;
-}
+    CNonNullable<VideoCardContextProps> {}
 
 export const VideoCardRoot = forwardRef<HTMLDivElement, VideoCardRootProps>(
-  (
-    { video, className, children, blurOpacity = "1", blurClassName, ...props },
-    ref,
-  ) => {
+  ({ video, className, children, ...props }, ref) => {
     const contextValues = useMemo(
       () => ({
         video,
@@ -50,20 +43,7 @@ export const VideoCardRoot = forwardRef<HTMLDivElement, VideoCardRootProps>(
             href={`/watch?v=${video.id}`}
             className="absolute inset-0 z-[5] -m-1 rounded-xl outline-none duration-200 focus-within:bg-zinc-600/30 active:bg-zinc-600/30"
           />
-          <div
-            style={
-              {
-                backgroundImage: `url(${video.thumb})`,
-                "--blur-opacity": blurOpacity,
-              } as CSSProperties
-            }
-            id="blur"
-            className={cn(
-              "absolute inset-0 z-[4] -m-1.5 aspect-video rounded-xl bg-cover bg-center bg-no-repeat object-cover opacity-0 blur-xl duration-500",
-              "group-focus-within/video-card:opacity-[var(--blur-opacity)] group-hover/video-card:opacity-[var(--blur-opacity)]",
-              blurClassName,
-            )}
-          />
+          <div className="absolute inset-0 z-[4] -m-1 rounded-xl duration-300 group-hover/video-card:bg-primary/20" />
           {children}
         </div>
       </VideoCardContext.Provider>

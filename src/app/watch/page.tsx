@@ -108,7 +108,6 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
               key={v.id}
               video={v}
               className="mt-3 gap-1 xs:mt-0 xs:flex-row [&>#blur]:size-full"
-              blurOpacity="0.5"
             >
               <VideoCardThumb linkClassName="xs:max-h-[94px] xs:max-w-[168px]" />
               <VideoCardInfo className="xs:mt-0.5">

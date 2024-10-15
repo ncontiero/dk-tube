@@ -157,8 +157,6 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
                   <VideoCardRoot
                     video={{ ...mainVideo, user: channel }}
                     className="gap-3 pb-4 xs:flex-row xs:pb-0"
-                    blurClassName="size-full -m-0 blur-lg"
-                    blurOpacity="0.5"
                   >
                     <VideoCardThumb linkClassName="xs:max-h-[150px] xs:max-w-[250px]" />
                     <VideoCardInfo className="mt-0 px-0">
@@ -191,7 +189,6 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
                       key={video.id}
                       video={{ ...video, user: channel }}
                       className="flex-row xs:w-[210px] xs:flex-col xs:pb-4"
-                      blurClassName="hidden"
                     >
                       <VideoCardThumb
                         className="rounded-xl"
@@ -221,8 +218,6 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
                 key={video.id}
                 video={{ ...video, user: channel }}
                 className="flex-row xs:max-w-[300px] xs:flex-col xs:pb-2"
-                blurClassName="size-full xs:size-auto"
-                blurOpacity="0.5"
               >
                 <VideoCardThumb
                   linkClassName="rounded-xl xs:max-h-[180px] xs:max-w-[300px]"
