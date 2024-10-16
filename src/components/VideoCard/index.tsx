@@ -41,9 +41,9 @@ export const VideoCardRoot = forwardRef<HTMLDivElement, VideoCardRootProps>(
         >
           <Link
             href={`/watch?v=${video.id}`}
-            className="absolute inset-0 z-[5] -m-1 rounded-xl outline-none duration-200 focus-within:bg-zinc-600/30 active:bg-zinc-600/30"
+            className="absolute inset-0 z-[5] -my-1 rounded-xl outline-none duration-200 focus-within:bg-zinc-600/30 group-active/video-card:bg-zinc-600/30 xs:-m-1"
           />
-          <div className="absolute inset-0 z-[4] -m-1 rounded-xl duration-300 group-hover/video-card:bg-primary/20" />
+          <div className="absolute inset-0 z-[4] -my-1 rounded-xl duration-300 group-hover/video-card:bg-primary/20 xs:-m-1" />
           {children}
         </div>
       </VideoCardContext.Provider>
