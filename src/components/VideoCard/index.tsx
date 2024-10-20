@@ -12,6 +12,14 @@ import {
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import {
+  type CardContentProps,
+  type CardTitleProps,
+  CardContent,
+  CardImage,
+  CardRoot,
+  CardTitle,
+} from "../Card";
 
 const VideoCardContext = createContext<VideoCardContextProps>({ video: null });
 const useVideoCardContext = () => useContext(VideoCardContext);
@@ -20,32 +28,30 @@ export interface VideoCardRootProps
   extends HTMLAttributes<HTMLDivElement>,
     CNonNullable<VideoCardContextProps> {}
 
+/**
+ * VideoCard component for displaying video content in a card format.
+ *
+ * @example
+ * <VideoCardRoot video={video}>
+ *  <VideoCardThumb />
+ *  <VideoCardInfo>
+ *    <VideoCardChannel>
+ *      <VideoCardChannelImage />
+ *    </VideoCardChannel>
+ *    <CardTitle />
+ *    <VideoCardChannel>
+ *      <VideoCardChannelName />
+ *    </VideoCardChannel>
+ *  </VideoCardInfo>
+ * </VideoCardRoot>
+ */
 export const VideoCardRoot = forwardRef<HTMLDivElement, VideoCardRootProps>(
-  ({ video, className, children, ...props }, ref) => {
-    const contextValues = useMemo(
-      () => ({
-        video,
-      }),
-      [video],
-    );
+  ({ video, ...props }, ref) => {
+    const contextValues = useMemo(() => ({ video }), [video]);
 
     return (
       <VideoCardContext.Provider value={contextValues}>
-        <div
-          ref={ref}
-          className={cn(
-            "group/video-card relative flex w-full flex-col",
-            className,
-          )}
-          {...props}
-        >
-          <Link
-            href={`/watch?v=${video.id}`}
-            className="absolute inset-0 z-[5] -my-1 rounded-xl outline-none duration-200 focus-within:bg-zinc-600/30 group-active/video-card:bg-zinc-600/30 xs:-m-1"
-          />
-          <div className="absolute inset-0 z-[4] -my-1 rounded-xl duration-300 group-hover/video-card:bg-primary/20 xs:-m-1" />
-          {children}
-        </div>
+        <CardRoot ref={ref} href={`/watch?v=${video.id}`} {...props} />
       </VideoCardContext.Provider>
     );
   },
@@ -57,7 +63,7 @@ export interface VideoCardThumbProps extends Partial<ImageProps> {
 }
 
 export const VideoCardThumb = forwardRef<HTMLImageElement, VideoCardThumbProps>(
-  ({ className, linkClassName, width = 360, height = 200, ...props }, ref) => {
+  ({ linkClassName, width = 360, height = 200, ...props }, ref) => {
     const { video } = useVideoCardContext();
     if (!video) return null;
 
@@ -65,21 +71,17 @@ export const VideoCardThumb = forwardRef<HTMLImageElement, VideoCardThumbProps>(
       <Link
         href={`/watch?v=${video.id}`}
         className={cn(
-          "relative z-10 w-full outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2 xs:rounded-xl",
+          "relative z-10 w-full outline-none ring-ring duration-200 hover:opacity-90 focus-visible:ring-2 xs:rounded-xl",
           linkClassName,
         )}
       >
-        <Image
+        <CardImage
+          ref={ref}
           src={video.thumb}
           alt={video.title}
-          ref={ref}
           width={width}
           height={height}
           quality={100}
-          className={cn(
-            "aspect-video w-full object-cover xs:rounded-xl",
-            className,
-          )}
           {...props}
         />
       </Link>
@@ -88,17 +90,9 @@ export const VideoCardThumb = forwardRef<HTMLImageElement, VideoCardThumbProps>(
 );
 VideoCardThumb.displayName = "VideoCardThumb";
 
-export interface VideoCardInfoProps extends HTMLAttributes<HTMLDivElement> {}
-
-export const VideoCardInfo = forwardRef<HTMLDivElement, VideoCardInfoProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn("mt-3 flex w-full gap-2 px-2 md:px-0", className)}
-        {...props}
-      />
-    );
+export const VideoCardInfo = forwardRef<HTMLDivElement, CardContentProps>(
+  (props, ref) => {
+    return <CardContent ref={ref} {...props} />;
   },
 );
 VideoCardInfo.displayName = "VideoCardInfo";
@@ -179,15 +173,12 @@ export const VideoCardChannelName = forwardRef<
 });
 VideoCardChannelName.displayName = "VideoCardChannelName";
 
-export interface VideoCardTitleProps
-  extends HTMLAttributes<HTMLHeadingElement> {
-  readonly titleMaxChars?: number;
-}
+export interface VideoCardTitleProps extends CardTitleProps {}
 
 export const VideoCardTitle = forwardRef<
   HTMLHeadingElement,
   VideoCardTitleProps
->(({ className, titleMaxChars = 40, ...props }, ref) => {
+>((props, ref) => {
   const { video } = useVideoCardContext();
   if (!video) return null;
 
@@ -195,20 +186,11 @@ export const VideoCardTitle = forwardRef<
     <Link
       href={`/watch?v=${video.id}`}
       title={video.title}
-      className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus:ring-2"
+      className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
     >
-      <h3
-        className={cn(
-          "max-h-12 overflow-hidden px-0.5 text-sm font-semibold md:text-base",
-          className,
-        )}
-        ref={ref}
-        {...props}
-      >
-        {video.title.length > titleMaxChars
-          ? `${video.title.slice(0, titleMaxChars)}...`
-          : video.title}
-      </h3>
+      <CardTitle ref={ref} {...props}>
+        {video.title}
+      </CardTitle>
     </Link>
   );
 });

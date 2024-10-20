@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CardRoot, CardTitle } from "@/components/Card";
 import { Separator } from "@/components/ui/Separator";
 import { prisma } from "@/lib/prisma";
 
@@ -80,6 +81,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   if (!searchParams.q) return notFound();
 
   const searchResults = await getSearchResults(searchParams.q);
+  const createURL = (id: string, type: "channel" | "video") => {
+    return type === "channel" ? `/channel/${id}` : `/watch?v=${id}`;
+  };
 
   return (
     <div className="mx-auto mb-10 flex max-w-5xl flex-col gap-4 xs:my-10 xs:px-2">
@@ -89,16 +93,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             {!result.user && i !== 0 && searchResults[i - 1]?.user ? (
               <Separator />
             ) : null}
-            <div
-              className={`relative flex w-full ${result.user ? "flex-col pb-4 xs:flex-row xs:pb-0" : "px-4 xs:px-0"} gap-3`}
+            <CardRoot
+              href={createURL(result.id, result.user ? "video" : "channel")}
+              className={`gap-3 ${result.user ? "pb-4 xs:flex-row xs:pb-0" : "flex-row px-4 xs:px-0"}`}
             >
               <Link
                 href={`/watch?v=${result.id}`}
-                className="absolute inset-0 z-[5] -m-1.5 outline-none duration-200 focus:bg-zinc-600/30 active:bg-zinc-600/30 xs:rounded-xl"
-              />
-              <Link
-                href={`/watch?v=${result.id}`}
-                className={`relative z-10 w-full outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2 xs:max-w-[360px] ${result.user ? "xs:max-h-[230px]" : "flex w-[136px] justify-center rounded-full xs:max-h-[136px] xs:w-full"} xs:rounded-xl`}
+                className={`relative z-10 w-full outline-none ring-ring duration-200 hover:opacity-90 focus-visible:ring-2 xs:max-w-[360px] ${result.user ? "xs:max-h-[230px]" : "flex w-[136px] justify-center rounded-full xs:max-h-[136px] xs:w-full"} xs:rounded-xl`}
               >
                 <Image
                   src={result.image}
@@ -112,13 +113,14 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 <Link
                   href={`/watch?v=${result.id}`}
                   title={result.label}
-                  className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus:ring-2"
+                  className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
                 >
-                  <h3 className="text-base font-semibold xs:text-lg">
-                    {result.label.length > 90
-                      ? `${result.label.slice(0, 90)}...`
-                      : result.label}
-                  </h3>
+                  <CardTitle
+                    className="max-h-max overflow-auto text-base xs:text-lg"
+                    titleMaxChars={64}
+                  >
+                    {result.label}
+                  </CardTitle>
                 </Link>
                 {result.user ? (
                   <Link
@@ -139,7 +141,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   </Link>
                 ) : null}
               </div>
-            </div>
+            </CardRoot>
             {!result.user ? (
               <Separator
                 className={`${!searchResults[i + 1]?.user ? "flex xs:hidden" : ""}`}
