@@ -185,7 +185,7 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
               </Link>
               <ScrollArea className="mt-4">
                 <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
-                  {videos.map((video) => (
+                  {videos.slice(0, 5).map((video) => (
                     <VideoCardRoot
                       key={video.id}
                       video={{ ...video, user: channel }}
