@@ -3,6 +3,7 @@ import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { CardImage, CardRoot, CardTitle } from "@/components/Card";
 import { ScrollArea, ScrollBar } from "@/components/ui/ScrollArea";
 import { Separator } from "@/components/ui/Separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
@@ -244,22 +245,19 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
                   ? `/watch?v=${playlist.videos[0].id}`
                   : `/playlist/${playlist.id}`;
                 return (
-                  <div
+                  <CardRoot
+                    href={href}
                     key={playlist.id}
-                    className="group relative flex gap-2 xs:max-w-[300px] xs:flex-col xs:gap-1.5 xs:pb-4"
+                    className="gap-2 xs:max-w-[300px] xs:gap-1.5 xs:pb-4"
                   >
                     <Link
                       href={href}
-                      className="absolute inset-0 z-[5] -m-1 rounded-xl outline-none duration-200 focus:bg-zinc-600/30 active:bg-zinc-600/30"
-                    />
-                    <Link
-                      href={href}
-                      className="relative z-10 rounded-xl outline-none ring-ring duration-200 focus:ring-2 xs:max-h-[180px] xs:max-w-[300px]"
+                      className="relative z-10 rounded-xl outline-none ring-ring duration-200 focus-visible:ring-2 xs:max-h-[180px] xs:max-w-[300px]"
                     >
-                      <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/80 text-sm font-semibold uppercase opacity-0 duration-200 group-hover:opacity-100 xs:text-base">
+                      <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/80 text-sm font-semibold uppercase opacity-0 duration-200 group-hover/card:opacity-100 xs:text-base">
                         Reproduzir tudo
                       </div>
-                      <Image
+                      <CardImage
                         src={
                           playlist.videos[0]
                             ? playlist.videos[0].thumb
@@ -269,29 +267,27 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
                         alt={`Reproduzir ${playlist.name}`}
                         width={300}
                         height={180}
-                        className="aspect-video w-full rounded-xl object-cover"
+                        className="rounded-xl"
                       />
                     </Link>
                     <div className="flex w-full flex-col px-1">
                       <Link
                         href={href}
                         title={playlist.name}
-                        className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus:ring-2"
+                        className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
                       >
-                        <h3 className="max-h-12 overflow-hidden text-base font-semibold">
-                          {playlist.name.length > 40
-                            ? `${playlist.name.slice(0, 40)}...`
-                            : playlist.name}
-                        </h3>
+                        <CardTitle className="text-base">
+                          {playlist.name}
+                        </CardTitle>
                       </Link>
                       <Link
                         href={`/playlist/${playlist.id}`}
-                        className="z-10 mt-2 w-fit rounded-md text-xs text-foreground/60 ring-primary duration-200 hover:text-foreground focus:text-foreground focus:outline-none focus:ring-2 xs:text-sm"
+                        className="z-10 mt-2 w-fit rounded-md text-xs text-foreground/60 ring-primary duration-200 hover:text-foreground focus:outline-none focus-visible:text-foreground focus-visible:ring-2 xs:text-sm"
                       >
                         Ver playlist completa
                       </Link>
                     </div>
-                  </div>
+                  </CardRoot>
                 );
               })}
             </div>
