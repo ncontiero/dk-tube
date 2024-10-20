@@ -1,10 +1,19 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-import { FilePlus } from "lucide-react";
+import { ArrowLeft, FilePlus, Search } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Logo } from "../Logo";
+import { Button } from "../ui/Button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogTrigger,
+} from "../ui/Dialog";
 import { SearchForm } from "./SearchForm";
 import { UserButton } from "./UserButton";
 
@@ -34,6 +43,36 @@ export async function Header() {
         </Link>
         <SearchForm />
         <div className="flex items-center gap-2 md:gap-4">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                className="rounded-full md:hidden"
+                size="icon"
+              >
+                <Search />
+              </Button>
+            </DialogTrigger>
+            <DialogPortal>
+              <DialogOverlay className="z-[9999] backdrop-blur-sm" />
+              <DialogContent className="top-0 z-[9999] flex h-[63px] w-full p-0 xs:h-[72px] sm:rounded-none">
+                <div className="flex size-full items-center gap-4 bg-secondary pl-2 pr-4 xs:pr-8">
+                  <DialogClose asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full"
+                      title="Voltar"
+                      aria-label="Voltar"
+                    >
+                      <ArrowLeft />
+                    </Button>
+                  </DialogClose>
+                  <SearchForm size="sm" />
+                </div>
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
           <SignedOut>
             <Link
               href="/sign-in"

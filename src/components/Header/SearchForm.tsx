@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import { Loader, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useFormState } from "@/hooks/useFormState";
+import { cn } from "@/lib/utils";
 import { type SearchDataKeys, searchAction } from "./searchAction";
 
-export function SearchForm() {
+export function SearchForm({ size = "md" }: { readonly size?: "sm" | "md" }) {
   const router = useRouter();
   const searchQuery = useSearchParams().get("q");
 
@@ -28,10 +29,13 @@ export function SearchForm() {
 
   return (
     <form
-      className="flex size-full max-w-lg items-center md:flex-1"
+      className={cn(
+        "hidden size-full max-w-lg items-center md:flex md:flex-1",
+        size === "sm" && "flex max-w-none",
+      )}
       onSubmit={handleSubmit}
     >
-      <div className="hidden w-full rounded-3xl md:flex">
+      <div className="flex w-full rounded-3xl">
         <input
           type="text"
           placeholder="Buscar videos..."
