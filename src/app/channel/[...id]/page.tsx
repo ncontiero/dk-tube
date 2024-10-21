@@ -1,4 +1,5 @@
 import type { Metadata, ResolvingMetadata } from "next";
+import { currentUser } from "@clerk/nextjs/server";
 import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,6 +26,7 @@ const getChannels = unstable_cache(
   async () => {
     return await prisma.user.findMany({
       include: { videos: true, playlists: { include: { videos: true } } },
+      omit: { externalId: false },
     });
   },
   ["channels"],
@@ -73,6 +75,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ChannelPage({ params }: ChannelPageProps) {
+  const user = await currentUser();
   const channel = (await getChannels()).find(
     (channel) => channel.id === params.id[0],
   );
@@ -96,6 +99,8 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
     redirect(`/channel/${channel.id}/home`);
   if (initialTab === "playlists" && !channelHasPlaylists)
     redirect(`/channel/${channel.id}/home`);
+
+  console.log(user?.id, channel.externalId);
 
   return (
     <div className="flex flex-col gap-4">
@@ -128,7 +133,11 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
             <ScrollArea className="w-full">
               <div className="relative mx-auto flex w-full max-w-screen-2xl pt-4 xs:px-2">
                 {tabs
-                  .filter((tab) => channelHasVideos || tab.value !== "videos")
+                  .filter(
+                    (tab) =>
+                      channelHasVideos ||
+                      (tab.value !== "videos" && tab.value !== "home"),
+                  )
                   .filter(
                     (tab) => channelHasPlaylists || tab.value !== "playlists",
                   )
@@ -210,30 +219,32 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
               </ScrollArea>
             </div>
           </TabsContent>
-          <TabsContent
-            value="videos"
-            className="mx-auto my-2 flex size-full max-w-screen-2xl flex-col flex-wrap gap-4 px-2 xs:flex-row"
-          >
-            {[mainVideo!, ...videos].map((video) => (
-              <VideoCardRoot
-                key={video.id}
-                video={{ ...video, user: channel }}
-                className="flex-row xs:max-w-[300px] xs:flex-col xs:pb-2"
-              >
-                <VideoCardThumb
-                  linkClassName="rounded-xl xs:max-h-[180px] xs:max-w-[300px]"
-                  className="rounded-xl"
-                  width={300}
-                  height={180}
-                />
-                <VideoCardInfo className="mt-0 xs:mt-2">
-                  <div className="flex flex-col">
-                    <VideoCardTitle className="text-base" />
-                  </div>
-                </VideoCardInfo>
-              </VideoCardRoot>
-            ))}
-          </TabsContent>
+          {channelHasVideos ? (
+            <TabsContent
+              value="videos"
+              className="mx-auto my-2 flex size-full max-w-screen-2xl flex-col flex-wrap gap-4 px-2 xs:flex-row"
+            >
+              {[mainVideo!, ...videos].map((video) => (
+                <VideoCardRoot
+                  key={video.id}
+                  video={{ ...video, user: channel }}
+                  className="flex-row xs:max-w-[300px] xs:flex-col xs:pb-2"
+                >
+                  <VideoCardThumb
+                    linkClassName="rounded-xl xs:max-h-[180px] xs:max-w-[300px]"
+                    className="rounded-xl"
+                    width={300}
+                    height={180}
+                  />
+                  <VideoCardInfo className="mt-0 xs:mt-2">
+                    <div className="flex flex-col">
+                      <VideoCardTitle className="text-base" />
+                    </div>
+                  </VideoCardInfo>
+                </VideoCardRoot>
+              ))}
+            </TabsContent>
+          ) : null}
           <TabsContent
             value="playlists"
             className="mx-auto mt-0 flex size-full max-w-screen-2xl flex-col px-2"
@@ -254,7 +265,7 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
                       href={href}
                       className="relative z-10 rounded-xl outline-none ring-ring duration-200 focus-visible:ring-2 xs:max-h-[180px] xs:max-w-[300px]"
                     >
-                      <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/80 text-sm font-semibold uppercase opacity-0 duration-200 group-hover/card:opacity-100 xs:text-base">
+                      <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/80 text-sm font-semibold uppercase opacity-0 duration-300 group-hover/card:opacity-100 xs:text-base">
                         Reproduzir tudo
                       </div>
                       <CardImage
