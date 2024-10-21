@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
+import { Lock } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
@@ -99,8 +100,6 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
     redirect(`/channel/${channel.id}/home`);
   if (initialTab === "playlists" && !channelHasPlaylists)
     redirect(`/channel/${channel.id}/home`);
-
-  console.log(user?.id, channel.externalId);
 
   return (
     <div className="flex flex-col gap-4">
@@ -252,6 +251,9 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
             <h3 className="mb-4">Playlist criadas</h3>
             <div className="flex flex-wrap gap-4">
               {channel.playlists.map((playlist) => {
+                if (user?.id !== channel.externalId && !playlist.isPublic) {
+                  return null;
+                }
                 const href = playlist.videos[0]
                   ? `/watch?v=${playlist.videos[0].id}`
                   : `/playlist/${playlist.id}`;
@@ -259,7 +261,7 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
                   <CardRoot
                     href={href}
                     key={playlist.id}
-                    className="gap-2 xs:max-w-[300px] xs:gap-1.5 xs:pb-4"
+                    className="flex-row gap-0.5 xs:max-w-[300px] xs:flex-col xs:gap-1.5 xs:pb-4"
                   >
                     <Link
                       href={href}
@@ -293,9 +295,14 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
                       </Link>
                       <Link
                         href={`/playlist/${playlist.id}`}
-                        className="z-10 mt-2 w-fit rounded-md text-xs text-foreground/60 ring-primary duration-200 hover:text-foreground focus:outline-none focus-visible:text-foreground focus-visible:ring-2 xs:text-sm"
+                        className="z-10 mt-2 flex w-fit items-center gap-1 rounded-md text-xs text-foreground/60 ring-primary duration-200 hover:text-foreground focus:outline-none focus-visible:text-foreground focus-visible:ring-2 xs:text-sm"
                       >
                         Ver playlist completa
+                        {!playlist.isPublic && (
+                          <span title="Privada">
+                            <Lock className="size-4 text-yellow-500" />
+                          </span>
+                        )}
                       </Link>
                     </div>
                   </CardRoot>
