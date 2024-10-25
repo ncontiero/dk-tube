@@ -8,16 +8,17 @@ import { Separator } from "@/components/ui/Separator";
 import { prisma } from "@/lib/prisma";
 
 type SearchPageProps = {
-  readonly searchParams: {
-    q: string | undefined;
-  };
+  readonly searchParams: Promise<{ q: string | undefined }>;
 };
 
-export function generateMetadata({ searchParams }: SearchPageProps): Metadata {
-  if (!searchParams.q) return notFound();
+export async function generateMetadata({
+  searchParams,
+}: SearchPageProps): Promise<Metadata> {
+  const query = (await searchParams).q;
+  if (!query) return notFound();
 
   return {
-    title: searchParams.q || "Nenhuma consulta de pesquisa",
+    title: query || "Nenhuma consulta de pesquisa",
   };
 }
 
@@ -78,9 +79,10 @@ const getSearchResults = async (query: string) => {
 };
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  if (!searchParams.q) return notFound();
+  const query = (await searchParams).q;
+  if (!query) return notFound();
 
-  const searchResults = await getSearchResults(searchParams.q);
+  const searchResults = await getSearchResults(query);
   const createURL = (id: string, type: "channel" | "video") => {
     return type === "channel" ? `/channel/${id}` : `/watch?v=${id}`;
   };

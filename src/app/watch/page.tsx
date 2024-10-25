@@ -17,7 +17,7 @@ import {
 import { prisma } from "@/lib/prisma";
 
 type WatchPageProps = {
-  readonly searchParams: { v: string };
+  readonly searchParams: Promise<{ v: string }>;
 };
 
 const getVideos = cache(async () => {
@@ -30,7 +30,7 @@ export async function generateMetadata(
   { searchParams }: WatchPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const videoId = searchParams.v;
+  const videoId = (await searchParams).v;
   if (!videoId) return notFound();
 
   const video = (await getVideos()).find((video) => video.id === videoId);
@@ -57,10 +57,11 @@ export async function generateMetadata(
 }
 
 export default async function WatchPage({ searchParams }: WatchPageProps) {
-  if (!searchParams.v) return notFound();
+  const videoId = (await searchParams).v;
+  if (!videoId) return notFound();
 
   const videos = await getVideos();
-  const video = videos.find((video) => video.id === searchParams.v);
+  const video = videos.find((video) => video.id === videoId);
   if (!video) return notFound();
 
   return (

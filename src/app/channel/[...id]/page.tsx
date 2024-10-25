@@ -20,7 +20,7 @@ import {
 import { prisma } from "@/lib/prisma";
 
 type ChannelPageProps = {
-  readonly params: { id: string[] };
+  readonly params: Promise<{ id: string[] }>;
 };
 
 const getChannels = unstable_cache(
@@ -38,7 +38,7 @@ export async function generateMetadata(
   { params }: ChannelPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const channelId = params.id[0];
+  const channelId = (await params).id[0];
   if (!channelId) return notFound();
 
   const channel = (await getChannels()).find(
@@ -75,7 +75,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ChannelPage({ params }: ChannelPageProps) {
+export default async function ChannelPage(props: ChannelPageProps) {
+  const params = await props.params;
   const user = await currentUser();
   const channel = (await getChannels()).find(
     (channel) => channel.id === params.id[0],

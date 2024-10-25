@@ -17,7 +17,7 @@ import {
 import { prisma } from "@/lib/prisma";
 
 type PlaylistPageProps = {
-  readonly params: { id: string };
+  readonly params: Promise<{ id: string }>;
 };
 
 const getPlaylists = unstable_cache(
@@ -37,7 +37,7 @@ export async function generateMetadata(
   { params }: PlaylistPageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const playlistId = params.id;
+  const playlistId = (await params).id;
   if (!playlistId) return notFound();
 
   const playlist = (await getPlaylists()).find(
@@ -74,7 +74,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PlaylistPage({ params }: PlaylistPageProps) {
+export default async function PlaylistPage(props: PlaylistPageProps) {
+  const params = await props.params;
   const user = await currentUser();
   const playlist = (await getPlaylists()).find(
     (playlist) => playlist.id === params.id,
