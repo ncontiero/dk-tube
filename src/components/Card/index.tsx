@@ -67,7 +67,10 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
     return (
       <div
         ref={ref}
-        className={cn("mt-3 flex w-full gap-2 px-2 md:px-0", className)}
+        className={cn(
+          "relative mt-3 flex w-full gap-2 px-2 md:px-0",
+          className,
+        )}
         {...props}
       />
     );

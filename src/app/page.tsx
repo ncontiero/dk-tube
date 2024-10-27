@@ -20,7 +20,7 @@ export default async function HomePage() {
         {videos.map((video) => (
           <VideoCardRoot key={video.id} video={video}>
             <VideoCardThumb />
-            <VideoCardInfo>
+            <VideoCardInfo className="relative mt-2">
               <VideoCardChannel className="size-9 rounded-full md:mt-1">
                 <VideoCardChannelImage />
               </VideoCardChannel>

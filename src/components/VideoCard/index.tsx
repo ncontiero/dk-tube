@@ -20,6 +20,7 @@ import {
   CardRoot,
   CardTitle,
 } from "../Card";
+import { SaveVideoPlaylistMenu } from "../SaveVideoPlaylist";
 
 const VideoCardContext = createContext<VideoCardContextProps>({ video: null });
 const useVideoCardContext = () => useContext(VideoCardContext);
@@ -91,8 +92,16 @@ export const VideoCardThumb = forwardRef<HTMLImageElement, VideoCardThumbProps>(
 VideoCardThumb.displayName = "VideoCardThumb";
 
 export const VideoCardInfo = forwardRef<HTMLDivElement, CardContentProps>(
-  (props, ref) => {
-    return <CardContent ref={ref} {...props} />;
+  ({ children, ...props }, ref) => {
+    const { video } = useVideoCardContext();
+    if (!video) return null;
+
+    return (
+      <CardContent ref={ref} {...props}>
+        <SaveVideoPlaylistMenu video={video} />
+        {children}
+      </CardContent>
+    );
   },
 );
 VideoCardInfo.displayName = "VideoCardInfo";
@@ -186,7 +195,7 @@ export const VideoCardTitle = forwardRef<
     <Link
       href={`/watch?v=${video.id}`}
       title={video.title}
-      className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
+      className="z-10 size-fit rounded-md pr-6 ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
     >
       <CardTitle ref={ref} {...props}>
         {video.title}

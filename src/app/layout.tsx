@@ -10,6 +10,7 @@ import { Inter } from "next/font/google";
 import { Header } from "@/components/Header";
 import { env } from "@/env";
 import { clerkTheme } from "./clerkTheme";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -62,19 +63,21 @@ export default function RootLayout({
     <ClerkProvider appearance={{ baseTheme: clerkTheme }} localization={ptBR}>
       <html lang="pt-BR" className={inter.variable} suppressHydrationWarning>
         <body>
-          <Header />
-          <ToastContainer
-            autoClose={3000}
-            position="top-right"
-            theme="dark"
-            newestOnTop
-            pauseOnFocusLoss={false}
-            limit={3}
-            toastClassName="bg-background"
-            bodyClassName="text-foreground"
-            progressClassName="bg-primary"
-          />
-          <div className="pt-16">{children}</div>
+          <Providers>
+            <Header />
+            <ToastContainer
+              autoClose={3000}
+              position="top-right"
+              theme="dark"
+              newestOnTop
+              pauseOnFocusLoss={false}
+              limit={3}
+              toastClassName="bg-background"
+              bodyClassName="text-foreground"
+              progressClassName="bg-primary"
+            />
+            <div className="pt-16">{children}</div>
+          </Providers>
         </body>
       </html>
     </ClerkProvider>
