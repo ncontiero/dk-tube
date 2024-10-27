@@ -1,10 +1,18 @@
 "use client";
 
 import type { Playlist, Video } from "@prisma/client";
-import { type PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
-import { Bookmark, EllipsisVertical, Lock, X } from "lucide-react";
+import {
+  Bookmark,
+  EllipsisVertical,
+  Loader2,
+  Lock,
+  Plus,
+  X,
+} from "lucide-react";
+import { useFormState } from "@/hooks/useFormState";
 import { Button } from "../ui/Button";
 import { Checkbox } from "../ui/Checkbox";
 import {
@@ -23,7 +31,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/DropwDownMenu";
+import { Input } from "../ui/Input";
 import { Label } from "../ui/Label";
+import {
+  type CreatePlaylistKeys,
+  createPlaylistAction,
+} from "./createPlaylistAction";
 
 export interface SaveVideoPlaylistDialogProps extends PropsWithChildren {
   readonly video: Video;
@@ -38,20 +51,41 @@ export function SaveVideoPlaylistDialog({
   open = false,
   onOpenChange = noopFunc,
 }: SaveVideoPlaylistDialogProps) {
-  const { data: playlists } = useQuery<Array<Playlist & { hasVideo: boolean }>>(
-    {
-      queryKey: ["playlists"],
-      queryFn: async () => {
-        try {
-          return (
-            await fetch(`/api/playlists/my-playlists?videoId=${video.id}`)
-          ).json();
-        } catch (error) {
-          console.error(error);
-        }
-      },
+  const [createPlaylistFormOpen, setCreatePlaylistFormOpen] = useState(false);
+
+  const { data: playlists, refetch } = useQuery<
+    Array<Playlist & { hasVideo: boolean }>
+  >({
+    queryKey: ["playlists"],
+    queryFn: async () => {
+      try {
+        return (
+          await fetch(`/api/playlists/my-playlists?videoId=${video.id}`)
+        ).json();
+      } catch (error) {
+        console.error(error);
+      }
     },
-  );
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  });
+
+  const [{ errors, message, success }, handleSubmit, isPending] =
+    useFormState<CreatePlaylistKeys>(createPlaylistAction, async (message) => {
+      await refetch();
+      toast.success(message);
+      setCreatePlaylistFormOpen(false);
+    });
+
+  useEffect(() => {
+    if (success === false && message) {
+      toast.error(message);
+    }
+    if (errors?.videoId) {
+      toast.error(errors.videoId);
+    }
+  }, [errors, message, success]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -61,7 +95,11 @@ export function SaveVideoPlaylistDialog({
         <DialogContent className="left-[50%] top-[50%] z-[99999] max-w-xs translate-x-[-50%] translate-y-[-50%]">
           <div className="flex w-full items-center justify-between">
             <DialogHeader>
-              <DialogTitle>Salvar vídeo em...</DialogTitle>
+              <DialogTitle>
+                {createPlaylistFormOpen
+                  ? "Criar playlist"
+                  : "Salvar vídeo em..."}
+              </DialogTitle>
             </DialogHeader>
             <DialogClose asChild>
               <Button
@@ -74,42 +112,101 @@ export function SaveVideoPlaylistDialog({
               </Button>
             </DialogClose>
           </div>
-          <div className="flex flex-col space-y-2">
-            {playlists?.map((playlist) => (
-              <div key={playlist.id} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`save-${playlist.id}`}
-                  className="size-6"
-                  defaultChecked={playlist.hasVideo}
-                  onCheckedChange={async (checked) => {
-                    const { status } = await fetch(
-                      `/api/playlists/my-playlists`,
-                      {
-                        method: "POST",
-                        body: JSON.stringify({
-                          videoId: video.id,
-                          playlistId: playlist.id,
-                        }),
-                      },
-                    );
-                    if (status === 200)
-                      toast.success(checked ? "Salvo" : "Removido");
-                  }}
-                />
-                <Label
-                  htmlFor={`save-${playlist.id}`}
-                  className="flex items-center gap-1 text-base"
-                >
-                  {playlist.name}
-                  {!playlist.isPublic && (
-                    <span title="Privada">
-                      <Lock className="size-4 text-yellow-500" />
-                    </span>
-                  )}
-                </Label>
+          {!createPlaylistFormOpen ? (
+            <>
+              <div className="flex flex-col space-y-2">
+                {playlists?.map((playlist) => (
+                  <div
+                    key={playlist.id}
+                    className="flex items-center space-x-2"
+                  >
+                    <Checkbox
+                      id={`save-${playlist.id}`}
+                      className="size-6"
+                      defaultChecked={playlist.hasVideo}
+                      onCheckedChange={async (checked) => {
+                        const { status } = await fetch(
+                          `/api/playlists/my-playlists`,
+                          {
+                            method: "POST",
+                            body: JSON.stringify({
+                              videoId: video.id,
+                              playlistId: playlist.id,
+                            }),
+                          },
+                        );
+                        if (status === 200)
+                          toast.success(checked ? "Salvo" : "Removido");
+                      }}
+                    />
+                    <Label
+                      htmlFor={`save-${playlist.id}`}
+                      className="flex items-center gap-1 text-base"
+                    >
+                      {playlist.name}
+                      {!playlist.isPublic && (
+                        <span title="Privada">
+                          <Lock className="size-4 text-yellow-500" />
+                        </span>
+                      )}
+                    </Label>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+              <div className="flex w-full items-center justify-center">
+                <Button
+                  className="w-full gap-1 rounded-full"
+                  variant="secondary"
+                  onClick={() => setCreatePlaylistFormOpen(true)}
+                  type="button"
+                >
+                  <Plus />
+                  Nova playlist
+                </Button>
+              </div>
+            </>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <input hidden value={video.id} name="videoId" readOnly />
+              <div className="space-y-2">
+                <Label htmlFor="name">Nome</Label>
+                <Input
+                  name="name"
+                  type="text"
+                  id="name"
+                  placeholder="Digite o nome da playlist..."
+                />
+
+                {errors?.name ? (
+                  <p className="text-xs font-medium text-red-500 dark:text-red-400">
+                    {errors.name[0]}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="mt-4 flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full rounded-full"
+                  onClick={() => setCreatePlaylistFormOpen(false)}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  className="w-full rounded-full"
+                  disabled={isPending}
+                >
+                  {isPending ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    "Criar"
+                  )}
+                </Button>
+              </div>
+            </form>
+          )}
         </DialogContent>
       </DialogPortal>
     </Dialog>
