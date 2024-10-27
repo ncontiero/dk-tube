@@ -1,8 +1,12 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { cache } from "react";
+import { Bookmark } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SaveVideoPlaylistDialog } from "@/components/SaveVideoPlaylist";
+import { Button } from "@/components/ui/Button";
+import { DialogTrigger } from "@/components/ui/Dialog";
 import { Separator } from "@/components/ui/Separator";
 import { Video } from "@/components/Video";
 import {
@@ -76,7 +80,7 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
           <h1 className="z-10 text-base font-semibold md:text-lg mdlg:text-xl">
             {video.title}
           </h1>
-          <div>
+          <div className="flex items-center justify-between">
             <div className="mt-4 flex gap-2 mdlg:mt-3 mdlg:gap-3">
               <Link
                 href={`/channel/${video.user.id}`}
@@ -96,6 +100,20 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
               >
                 {video.user.username}
               </Link>
+            </div>
+            <div>
+              <SaveVideoPlaylistDialog video={video}>
+                <DialogTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="transparent"
+                    className="gap-1 rounded-full"
+                  >
+                    <Bookmark size={20} />
+                    <span className="text-sm">Salvar</span>
+                  </Button>
+                </DialogTrigger>
+              </SaveVideoPlaylistDialog>
             </div>
           </div>
         </div>
