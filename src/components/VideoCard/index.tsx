@@ -9,6 +9,7 @@ import {
   useMemo,
 } from "react";
 
+import { useUser } from "@clerk/nextjs";
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -94,11 +95,14 @@ VideoCardThumb.displayName = "VideoCardThumb";
 export const VideoCardInfo = forwardRef<HTMLDivElement, CardContentProps>(
   ({ children, ...props }, ref) => {
     const { video } = useVideoCardContext();
+    const { isLoaded, isSignedIn } = useUser();
     if (!video) return null;
 
     return (
       <CardContent ref={ref} {...props}>
-        <SaveVideoPlaylistMenu video={video} />
+        {isLoaded && isSignedIn ? (
+          <SaveVideoPlaylistMenu video={video} />
+        ) : null}
         {children}
       </CardContent>
     );

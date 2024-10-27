@@ -55,7 +55,7 @@ export async function Header() {
             </DialogTrigger>
             <DialogPortal>
               <DialogOverlay className="z-[9999] backdrop-blur-sm" />
-              <DialogContent className="top-0 z-[9999] flex h-[63px] w-full p-0 xs:h-[72px] sm:rounded-none">
+              <DialogContent className="top-0 z-[9999] flex h-14 w-full p-0 sm:h-16 sm:rounded-none">
                 <div className="flex size-full items-center gap-4 bg-secondary pl-2 pr-4 xs:pr-8">
                   <DialogClose asChild>
                     <Button
