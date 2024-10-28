@@ -33,6 +33,7 @@ import {
 } from "../ui/DropwDownMenu";
 import { Input } from "../ui/Input";
 import { Label } from "../ui/Label";
+import { Skeleton } from "../ui/Skeleton";
 import { Switch } from "../ui/Switch";
 import {
   type CreatePlaylistKeys,
@@ -54,9 +55,12 @@ export function SaveVideoPlaylistDialog({
 }: SaveVideoPlaylistDialogProps) {
   const [createPlaylistFormOpen, setCreatePlaylistFormOpen] = useState(false);
 
-  const { data: playlists, refetch: refetchPlaylists } = useQuery<
-    Array<Playlist & { hasVideo: boolean }>
-  >({
+  const {
+    data: playlists,
+    refetch: refetchPlaylists,
+    isPending: isPendingPlaylists,
+    isRefetching: isRefetchingPlaylists,
+  } = useQuery<Array<Playlist & { hasVideo: boolean }>>({
     queryKey: ["playlists"],
     queryFn: async () => {
       try {
@@ -117,40 +121,51 @@ export function SaveVideoPlaylistDialog({
             aria-hidden={createPlaylistFormOpen}
           >
             <div className="flex flex-col space-y-2">
-              {playlists?.map((playlist) => (
-                <Label
-                  key={playlist.id}
-                  htmlFor={`save-${playlist.id}`}
-                  className="flex cursor-pointer items-center gap-2 text-base"
-                  title={`Clique para salvar o vídeo na playlist '${playlist.name}'${!playlist.isPublic ? " (privada)" : ""}`}
-                >
-                  <Checkbox
-                    id={`save-${playlist.id}`}
-                    className="size-6"
-                    defaultChecked={playlist.hasVideo}
-                    onCheckedChange={async (checked) => {
-                      const { status } = await fetch(
-                        `/api/playlists/my-playlists`,
-                        {
-                          method: "POST",
-                          body: JSON.stringify({
-                            videoId,
-                            playlistId: playlist.id,
-                          }),
-                        },
-                      );
-                      if (status === 200)
-                        toast.success(checked ? "Salvo" : "Removido");
-                    }}
-                  />
-                  {playlist.name}
-                  {!playlist.isPublic && (
-                    <span title="Privada">
-                      <Lock className="size-4 text-yellow-500" />
-                    </span>
-                  )}
-                </Label>
-              ))}
+              {isPendingPlaylists || isRefetchingPlaylists ? (
+                [1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <Skeleton className="size-6 rounded-md" />
+                    <Skeleton className="h-6 w-1/2" />
+                  </div>
+                ))
+              ) : !playlists ? (
+                <div className="my-2">Você não tem playlists!</div>
+              ) : (
+                playlists.map((playlist) => (
+                  <Label
+                    key={playlist.id}
+                    htmlFor={`save-${playlist.id}`}
+                    className="flex cursor-pointer items-center gap-2 text-base"
+                    title={`Clique para salvar o vídeo na playlist '${playlist.name}'${!playlist.isPublic ? " (privada)" : ""}`}
+                  >
+                    <Checkbox
+                      id={`save-${playlist.id}`}
+                      className="size-6"
+                      defaultChecked={playlist.hasVideo}
+                      onCheckedChange={async (checked) => {
+                        const { status } = await fetch(
+                          `/api/playlists/my-playlists`,
+                          {
+                            method: "POST",
+                            body: JSON.stringify({
+                              videoId,
+                              playlistId: playlist.id,
+                            }),
+                          },
+                        );
+                        if (status === 200)
+                          toast.success(checked ? "Salvo" : "Removido");
+                      }}
+                    />
+                    {playlist.name}
+                    {!playlist.isPublic && (
+                      <span title="Privada">
+                        <Lock className="size-4 text-yellow-500" />
+                      </span>
+                    )}
+                  </Label>
+                ))
+              )}
             </div>
             <Button
               className="w-full gap-1 rounded-full"
