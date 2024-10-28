@@ -91,7 +91,7 @@ export function SaveVideoPlaylistDialog({
       {children}
       <DialogPortal>
         <DialogOverlay className="z-[9999] backdrop-blur-sm" />
-        <DialogContent className="left-[50%] top-[50%] z-[99999] max-w-xs translate-x-[-50%] translate-y-[-50%] data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
+        <DialogContent className="z-[99999] max-w-xs">
           <div className="flex w-full items-center justify-between">
             <DialogHeader>
               <DialogTitle>
