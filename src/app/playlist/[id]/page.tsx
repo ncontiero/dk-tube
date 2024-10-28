@@ -94,8 +94,14 @@ export default async function PlaylistPage(props: PlaylistPageProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative mx-auto flex size-full max-w-screen-2xl flex-col gap-4 mdlg:mt-4 mdlg:flex-row mdlg:px-4 mdlg:pt-4">
-        <div className="flex size-full flex-col items-center gap-4 bg-primary/60 p-4 sm:flex-row mdlg:w-fit mdlg:flex-col mdlg:gap-0 mdlg:rounded-xl">
+      <div className="mx-auto flex size-full max-w-screen-2xl flex-col gap-4 mdlg:mt-4 mdlg:flex-row mdlg:px-4 mdlg:pt-4">
+        <div className="flex size-full flex-col items-center gap-4 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background p-4 sm:flex-row mdlg:fixed mdlg:w-fit mdlg:flex-col mdlg:gap-0 mdlg:rounded-xl">
+          <Image
+            src={plImage}
+            alt="image"
+            className="top-0 -z-10 size-full max-h-[50%] bg-cover bg-top bg-no-repeat opacity-70 blur-3xl sm:max-h-[35%] mdlg:max-h-[50%] mdlg:max-w-[400px]"
+            fill
+          />
           <div className="size-full md:max-h-[240px] md:max-w-[426px] mdlg:h-[190px] mdlg:w-[326px]">
             <Image
               src={plImage}
@@ -160,7 +166,7 @@ export default async function PlaylistPage(props: PlaylistPageProps) {
             </div>
           </div>
         </div>
-        <div className="mddlg:gap-2.5 mt-1.5 flex w-full flex-col gap-3 px-3 sm:px-8 mdlg:px-0">
+        <div className="mt-1.5 flex w-full flex-col gap-3 px-3 sm:px-8 mdlg:gap-2.5 mdlg:px-0 mdlg:pl-[380px]">
           {playlist.videos.map((video) => (
             <VideoCardRoot
               key={video.id}
