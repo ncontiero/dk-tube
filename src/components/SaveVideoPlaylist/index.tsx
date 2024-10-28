@@ -1,6 +1,6 @@
 "use client";
 
-import type { Playlist, Video } from "@prisma/client";
+import type { Playlist } from "@prisma/client";
 import { type PropsWithChildren, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
@@ -39,7 +39,7 @@ import {
 } from "./createPlaylistAction";
 
 export interface SaveVideoPlaylistDialogProps extends PropsWithChildren {
-  readonly video: Video;
+  readonly videoId: string;
   readonly open?: boolean;
   readonly onOpenChange?: (open: boolean) => void;
 }
@@ -47,33 +47,31 @@ export interface SaveVideoPlaylistDialogProps extends PropsWithChildren {
 const noopFunc = () => {};
 export function SaveVideoPlaylistDialog({
   children,
-  video,
+  videoId,
   open = false,
   onOpenChange = noopFunc,
 }: SaveVideoPlaylistDialogProps) {
   const [createPlaylistFormOpen, setCreatePlaylistFormOpen] = useState(false);
 
-  const { data: playlists, refetch } = useQuery<
+  const { data: playlists, refetch: refetchPlaylists } = useQuery<
     Array<Playlist & { hasVideo: boolean }>
   >({
     queryKey: ["playlists"],
     queryFn: async () => {
       try {
         return (
-          await fetch(`/api/playlists/my-playlists?videoId=${video.id}`)
+          await fetch(`/api/playlists/my-playlists?videoId=${videoId}`)
         ).json();
       } catch (error) {
         console.error(error);
       }
     },
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
   });
 
   const [{ errors, message, success }, handleSubmit, isPending] =
     useFormState<CreatePlaylistKeys>(createPlaylistAction, async (message) => {
-      await refetch();
+      await refetchPlaylists();
       toast.success(message);
       setCreatePlaylistFormOpen(false);
     });
@@ -130,7 +128,7 @@ export function SaveVideoPlaylistDialog({
                         {
                           method: "POST",
                           body: JSON.stringify({
-                            videoId: video.id,
+                            videoId,
                             playlistId: playlist.id,
                           }),
                         },
@@ -169,7 +167,7 @@ export function SaveVideoPlaylistDialog({
             className="duration-200 data-[state=closed]:hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-left-1/3 data-[state=open]:slide-in-from-left-1/3"
             aria-hidden={!createPlaylistFormOpen}
           >
-            <input hidden value={video.id} name="videoId" readOnly />
+            <input hidden value={videoId} name="videoId" readOnly />
             <div className="space-y-2">
               <Label htmlFor="name">Nome</Label>
               <Input
@@ -214,7 +212,11 @@ export function SaveVideoPlaylistDialog({
   );
 }
 
-export function SaveVideoPlaylistMenu({ video }: { readonly video: Video }) {
+export function SaveVideoPlaylistMenu({
+  videoId,
+}: {
+  readonly videoId: string;
+}) {
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -224,7 +226,7 @@ export function SaveVideoPlaylistMenu({ video }: { readonly video: Video }) {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-0 z-20 size-fit rounded-full p-0.5 opacity-0 duration-200 group-focus-within/card:opacity-100 group-hover/card:opacity-100"
+          className="absolute right-0 z-20 size-fit rounded-full p-0.5 duration-200 group-focus-within/card:opacity-100 group-hover/card:opacity-100 sm:opacity-0"
         >
           <EllipsisVertical />
         </Button>
@@ -233,7 +235,7 @@ export function SaveVideoPlaylistMenu({ video }: { readonly video: Video }) {
         <SaveVideoPlaylistDialog
           open={dialogOpen}
           onOpenChange={setDialogOpen}
-          video={video}
+          videoId={videoId}
         >
           <DropdownMenuItem className="gap-2" asChild>
             <DialogTrigger>

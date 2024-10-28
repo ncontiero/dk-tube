@@ -15,7 +15,7 @@ export async function GET(request: Request) {
       where: {
         user: { externalId: userId },
       },
-      include: { videos: true },
+      include: { videos: { select: { id: true } } },
     });
 
     const playlistsResponse = playlists.map((pl) => {

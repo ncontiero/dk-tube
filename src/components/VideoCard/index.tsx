@@ -102,7 +102,7 @@ export const VideoCardInfo = forwardRef<HTMLDivElement, CardContentProps>(
       <CardContent ref={ref} {...props}>
         {children}
         {isLoaded && isSignedIn ? (
-          <SaveVideoPlaylistMenu video={video} />
+          <SaveVideoPlaylistMenu videoId={video.id} />
         ) : null}
       </CardContent>
     );

@@ -3,7 +3,8 @@ import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CardRoot, CardTitle } from "@/components/Card";
+import { CardContent, CardRoot, CardTitle } from "@/components/Card";
+import { SaveVideoPlaylistMenu } from "@/components/SaveVideoPlaylist";
 import { Separator } from "@/components/ui/Separator";
 import { prisma } from "@/lib/prisma";
 
@@ -36,6 +37,7 @@ const getSearchResults = async (query: string) => {
     label: channel.username,
     image: channel.image,
     user: null,
+    createdAt: channel.createdAt,
   }));
 
   const dbVideos = await prisma.video.findMany({
@@ -52,6 +54,7 @@ const getSearchResults = async (query: string) => {
     label: video.title,
     image: video.thumb,
     user: video.user,
+    createdAt: video.createdAt,
   }));
 
   const searchedItems = [...videos, ...channels];
@@ -111,38 +114,41 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   className={`object-cover ${result.user ? "aspect-video w-full xs:rounded-xl" : "aspect-square rounded-full"}`}
                 />
               </Link>
-              <div className="flex w-full flex-col px-2.5 xs:mt-0.5 xs:px-0.5">
+              <CardContent className="mt-0 flex-col px-2.5 xs:mt-0.5 xs:px-0.5 md:px-0.5">
                 <Link
                   href={`/watch?v=${result.id}`}
                   title={result.label}
-                  className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
+                  className="z-10 size-fit rounded-md pr-14 ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
                 >
                   <CardTitle
                     className="max-h-max overflow-auto text-base xs:text-lg"
-                    titleMaxChars={64}
+                    titleMaxChars={50}
                   >
                     {result.label}
                   </CardTitle>
                 </Link>
                 {result.user ? (
-                  <Link
-                    className="group z-10 mt-1 flex size-fit items-center gap-2 rounded-md outline-none ring-ring duration-200 focus:ring-2 xs:mt-3"
-                    href={`/channel/${result.user.id}`}
-                    title={result.user.username}
-                  >
-                    <Image
-                      src={result.user.image}
-                      alt={result.user.username}
-                      width={28}
-                      height={28}
-                      className="aspect-square rounded-full object-cover"
-                    />
-                    <span className="text-sm opacity-60 duration-200 group-hover:opacity-100">
-                      {result.user.username}
-                    </span>
-                  </Link>
+                  <>
+                    <Link
+                      className="group z-10 flex size-fit items-center gap-2 rounded-md outline-none ring-ring duration-200 focus:ring-2"
+                      href={`/channel/${result.user.id}`}
+                      title={result.user.username}
+                    >
+                      <Image
+                        src={result.user.image}
+                        alt={result.user.username}
+                        width={28}
+                        height={28}
+                        className="aspect-square rounded-full object-cover"
+                      />
+                      <span className="text-sm opacity-60 duration-200 group-hover:opacity-100">
+                        {result.user.username}
+                      </span>
+                    </Link>
+                    <SaveVideoPlaylistMenu videoId={result.id} />
+                  </>
                 ) : null}
-              </div>
+              </CardContent>
             </CardRoot>
             {!result.user ? (
               <Separator
