@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { cache } from "react";
+import { auth } from "@clerk/nextjs/server";
 import { Bookmark } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -68,6 +69,8 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
   const video = videos.find((video) => video.id === videoId);
   if (!video) return notFound();
 
+  const { userId } = await auth();
+
   return (
     <div className="my-6 grid grid-cols-1 px-0 md:px-20 xl:grid-cols-4 xl:px-24">
       <div className="col-span-3 flex w-full flex-col items-center justify-center xl:pb-0 xl:pr-6">
@@ -101,20 +104,22 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
                 {video.user.username}
               </Link>
             </div>
-            <div>
-              <SaveVideoPlaylistDialog videoId={video.id}>
-                <DialogTrigger asChild>
-                  <Button
-                    type="button"
-                    variant="transparent"
-                    className="gap-1 rounded-full"
-                  >
-                    <Bookmark size={20} />
-                    <span className="text-sm">Salvar</span>
-                  </Button>
-                </DialogTrigger>
-              </SaveVideoPlaylistDialog>
-            </div>
+            {userId ? (
+              <div>
+                <SaveVideoPlaylistDialog videoId={video.id}>
+                  <DialogTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="transparent"
+                      className="gap-1 rounded-full"
+                    >
+                      <Bookmark size={20} />
+                      <span className="text-sm">Salvar</span>
+                    </Button>
+                  </DialogTrigger>
+                </SaveVideoPlaylistDialog>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
