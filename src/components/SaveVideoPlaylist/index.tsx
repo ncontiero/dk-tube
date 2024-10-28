@@ -117,7 +117,12 @@ export function SaveVideoPlaylistDialog({
           >
             <div className="flex flex-col space-y-2">
               {playlists?.map((playlist) => (
-                <div key={playlist.id} className="flex items-center space-x-2">
+                <Label
+                  key={playlist.id}
+                  htmlFor={`save-${playlist.id}`}
+                  className="flex cursor-pointer items-center gap-2 text-base"
+                  title={`Clique para salvar o vídeo na playlist '${playlist.name}'${!playlist.isPublic ? " (privada)" : ""}`}
+                >
                   <Checkbox
                     id={`save-${playlist.id}`}
                     className="size-6"
@@ -137,18 +142,13 @@ export function SaveVideoPlaylistDialog({
                         toast.success(checked ? "Salvo" : "Removido");
                     }}
                   />
-                  <Label
-                    htmlFor={`save-${playlist.id}`}
-                    className="flex items-center gap-1 text-base"
-                  >
-                    {playlist.name}
-                    {!playlist.isPublic && (
-                      <span title="Privada">
-                        <Lock className="size-4 text-yellow-500" />
-                      </span>
-                    )}
-                  </Label>
-                </div>
+                  {playlist.name}
+                  {!playlist.isPublic && (
+                    <span title="Privada">
+                      <Lock className="size-4 text-yellow-500" />
+                    </span>
+                  )}
+                </Label>
               ))}
             </div>
             <Button

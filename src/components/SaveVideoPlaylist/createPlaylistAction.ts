@@ -33,7 +33,7 @@ export async function createPlaylistAction(
 
   const user = await currentUser();
   if (!user) {
-    return objectError("Você precisa estar logado para criar um vídeo!");
+    return objectError("Você precisa estar logado para criar uma playlist!");
   }
 
   try {
