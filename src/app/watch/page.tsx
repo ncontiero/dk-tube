@@ -102,7 +102,7 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
               </Link>
             </div>
             <div>
-              <SaveVideoPlaylistDialog video={video}>
+              <SaveVideoPlaylistDialog videoId={video.id}>
                 <DialogTrigger asChild>
                   <Button
                     type="button"
