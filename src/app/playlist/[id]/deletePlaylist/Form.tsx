@@ -56,10 +56,15 @@ export function DeletePlaylistForm({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Excluir playlist</AlertDialogTitle>
-          <AlertDialogDescription>
-            Quer mesmo excluir{" "}
-            <span className="font-bold">{playlist.name}</span>? Nota: a exclusão
-            de playlists é uma ação permanente e não pode ser desfeita.
+          <AlertDialogDescription className="flex flex-col">
+            <span>
+              Quer mesmo excluir{" "}
+              <span className="font-bold">{playlist.name}</span>?
+            </span>
+            <span>
+              <span className="font-bold">Nota:</span> a exclusão de playlists é
+              uma ação permanente e não pode ser desfeita.
+            </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -74,7 +79,7 @@ export function DeletePlaylistForm({
             />
             <Button
               type="submit"
-              className="flex items-center gap-2"
+              className="flex w-full items-center gap-2"
               title="Excluir playlist"
               disabled={isPending}
             >
