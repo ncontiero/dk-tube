@@ -9,6 +9,10 @@ import { prisma, prismaSkip } from "@/lib/prisma";
 const createPlaylistSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
   videoId: z.string().optional(),
+  isPublic: z
+    .string()
+    .default("off")
+    .transform((value) => value === "on"),
 });
 export type CreatePlaylistKeys = keyof z.infer<typeof createPlaylistSchema>;
 
@@ -37,13 +41,14 @@ export async function createPlaylistAction(
   }
 
   try {
-    const { name, videoId } = result.data;
+    const { name, videoId, isPublic } = result.data;
 
     await prisma.playlist.create({
       data: {
         name,
         user: { connect: { externalId: user.id } },
         videos: { connect: { id: videoId || prismaSkip } },
+        isPublic,
       },
     });
   } catch (error) {

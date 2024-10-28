@@ -33,6 +33,7 @@ import {
 } from "../ui/DropwDownMenu";
 import { Input } from "../ui/Input";
 import { Label } from "../ui/Label";
+import { Switch } from "../ui/Switch";
 import {
   type CreatePlaylistKeys,
   createPlaylistAction,
@@ -184,6 +185,21 @@ export function SaveVideoPlaylistDialog({
               ) : null}
             </div>
 
+            <Label
+              className="mt-4 flex cursor-pointer flex-col gap-2 rounded-xl p-2 duration-200 hover:bg-input/80"
+              htmlFor="isPublic"
+            >
+              <div className="flex w-full items-center justify-between">
+                Pública
+                <Switch name="isPublic" id="isPublic" />
+              </div>
+              {errors?.isPublic ? (
+                <p className="text-xs font-medium text-red-500 dark:text-red-400">
+                  {errors.isPublic[0]}
+                </p>
+              ) : null}
+            </Label>
+
             <div className="mt-4 flex items-center gap-2">
               <Button
                 type="button"
@@ -191,7 +207,7 @@ export function SaveVideoPlaylistDialog({
                 className="w-full rounded-full"
                 onClick={() => setCreatePlaylistFormOpen(false)}
               >
-                Cancelar
+                Voltar
               </Button>
               <Button
                 type="submit"
