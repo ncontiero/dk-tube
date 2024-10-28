@@ -1,11 +1,17 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
-import { Play, Share } from "lucide-react";
+import { EllipsisVertical, Play, Share, Trash } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropwDownMenu";
 import {
   VideoCardChannel,
   VideoCardChannelName,
@@ -15,6 +21,7 @@ import {
   VideoCardTitle,
 } from "@/components/VideoCard";
 import { prisma } from "@/lib/prisma";
+import { UpdatePlaylistDialog } from "./updatePlaylist/Dialog";
 
 type PlaylistPageProps = {
   readonly params: Promise<{ id: string }>;
@@ -125,25 +132,59 @@ export default async function PlaylistPage(props: PlaylistPageProps) {
               <span>•</span>
               <span>{playlist.videos.length} vídeos</span>
             </div>
-            <div className="mt-4 flex w-full gap-2 sm:w-auto">
-              <Button
-                variant="outline"
-                className="w-full gap-2 rounded-full sm:w-auto"
-                asChild
-              >
-                <Link href={`/watch?v=${playlist.videos[0]?.id}`}>
-                  <Play size={18} />
-                  Reproduzir
-                </Link>
-              </Button>
-              <Button
-                variant="transparent"
-                className="rounded-full"
-                size="icon"
-                title="Compartilhar"
-              >
-                <Share size={20} />
-              </Button>
+            <div className="mt-4 flex w-full gap-1">
+              {playlist.videos[0] ? (
+                <Button
+                  variant="outline"
+                  className="w-full gap-2 rounded-full"
+                  asChild
+                >
+                  <Link href={`/watch?v=${playlist.videos[0].id}`}>
+                    <Play size={18} />
+                    Reproduzir
+                  </Link>
+                </Button>
+              ) : null}
+              <div className="hidden gap-1 xxs:flex">
+                <UpdatePlaylistDialog playlist={playlist} />
+                <Button
+                  variant="transparent"
+                  className="hidden rounded-full xs:flex"
+                  size="icon"
+                  title="Compartilhar"
+                >
+                  <Share size={20} />
+                </Button>
+              </div>
+              <DropdownMenu>
+                <div>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="transparent"
+                      className="rounded-full"
+                      size="icon"
+                      title="Mais opções"
+                    >
+                      <EllipsisVertical size={20} />
+                    </Button>
+                  </DropdownMenuTrigger>
+                </div>
+                <DropdownMenuContent>
+                  <DropdownMenuItem className="gap-2 py-2">
+                    <button
+                      type="button"
+                      className="flex items-center gap-2"
+                      title="Excluir playlist"
+                    >
+                      <Trash size={20} />
+                      Excluir playlist
+                    </button>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="flex py-2 xxs:hidden">
+                    <UpdatePlaylistDialog playlist={playlist} inMenu />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
