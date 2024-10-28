@@ -32,7 +32,13 @@ export function UpdatePlaylistForm({
 
   return (
     <form className="flex flex-col" onSubmit={handleSubmit}>
-      <input hidden value={playlist.id} name="playlistId" readOnly />
+      <input
+        hidden
+        type="hidden"
+        value={playlist.id}
+        name="playlistId"
+        readOnly
+      />
       <div className="space-y-2">
         <Label htmlFor="name">Nome</Label>
         <Input

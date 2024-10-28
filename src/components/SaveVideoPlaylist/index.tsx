@@ -151,7 +151,13 @@ export function SaveVideoPlaylistDialog({
             className="duration-200 data-[state=closed]:hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-left-1/3 data-[state=open]:slide-in-from-left-1/3"
             aria-hidden={!createPlaylistFormOpen}
           >
-            <input hidden value={videoId} name="videoId" readOnly />
+            <input
+              hidden
+              type="hidden"
+              value={videoId}
+              name="videoId"
+              readOnly
+            />
             <div className="space-y-2">
               <Label htmlFor="name">Nome</Label>
               <Input

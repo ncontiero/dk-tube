@@ -6,15 +6,10 @@ import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
-const updatePlaylistSchema = z.object({
+const deletePlaylistSchema = z.object({
   playlistId: z.string().min(1, "ID da playlist é obrigatório"),
-  name: z.string().min(1, "Nome é obrigatório"),
-  isPublic: z
-    .string()
-    .default("off")
-    .transform((value) => value === "on"),
 });
-export type UpdatePlaylistKeys = keyof z.infer<typeof updatePlaylistSchema>;
+export type DeletePlaylistKeys = keyof z.infer<typeof deletePlaylistSchema>;
 
 const objectError = (message: string) => {
   return {
@@ -25,10 +20,10 @@ const objectError = (message: string) => {
   };
 };
 
-export async function updatePlaylistAction(
+export async function deletePlaylistAction(
   data: FormData,
-): ActionsReturn<UpdatePlaylistKeys> {
-  const result = updatePlaylistSchema.safeParse(Object.fromEntries(data));
+): ActionsReturn<DeletePlaylistKeys> {
+  const result = deletePlaylistSchema.safeParse(Object.fromEntries(data));
 
   if (!result.success) {
     const errors = result.error.flatten().fieldErrors;
@@ -41,7 +36,7 @@ export async function updatePlaylistAction(
   }
 
   try {
-    const { playlistId, name, isPublic } = result.data;
+    const { playlistId } = result.data;
 
     const playlist = await prisma.playlist.findUnique({
       where: { id: playlistId, user: { externalId: user.id } },
@@ -51,16 +46,12 @@ export async function updatePlaylistAction(
       return objectError("Playlist não encontrada!");
     }
 
-    await prisma.playlist.update({
+    await prisma.playlist.delete({
       where: { id: playlist.id, user: { externalId: user.id } },
-      data: {
-        name,
-        isPublic,
-      },
     });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      let message = "Houve um erro ao atualizar a playlist!";
+      let message = "Houve um erro ao deletar a playlist!";
       if (error.code === "P2025") {
         message = "Usuário não encontrado!";
       }
@@ -71,12 +62,12 @@ export async function updatePlaylistAction(
       return objectError(error.message);
     }
 
-    return objectError("Houve um erro ao atualizar a playlist!");
+    return objectError("Houve um erro ao deletar a playlist!");
   }
 
   return {
     success: true,
-    message: "Playlist atualizada com sucesso!",
+    message: "Playlist deletada com sucesso!",
     errors: null,
     data: null,
   };

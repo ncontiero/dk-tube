@@ -1,17 +1,12 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
-import { EllipsisVertical, Play, Share, Trash } from "lucide-react";
+import { Play, Share } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/DropwDownMenu";
+
 import {
   VideoCardChannel,
   VideoCardChannelName,
@@ -21,6 +16,7 @@ import {
   VideoCardTitle,
 } from "@/components/VideoCard";
 import { prisma } from "@/lib/prisma";
+import { PlaylistOptions } from "./PlaylistOptions";
 import { UpdatePlaylistDialog } from "./updatePlaylist/Dialog";
 
 type PlaylistPageProps = {
@@ -146,7 +142,9 @@ export default async function PlaylistPage(props: PlaylistPageProps) {
                 </Button>
               ) : null}
               <div className="hidden gap-1 xxs:flex">
-                <UpdatePlaylistDialog playlist={playlist} />
+                {user && user.id === playlist.user.externalId ? (
+                  <UpdatePlaylistDialog playlist={playlist} />
+                ) : null}
                 <Button
                   variant="transparent"
                   className="hidden rounded-full xs:flex"
@@ -156,35 +154,9 @@ export default async function PlaylistPage(props: PlaylistPageProps) {
                   <Share size={20} />
                 </Button>
               </div>
-              <DropdownMenu>
-                <div>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="transparent"
-                      className="rounded-full"
-                      size="icon"
-                      title="Mais opções"
-                    >
-                      <EllipsisVertical size={20} />
-                    </Button>
-                  </DropdownMenuTrigger>
-                </div>
-                <DropdownMenuContent>
-                  <DropdownMenuItem className="gap-2 py-2">
-                    <button
-                      type="button"
-                      className="flex items-center gap-2"
-                      title="Excluir playlist"
-                    >
-                      <Trash size={20} />
-                      Excluir playlist
-                    </button>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="flex py-2 xxs:hidden">
-                    <UpdatePlaylistDialog playlist={playlist} inMenu />
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {user && user.id === playlist.user.externalId ? (
+                <PlaylistOptions playlist={playlist} />
+              ) : null}
             </div>
           </div>
         </div>
