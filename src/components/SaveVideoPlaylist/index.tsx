@@ -1,20 +1,11 @@
 "use client";
 
-import type { Playlist } from "@prisma/client";
 import { type PropsWithChildren, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
-import {
-  Bookmark,
-  EllipsisVertical,
-  Loader2,
-  Lock,
-  Plus,
-  X,
-} from "lucide-react";
+import { Bookmark, EllipsisVertical, Loader2, Plus, X } from "lucide-react";
 import { useFormState } from "@/hooks/useFormState";
 import { Button } from "../ui/Button";
-import { Checkbox } from "../ui/Checkbox";
 import {
   Dialog,
   DialogClose,
@@ -39,6 +30,10 @@ import {
   type CreatePlaylistKeys,
   createPlaylistAction,
 } from "./createPlaylistAction";
+import {
+  type PlaylistCheckboxProps,
+  PlaylistCheckbox,
+} from "./PlaylistCheckbox";
 
 export interface SaveVideoPlaylistDialogProps extends PropsWithChildren {
   readonly videoId: string;
@@ -60,7 +55,7 @@ export function SaveVideoPlaylistDialog({
     refetch: refetchPlaylists,
     isPending: isPendingPlaylists,
     isRefetching: isRefetchingPlaylists,
-  } = useQuery<Array<Playlist & { hasVideo: boolean }>>({
+  } = useQuery<PlaylistCheckboxProps["playlist"][]>({
     queryKey: ["playlists"],
     queryFn: async () => {
       try {
@@ -132,38 +127,11 @@ export function SaveVideoPlaylistDialog({
                 <div className="my-2">Você não tem playlists!</div>
               ) : (
                 playlists.map((playlist) => (
-                  <Label
+                  <PlaylistCheckbox
                     key={playlist.id}
-                    htmlFor={`save-${playlist.id}`}
-                    className="flex cursor-pointer items-center gap-2 text-base"
-                    title={`Clique para salvar o vídeo na playlist '${playlist.name}'${!playlist.isPublic ? " (privada)" : ""}`}
-                  >
-                    <Checkbox
-                      id={`save-${playlist.id}`}
-                      className="size-6"
-                      defaultChecked={playlist.hasVideo}
-                      onCheckedChange={async (checked) => {
-                        const { status } = await fetch(
-                          `/api/playlists/my-playlists`,
-                          {
-                            method: "POST",
-                            body: JSON.stringify({
-                              videoId,
-                              playlistId: playlist.id,
-                            }),
-                          },
-                        );
-                        if (status === 200)
-                          toast.success(checked ? "Salvo" : "Removido");
-                      }}
-                    />
-                    {playlist.name}
-                    {!playlist.isPublic && (
-                      <span title="Privada">
-                        <Lock className="size-4 text-yellow-500" />
-                      </span>
-                    )}
-                  </Label>
+                    playlist={playlist}
+                    videoId={videoId}
+                  />
                 ))
               )}
             </div>
