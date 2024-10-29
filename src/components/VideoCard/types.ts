@@ -14,7 +14,7 @@ export type LinkProps = Omit<
 > &
   Partial<NextLinkProps>;
 
-type VideoProps = Video & { user: User };
+export type VideoProps = Video & { user: User };
 
 export interface VideoCardContextProps {
   readonly video: VideoProps | null;

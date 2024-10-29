@@ -16,8 +16,10 @@ model User {
   image      String   @default("https://img.clerk.com/preview.png")
   createdAt  DateTime @default(now()) @map("created_at")
 
-  videos    Video[]
-  playlists Playlist[]
+  videos      Video[]
+  playlists   Playlist[]
+  watchLater  Video[]    @relation("WatchLater")
+  likedVideos Video[]    @relation("LikedVideos")
 
   @@map("users")
 }
@@ -30,8 +32,10 @@ model Video {
   youtubeId String   @map("youtube_id")
   createdAt DateTime @default(now()) @map("created_at")
 
-  user      User       @relation(fields: [userId], references: [id])
-  playlists Playlist[]
+  user             User       @relation(fields: [userId], references: [id])
+  playlists        Playlist[]
+  watchLaterUsers  User[]     @relation("WatchLater")
+  likedVideosUsers User[]     @relation("LikedVideos")
 
   @@map("videos")
 }

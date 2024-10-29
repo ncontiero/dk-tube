@@ -46,7 +46,7 @@ const authItems = [
     href: "/playlist/WL",
   },
   {
-    label: "Vídeos com 'Gostei'",
+    label: "Vídeos curtidos",
     icon: ThumbsUp,
     href: "/playlist/LL",
   },
