@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { getWatchLaterBase } from "@/utils/data";
 
 export async function GET(request: Request) {
   try {
@@ -11,6 +12,9 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const videoSelected = searchParams.get("videoId");
 
+    const watchLater = await getWatchLaterBase(userId);
+    if (!watchLater) throw new Error("Watch later not found");
+
     const playlists = await prisma.playlist.findMany({
       where: {
         user: { externalId: userId },
@@ -18,7 +22,7 @@ export async function GET(request: Request) {
       include: { videos: { select: { id: true } } },
     });
 
-    const playlistsResponse = playlists.map((pl) => {
+    const playlistsResponse = [...playlists, watchLater].map((pl) => {
       const hasVideo = pl.videos.some((v) => v.id === videoSelected);
       return { ...pl, hasVideo };
     });
@@ -53,10 +57,13 @@ export async function POST(request: Request) {
       await request.json(),
     );
 
-    const playlist = await prisma.playlist.findUnique({
-      where: { id: playlistId },
-      include: { videos: true, user: { omit: { externalId: false } } },
-    });
+    const playlist =
+      playlistId === "watch-later"
+        ? await getWatchLaterBase(userId)
+        : await prisma.playlist.findUnique({
+            where: { id: playlistId },
+            include: { videos: true, user: { omit: { externalId: false } } },
+          });
 
     if (!playlist) {
       return new Response("Playlist not found", { status: 404 });
@@ -67,6 +74,21 @@ export async function POST(request: Request) {
     }
     const connected = playlist.videos.some((v) => v.id === videoId);
 
+    if (playlistId === "watch-later") {
+      const updatedWatchLater = await prisma.user.update({
+        where: { externalId: userId },
+        data: {
+          watchLater: {
+            [connected ? "disconnect" : "connect"]: {
+              id: videoId,
+            },
+          },
+        },
+        include: { watchLater: true },
+      });
+
+      return new Response(JSON.stringify(updatedWatchLater), { status: 200 });
+    }
     const updatedPlaylist = await prisma.playlist.update({
       where: { id: playlistId },
       data: {

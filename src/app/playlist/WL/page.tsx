@@ -3,7 +3,7 @@ import { currentUser } from "@clerk/nextjs/server";
 
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { getWatchLaterBase } from "@/utils/data";
 import {
   type PlaylistPageProps,
   type PlaylistProps,
@@ -12,21 +12,9 @@ import {
 
 const getWatchLater = unstable_cache(
   async (userExternalId: string): Promise<PlaylistProps> => {
-    const user = await prisma.user.findUnique({
-      where: { externalId: userExternalId },
-      include: { watchLater: { include: { user: true } } },
-      omit: { externalId: false },
-    });
-    if (!user) notFound();
-    return {
-      id: "watch-later",
-      name: "Assistir mais tarde",
-      isPublic: false,
-      user,
-      videos: user?.watchLater || [],
-      createdAt: new Date(),
-      userId: user.id,
-    };
+    const watchLater = await getWatchLaterBase(userExternalId);
+    if (!watchLater) notFound();
+    return watchLater;
   },
   ["watch-later"],
   { revalidate: 60 },
