@@ -14,6 +14,7 @@ import {
   DialogPortal,
   DialogTrigger,
 } from "../ui/Dialog";
+import { SidebarTrigger } from "../ui/Sidebar";
 import { SearchForm } from "./SearchForm";
 import { UserButton } from "./UserButton";
 
@@ -34,13 +35,16 @@ export async function Header() {
   return (
     <header className="fixed top-0 z-[9999] flex h-14 w-full items-center border-b bg-secondary/60 pl-2 pr-3 backdrop-blur-md sm:h-16 sm:pl-4 sm:pr-6">
       <div className="flex size-full items-center justify-between gap-2">
-        <Link
-          href="/"
-          title="Ir para o inicio"
-          className="rounded-md py-2 pl-1 ring-ring duration-200 focus:outline-none focus:ring-2 sm:px-3 sm:py-4"
-        >
-          <Logo />
-        </Link>
+        <div className="flex items-center gap-2">
+          <SidebarTrigger className="mt-1 sm:mt-0" />
+          <Link
+            href="/"
+            title="Ir para o inicio"
+            className="rounded-md py-2 pl-1 ring-ring duration-200 focus:outline-none focus:ring-2 sm:px-3 sm:py-4"
+          >
+            <Logo />
+          </Link>
+        </div>
         <SearchForm />
         <div className="flex items-center gap-2 md:gap-4">
           <Dialog>
