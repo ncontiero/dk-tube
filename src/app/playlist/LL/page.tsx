@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   title: "Vídeos curtidos",
 };
 
-export default async function PlaylistPage(props: PlaylistPageProps) {
+export default async function LikedVideosPage(props: PlaylistPageProps) {
   const user = await currentUser();
   if (!user) notFound();
 

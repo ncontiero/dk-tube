@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Assistir mais tarde",
 };
 
-export default async function PlaylistPage(props: PlaylistPageProps) {
+export default async function WatchLaterPage(props: PlaylistPageProps) {
   const user = await currentUser();
   if (!user) notFound();
 

@@ -23,16 +23,18 @@ export type PlaylistProps = {
 } & Playlist;
 export type PlaylistPageProps = {
   readonly params: Promise<{ id: string }>;
+};
+export type PlaylistPageCompProps = {
   readonly getPlaylists?: () => Promise<PlaylistProps[]>;
   readonly playlist?: PlaylistProps;
-  readonly isPlaylistStatic: boolean;
-};
+  readonly isPlaylistStatic?: boolean;
+} & PlaylistPageProps;
 
 export async function PlaylistPageComp({
   getPlaylists,
   isPlaylistStatic = false,
   ...props
-}: PlaylistPageProps) {
+}: PlaylistPageCompProps) {
   const params = await props.params;
   const user = await currentUser();
   const playlist =
