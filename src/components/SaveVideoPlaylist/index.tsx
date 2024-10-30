@@ -34,6 +34,7 @@ import {
   type PlaylistCheckboxProps,
   PlaylistCheckbox,
 } from "./PlaylistCheckbox";
+import { SaveToWatchLater } from "./SaveToWatchLater";
 
 export interface SaveVideoPlaylistDialogProps extends PropsWithChildren {
   readonly videoId: string;
@@ -237,12 +238,18 @@ export function SaveVideoPlaylistMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <DropdownMenuItem
+          className="w-full cursor-pointer p-2"
+          onSelect={(e) => e.preventDefault()}
+        >
+          <SaveToWatchLater videoId={videoId} />
+        </DropdownMenuItem>
         <SaveVideoPlaylistDialog
           open={dialogOpen}
           onOpenChange={setDialogOpen}
           videoId={videoId}
         >
-          <DropdownMenuItem className="gap-2" asChild>
+          <DropdownMenuItem className="w-full cursor-pointer gap-2 p-2" asChild>
             <DialogTrigger>
               <Bookmark />
               <span>Salvar na playlist</span>

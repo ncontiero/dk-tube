@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { getWatchLaterBase } from "@/utils/data";
+import { getWatchLater } from "@/utils/data";
 
 export async function GET(request: Request) {
   try {
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const videoSelected = searchParams.get("videoId");
 
-    const watchLater = await getWatchLaterBase(userId);
+    const watchLater = await getWatchLater(userId);
     if (!watchLater) throw new Error("Watch later not found");
 
     const playlists = await prisma.playlist.findMany({
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
 
     const playlist =
       playlistId === "watch-later"
-        ? await getWatchLaterBase(userId)
+        ? await getWatchLater(userId)
         : await prisma.playlist.findUnique({
             where: { id: playlistId },
             include: { videos: true, user: { omit: { externalId: false } } },

@@ -1,7 +1,7 @@
 import type { PlaylistProps } from "@/app/playlist/PlaylistPage";
 import { prisma } from "@/lib/prisma";
 
-export const getWatchLaterBase = async (
+export const getWatchLater = async (
   userExternalId: string,
 ): Promise<PlaylistProps | null> => {
   const user = await prisma.user.findUnique({
