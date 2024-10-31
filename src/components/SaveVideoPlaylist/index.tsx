@@ -238,12 +238,7 @@ export function SaveVideoPlaylistMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem
-          className="w-full cursor-pointer p-2"
-          onSelect={(e) => e.preventDefault()}
-        >
-          <SaveToWatchLater videoId={videoId} />
-        </DropdownMenuItem>
+        <SaveToWatchLater videoId={videoId} />
         <SaveVideoPlaylistDialog
           open={dialogOpen}
           onOpenChange={setDialogOpen}
