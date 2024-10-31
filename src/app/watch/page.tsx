@@ -5,6 +5,7 @@ import { Bookmark } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { z } from "zod";
 import { SaveVideoPlaylistDialog } from "@/components/SaveVideoPlaylist";
 import { Button } from "@/components/ui/Button";
 import { DialogTrigger } from "@/components/ui/Dialog";
@@ -22,7 +23,7 @@ import {
 import { prisma } from "@/lib/prisma";
 
 type WatchPageProps = {
-  readonly searchParams: Promise<{ v: string }>;
+  readonly searchParams: Promise<{ v: string; t: string }>;
 };
 
 const getVideos = cache(async () => {
@@ -69,6 +70,11 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
   const video = videos.find((video) => video.id === videoId);
   if (!video) return notFound();
 
+  const startTime = z
+    .string()
+    .transform((v) => Number.parseInt(v, 10))
+    .pipe(z.number().int().min(0))
+    .safeParse((await searchParams).t).data;
   const { userId } = await auth();
 
   return (
@@ -76,7 +82,7 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
       <div className="col-span-3 flex w-full flex-col items-center justify-center xl:pb-0 xl:pr-6">
         <div className="-mt-7 size-full md:-mt-1">
           <div className="inset-x-0 w-full">
-            <Video videoId={video.youtubeId} />
+            <Video videoId={video.youtubeId} startTime={startTime} />
           </div>
         </div>
         <div className="mb-4 mt-3 flex w-full flex-col justify-start px-4 mdlg:px-0">

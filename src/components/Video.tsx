@@ -6,11 +6,12 @@ import ReactPlayer from "react-player/youtube";
 
 export type VideoProps = {
   readonly videoId: string;
+  readonly startTime: number | undefined;
 };
 
-export function Video({ videoId }: VideoProps) {
+export function Video({ videoId, startTime }: VideoProps) {
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const [videoCurrentTime, setVideoCurrentTime] = useState(0);
+  const [videoCurrentTime, setVideoCurrentTime] = useState(startTime || 0);
 
   const videoRef = useRef<ReactPlayer>(null);
   const ambilightVideoRef = useRef<ReactPlayer>(null);
@@ -51,6 +52,9 @@ export function Video({ videoId }: VideoProps) {
           onPause={() => {
             setVideoPlaying(false);
             setVideoCurrentTime(videoRef.current?.getCurrentTime() || 0);
+          }}
+          config={{
+            playerVars: { autoplay: 1, start: startTime },
           }}
           controls
         />
