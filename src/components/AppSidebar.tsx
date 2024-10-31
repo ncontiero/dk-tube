@@ -3,6 +3,7 @@ import {
   ChevronRight,
   CircleUser,
   Clock,
+  Github,
   History,
   Home,
   LogIn,
@@ -10,9 +11,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
+import { env } from "@/env";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -177,6 +180,31 @@ export async function AppSidebar() {
         )}
         <SidebarSeparator />
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu className="gap-4">
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              tooltip="Github do projeto"
+              className="gap-4"
+            >
+              <a
+                href="https://github.com/dkshs/dk-tube"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github />
+                Github do projeto
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem className="px-3.5 text-sm text-foreground/70 group-data-[collapsible=icon]:hidden">
+            <span className="text-sm text-foreground/70">
+              © {new Date().getFullYear()} {env.SITE_NAME}
+            </span>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }
