@@ -10,6 +10,7 @@ import {
   VideoCardTitle,
 } from "@/components/VideoCard";
 import { prisma } from "@/lib/prisma";
+import { DeleteHistoryBtn } from "./DeleteHistoryBtn";
 
 export default async function HistoryPage() {
   const { userId } = await auth();
@@ -30,30 +31,43 @@ export default async function HistoryPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto mt-4 flex size-full max-w-screen-xl flex-col gap-4 px-4">
-        <h1 className="text-4xl font-bold">Histórico</h1>
-        <div className="mt-4 flex w-full flex-col gap-4 xs:max-w-3xl">
-          {historyVideos.map((history) => (
-            <VideoCardRoot
-              key={history.id}
-              video={history.video}
-              className="gap-1 pb-4 xs:flex-row xs:pb-0"
-              timeWatched={history.videoTime}
-            >
-              <VideoCardThumb linkClassName="xs:max-h-[150px] xs:max-w-[250px]" />
-              <VideoCardInfo className="mt-0 px-0">
-                <div className="flex w-full flex-col px-2 xs:mt-0.5 xs:px-0.5">
-                  <VideoCardTitle
-                    titleMaxChars={50}
-                    className="text-base xs:max-h-14 md:text-lg"
-                  />
-                  <VideoCardChannel className="mt-1 flex size-fit rounded-md px-0.5 md:mt-0.5">
-                    <VideoCardChannelName className="md:text-sm" />
-                  </VideoCardChannel>
-                </div>
-              </VideoCardInfo>
-            </VideoCardRoot>
-          ))}
+      <div className="mx-auto mt-6 flex size-full max-w-screen-xl flex-col gap-4 px-4">
+        <div className="flex items-center gap-2">
+          <h1 className="text-4xl font-bold">Histórico</h1>
+          <div className="flex xs:hidden">
+            <DeleteHistoryBtn />
+          </div>
+        </div>
+        <div className="flex justify-between gap-2">
+          <div className="mt-4 flex w-full flex-col gap-4 xs:max-w-3xl">
+            {historyVideos.map((history) => (
+              <VideoCardRoot
+                key={history.id}
+                video={history.video}
+                className="gap-1 pb-4 xs:flex-row xs:pb-0"
+                timeWatched={history.videoTime}
+              >
+                <VideoCardThumb
+                  linkClassName="xs:max-h-[150px] xs:max-w-[250px]"
+                  className="rounded-xl"
+                />
+                <VideoCardInfo className="mt-0 px-0">
+                  <div className="flex w-full flex-col px-2 xs:mt-0.5 xs:px-0.5">
+                    <VideoCardTitle
+                      titleMaxChars={50}
+                      className="text-base xs:max-h-14 md:text-lg"
+                    />
+                    <VideoCardChannel className="mt-1 flex size-fit rounded-md px-0.5 md:mt-0.5">
+                      <VideoCardChannelName className="md:text-sm" />
+                    </VideoCardChannel>
+                  </div>
+                </VideoCardInfo>
+              </VideoCardRoot>
+            ))}
+          </div>
+          <div className="hidden flex-col gap-2 xs:flex">
+            <DeleteHistoryBtn />
+          </div>
         </div>
       </div>
     </div>
