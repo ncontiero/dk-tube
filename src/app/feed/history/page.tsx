@@ -38,6 +38,7 @@ export default async function HistoryPage() {
               key={history.id}
               video={history.video}
               className="gap-1 pb-4 xs:flex-row xs:pb-0"
+              timeWatched={history.videoTime}
             >
               <VideoCardThumb linkClassName="xs:max-h-[150px] xs:max-w-[250px]" />
               <VideoCardInfo className="mt-0 px-0">

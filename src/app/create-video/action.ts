@@ -4,6 +4,7 @@ import type { ActionsReturn } from "@/hooks/useFormState";
 import { currentUser } from "@clerk/nextjs/server";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
+import { env } from "@/env";
 import { prisma } from "@/lib/prisma";
 import { getMostQualityThumb } from "@/utils/thumb";
 
@@ -45,11 +46,24 @@ export async function createVideoAction(
       return objectError("Houve um erro ao obter a thumbnail do vídeo!");
     }
 
+    const details = await (
+      await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?id=${youtubeId}&key=${env.GC_API_KEY}&part=contentDetails`,
+      )
+    ).json();
+    const ytDuration = details.items[0].contentDetails.duration as string;
+    const duration = ytDuration
+      .replace("PT", "")
+      .replace("H", ":")
+      .replace("M", ":")
+      .replace("S", "");
+
     await prisma.video.create({
       data: {
         title,
         youtubeId,
         thumb,
+        duration,
         user: { connect: { externalId: user.id } },
       },
     });

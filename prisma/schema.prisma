@@ -30,6 +30,7 @@ model Video {
   userId    String   @map("user_id")
   title     String
   thumb     String
+  duration  String   @default("00:00")
   youtubeId String   @map("youtube_id")
   createdAt DateTime @default(now()) @map("created_at")
 

@@ -20,6 +20,9 @@ export const env = createEnv({
     // URLs
     SITE_BASEURL: z.string().url().default("http://localhost:3000"),
 
+    // Google Cloud
+    GC_API_KEY: z.string().min(1),
+
     // Clerk
     CLERK_SECRET_KEY: z.string().min(1),
     CLERK_WEBHOOK_SIGNING_SECRET: z.string().min(1),
@@ -53,6 +56,8 @@ export const env = createEnv({
     SITE_NAME: process.env.SITE_NAME,
     SITE_LOCALE: process.env.SITE_LOCALE,
     SITE_BASEURL: process.env.SITE_BASEURL,
+    // Google Cloud
+    GC_API_KEY: process.env.GC_API_KEY,
     // Clerk
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     CLERK_WEBHOOK_SIGNING_SECRET: process.env.CLERK_WEBHOOK_SIGNING_SECRET,
