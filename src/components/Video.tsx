@@ -1,15 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import ReactPlayer from "react-player/youtube";
 
 export type VideoProps = {
   readonly videoId: string;
   readonly startTime: number | undefined;
+  readonly hasUser?: boolean;
 };
 
-export function Video({ videoId, startTime }: VideoProps) {
+export function Video({ videoId, startTime, hasUser = false }: VideoProps) {
+  const dbVideoId = useSearchParams().get("v");
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [videoCurrentTime, setVideoCurrentTime] = useState(startTime || 0);
 
@@ -26,6 +29,24 @@ export function Video({ videoId, startTime }: VideoProps) {
       player.setPlaybackQuality(lowestLevel);
     }
   }, []);
+
+  const updateHistory = useCallback(
+    async (playedSeconds: number) => {
+      try {
+        const data = await fetch("/api/history", {
+          method: "POST",
+          body: JSON.stringify({
+            videoId: dbVideoId,
+            playedSeconds,
+          }),
+        });
+        if (data.status !== 200) throw new Error("Failed to update history");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dbVideoId],
+  );
 
   useEffect(() => {
     if (ambilightVideoRef.current) {
@@ -52,6 +73,11 @@ export function Video({ videoId, startTime }: VideoProps) {
           onPause={() => {
             setVideoPlaying(false);
             setVideoCurrentTime(videoRef.current?.getCurrentTime() || 0);
+          }}
+          onProgress={({ playedSeconds }) => {
+            if (!hasUser) return;
+            if (Math.floor(playedSeconds) % 5 === 0)
+              updateHistory(Math.floor(playedSeconds));
           }}
           config={{
             playerVars: { autoplay: 1, start: startTime },

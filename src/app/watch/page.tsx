@@ -82,7 +82,11 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
       <div className="col-span-3 flex w-full flex-col items-center justify-center xl:pb-0 xl:pr-6">
         <div className="-mt-7 size-full md:-mt-1">
           <div className="inset-x-0 w-full">
-            <Video videoId={video.youtubeId} startTime={startTime} />
+            <Video
+              videoId={video.youtubeId}
+              startTime={startTime}
+              hasUser={!!userId}
+            />
           </div>
         </div>
         <div className="mb-4 mt-3 flex w-full flex-col justify-start px-4 mdlg:px-0">

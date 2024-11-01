@@ -18,8 +18,9 @@ model User {
 
   videos      Video[]
   playlists   Playlist[]
-  watchLater  Video[]    @relation("WatchLater")
-  likedVideos Video[]    @relation("LikedVideos")
+  watchLater  Video[]        @relation("WatchLater")
+  likedVideos Video[]        @relation("LikedVideos")
+  history     HistoryVideo[]
 
   @@map("users")
 }
@@ -32,12 +33,26 @@ model Video {
   youtubeId String   @map("youtube_id")
   createdAt DateTime @default(now()) @map("created_at")
 
-  user             User       @relation(fields: [userId], references: [id])
+  user             User           @relation(fields: [userId], references: [id])
   playlists        Playlist[]
-  watchLaterUsers  User[]     @relation("WatchLater")
-  likedVideosUsers User[]     @relation("LikedVideos")
+  watchLaterUsers  User[]         @relation("WatchLater")
+  likedVideosUsers User[]         @relation("LikedVideos")
+  historyVideo     HistoryVideo[]
 
   @@map("videos")
+}
+
+model HistoryVideo {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  videoId   String   @map("video_id")
+  videoTime Int      @default(0) @map("video_time")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user  User  @relation(fields: [userId], references: [id])
+  video Video @relation(fields: [videoId], references: [id])
+
+  @@map("history_videos")
 }
 
 model Playlist {
