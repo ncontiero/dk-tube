@@ -43,7 +43,7 @@ const useVideoCardContext = () => useContext(VideoCardContext);
 
 export interface VideoCardRootProps extends HTMLAttributes<HTMLDivElement> {
   readonly video: VideoProps;
-  readonly timeWatched: number | undefined;
+  readonly timeWatched?: number | undefined;
 }
 
 /**
