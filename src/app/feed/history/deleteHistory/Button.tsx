@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { Loader2, Trash } from "lucide-react";
+import { Loader, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { useFormState } from "@/hooks/useFormState";
@@ -34,7 +34,7 @@ export function DeleteHistoryBtn() {
         aria-label="Limpar histórico"
         disabled={isPending}
       >
-        {isPending ? <Loader2 className="animate-spin" /> : <Trash />}
+        {isPending ? <Loader className="animate-spin" /> : <Trash />}
         <span className="hidden lg:flex">Limpar histórico</span>
       </Button>
     </form>

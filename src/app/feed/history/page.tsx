@@ -9,10 +9,15 @@ import {
   VideoCardThumb,
   VideoCardTitle,
 } from "@/components/VideoCard";
-import { prisma } from "@/lib/prisma";
-import { DeleteHistoryBtn } from "./DeleteHistoryBtn";
+import { prisma, prismaSkip } from "@/lib/prisma";
+import { DeleteHistoryBtn } from "./deleteHistory/Button";
+import { SearchVideoForm } from "./searchVideo/Form";
 
-export default async function HistoryPage() {
+export default async function HistoryPage({
+  searchParams,
+}: {
+  readonly searchParams: Promise<{ query: string }>;
+}) {
   const { userId } = await auth();
   if (!userId) {
     return (
@@ -23,10 +28,18 @@ export default async function HistoryPage() {
       />
     );
   }
-
   const historyVideos = await prisma.historyVideo.findMany({
-    where: { user: { externalId: userId } },
+    where: {
+      user: { externalId: userId },
+      video: {
+        title: {
+          mode: "insensitive",
+          contains: (await searchParams).query || prismaSkip,
+        },
+      },
+    },
     include: { video: { include: { user: true } } },
+    orderBy: { updatedAt: "desc" },
   });
 
   return (
@@ -65,7 +78,8 @@ export default async function HistoryPage() {
               </VideoCardRoot>
             ))}
           </div>
-          <div className="hidden flex-col gap-2 xs:flex">
+          <div className="hidden flex-col gap-4 xs:flex">
+            <SearchVideoForm />
             <DeleteHistoryBtn />
           </div>
         </div>

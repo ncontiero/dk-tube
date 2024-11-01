@@ -48,6 +48,7 @@ model HistoryVideo {
   userId    String   @map("user_id")
   videoId   String   @map("video_id")
   videoTime Int      @default(0) @map("video_time")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
   createdAt DateTime @default(now()) @map("created_at")
 
   user  User  @relation(fields: [userId], references: [id])
