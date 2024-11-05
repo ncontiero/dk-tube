@@ -106,7 +106,7 @@ export async function AppSidebar() {
               asChild
             >
               <Link
-                href="/feed"
+                href="/feed/you"
                 className="group-data-[collapsible=icon]:hidden"
               >
                 <span>Você</span>
