@@ -107,10 +107,10 @@ importers:
         version: 19.5.0
       '@dkshs/eslint-config':
         specifier: 3.3.0
-        version: 3.3.0(@tanstack/eslint-plugin-query@5.59.20(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(tailwindcss@3.4.14)(typescript@5.6.3)
+        version: 3.3.0(@tanstack/eslint-plugin-query@5.60.1(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(tailwindcss@3.4.14)(typescript@5.6.3)
       '@tanstack/eslint-plugin-query':
-        specifier: ^5.59.20
-        version: 5.59.20(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)
+        specifier: ^5.60.1
+        version: 5.60.1(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
@@ -1192,8 +1192,8 @@ packages:
       typescript:
         optional: true
 
-  '@tanstack/eslint-plugin-query@5.59.20':
-    resolution: {integrity: sha512-uZwF6N1Krcwrhx0+5wuLjU3E1zcb19bTJ5xhd38ZRvWbjrKQ3HAnf7OZ8w9lCAcdoPPSMEbyVrodgcmjAfZS8w==}
+  '@tanstack/eslint-plugin-query@5.60.1':
+    resolution: {integrity: sha512-oCaWtFKa6WwX14fm/Sp486eTFXXgadiDzEYxhM/tiAlM+xzvPwp6ZHgR6sndmvYK+s/jbksDCTLIPS0PCH8L2g==}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
 
@@ -3804,7 +3804,7 @@ snapshots:
       '@types/conventional-commits-parser': 5.0.0
       chalk: 5.3.0
 
-  '@dkshs/eslint-config@3.3.0(@tanstack/eslint-plugin-query@5.59.20(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(tailwindcss@3.4.14)(typescript@5.6.3)':
+  '@dkshs/eslint-config@3.3.0(@tanstack/eslint-plugin-query@5.60.1(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(tailwindcss@3.4.14)(typescript@5.6.3)':
     dependencies:
       '@eslint-community/eslint-plugin-eslint-comments': 4.4.1(eslint@9.14.0(jiti@1.21.6))
       '@eslint/markdown': 6.2.1
@@ -3839,7 +3839,7 @@ snapshots:
       typescript-eslint: 8.13.0(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)
       yaml-eslint-parser: 1.2.3
     optionalDependencies:
-      '@tanstack/eslint-plugin-query': 5.59.20(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)
+      '@tanstack/eslint-plugin-query': 5.60.1(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)
     transitivePeerDependencies:
       - '@types/eslint'
       - '@typescript-eslint/eslint-plugin'
@@ -4616,7 +4616,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.6.3
 
-  '@tanstack/eslint-plugin-query@5.59.20(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)':
+  '@tanstack/eslint-plugin-query@5.60.1(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)':
     dependencies:
       '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)
       eslint: 9.14.0(jiti@1.21.6)
