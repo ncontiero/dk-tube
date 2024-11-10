@@ -3,6 +3,12 @@ import { Film, Plus, X } from "lucide-react";
 import Image from "next/image";
 
 import Link from "next/link";
+import {
+  PlaylistCardImage,
+  PlaylistCardInfo,
+  PlaylistCardRoot,
+  PlaylistCardTitle,
+} from "@/components/PlaylistCard";
 import { CreatePlaylistForm } from "@/components/SaveVideoPlaylist/CreatePlaylistForm";
 import { Button } from "@/components/ui/Button";
 import {
@@ -53,6 +59,14 @@ export default async function YouPage() {
       history: { include: { video: true } },
       watchLater: true,
       likedVideos: true,
+      playlists: {
+        include: {
+          videos: {
+            include: { user: true },
+            orderBy: { createdAt: "desc" },
+          },
+        },
+      },
     },
   });
   if (!you) {
@@ -61,7 +75,7 @@ export default async function YouPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto mt-6 flex size-full max-w-screen-xl flex-col gap-6 px-4">
+      <div className="mx-auto mt-6 flex size-full flex-col gap-6 px-4 md:max-w-md lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl">
         <div className="flex items-center gap-4 xs:items-start">
           <Image
             src={you.image}
@@ -176,6 +190,30 @@ export default async function YouPage() {
               </Button>
             </div>
           </div>
+          <ScrollArea>
+            <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
+              {you.playlists.slice(0, 5).map((playlist) => (
+                <PlaylistCardRoot
+                  key={playlist.id}
+                  playlist={playlist}
+                  className="xs:w-[214px]"
+                >
+                  <PlaylistCardImage
+                    linkClassName="[&>div]:xs:text-xs"
+                    width={214}
+                    height={118}
+                  />
+                  <PlaylistCardInfo
+                    className="md:px-0.5"
+                    linkClassName="mt-0.5 xs:text-xs [&_svg]:size-3"
+                  >
+                    <PlaylistCardTitle className="text-sm xs:text-sm" />
+                  </PlaylistCardInfo>
+                </PlaylistCardRoot>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
@@ -236,7 +274,7 @@ export default async function YouPage() {
           </div>
           <ScrollArea>
             <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
-              {you.watchLater.slice(0, 5).map((video) => (
+              {you.likedVideos.slice(0, 5).map((video) => (
                 <VideoCardRoot
                   key={video.id}
                   video={{ ...video, user: you }}

@@ -1,11 +1,15 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
-import { Lock } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { CardImage, CardRoot, CardTitle } from "@/components/Card";
+import {
+  PlaylistCardImage,
+  PlaylistCardInfo,
+  PlaylistCardRoot,
+  PlaylistCardTitle,
+} from "@/components/PlaylistCard";
 import { ScrollArea, ScrollBar } from "@/components/ui/ScrollArea";
 import { Separator } from "@/components/ui/Separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
@@ -255,58 +259,13 @@ export default async function ChannelPage(props: ChannelPageProps) {
                 if (user?.id !== channel.externalId && !playlist.isPublic) {
                   return null;
                 }
-                const href = playlist.videos[0]
-                  ? `/watch?v=${playlist.videos[0].id}`
-                  : `/playlist/${playlist.id}`;
                 return (
-                  <CardRoot
-                    href={href}
-                    key={playlist.id}
-                    className="flex-row gap-0.5 xs:max-w-[300px] xs:flex-col xs:gap-1.5 xs:pb-4"
-                  >
-                    <Link
-                      href={href}
-                      className="relative z-10 rounded-xl outline-none ring-ring duration-200 focus-visible:ring-2 xs:max-h-[180px] xs:max-w-[300px]"
-                    >
-                      <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/80 text-sm font-semibold uppercase opacity-0 duration-300 group-hover/card:opacity-100 xs:text-base">
-                        Reproduzir tudo
-                      </div>
-                      <CardImage
-                        src={
-                          playlist.videos[0]
-                            ? playlist.videos[0].thumb
-                            : "/playlist-img.jpg"
-                        }
-                        quality={100}
-                        alt={`Reproduzir ${playlist.name}`}
-                        width={300}
-                        height={180}
-                        className="rounded-xl"
-                      />
-                    </Link>
-                    <div className="flex w-full flex-col px-1">
-                      <Link
-                        href={href}
-                        title={playlist.name}
-                        className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
-                      >
-                        <CardTitle className="text-base">
-                          {playlist.name}
-                        </CardTitle>
-                      </Link>
-                      <Link
-                        href={`/playlist/${playlist.id}`}
-                        className="z-10 mt-2 flex w-fit items-center gap-1 rounded-md text-xs text-foreground/60 ring-primary duration-200 hover:text-foreground focus:outline-none focus-visible:text-foreground focus-visible:ring-2 xs:text-sm"
-                      >
-                        Ver playlist completa
-                        {!playlist.isPublic && (
-                          <span title="Privada">
-                            <Lock className="size-4 text-yellow-500" />
-                          </span>
-                        )}
-                      </Link>
-                    </div>
-                  </CardRoot>
+                  <PlaylistCardRoot key={playlist.id} playlist={playlist}>
+                    <PlaylistCardImage />
+                    <PlaylistCardInfo linkClassName="mt-0">
+                      <PlaylistCardTitle />
+                    </PlaylistCardInfo>
+                  </PlaylistCardRoot>
                 );
               })}
             </div>
