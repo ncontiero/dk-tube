@@ -1,9 +1,34 @@
 import { auth } from "@clerk/nextjs/server";
-import { Film } from "lucide-react";
+import { Film, Plus, X } from "lucide-react";
 import Image from "next/image";
 
 import Link from "next/link";
+import { CreatePlaylistForm } from "@/components/SaveVideoPlaylist/CreatePlaylistForm";
+import { Button } from "@/components/ui/Button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/Dialog";
+import { ScrollArea, ScrollBar } from "@/components/ui/ScrollArea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/Tooltip";
 import { UnauthorizedPage } from "@/components/UnauthorizedPage";
+import {
+  VideoCardInfo,
+  VideoCardRoot,
+  VideoCardThumb,
+  VideoCardTitle,
+} from "@/components/VideoCard";
 import { prisma } from "@/lib/prisma";
 
 const YouUnauthorizedPage = () => {
@@ -24,6 +49,11 @@ export default async function YouPage() {
 
   const you = await prisma.user.findUnique({
     where: { externalId: userId },
+    include: {
+      history: { include: { video: true } },
+      watchLater: true,
+      likedVideos: true,
+    },
   });
   if (!you) {
     return <YouUnauthorizedPage />;
@@ -31,8 +61,8 @@ export default async function YouPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto mt-6 flex size-full max-w-screen-xl flex-col gap-4 px-4">
-        <div className="flex items-center gap-4">
+      <div className="mx-auto mt-6 flex size-full max-w-screen-xl flex-col gap-6 px-4">
+        <div className="flex items-center gap-4 xs:items-start">
           <Image
             src={you.image}
             alt={you.username}
@@ -51,6 +81,181 @@ export default async function YouPage() {
               Ver canal
             </span>
           </Link>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <Link href="/feed/history">
+              <h2 className="text-lg font-bold">Histórico</h2>
+            </Link>
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full"
+              size="sm"
+            >
+              <Link href="/feed/history">Ver tudo</Link>
+            </Button>
+          </div>
+          <ScrollArea>
+            <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
+              {you.history.slice(0, 5).map(({ video }) => (
+                <VideoCardRoot
+                  key={video.id}
+                  video={{ ...video, user: you }}
+                  className="flex-row xs:w-[214px] xs:flex-col xs:pb-4"
+                >
+                  <VideoCardThumb
+                    className="rounded-xl"
+                    linkClassName="rounded-xl xs:max-h-[118px] xs:max-w-[214px]"
+                    width={214}
+                    height={118}
+                  />
+                  <VideoCardInfo className="mt-1.5 md:px-0.5">
+                    <VideoCardTitle titleMaxChars={32} className="xs:text-sm" />
+                  </VideoCardInfo>
+                </VideoCardRoot>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <Link href="/feed/playlists">
+              <h2 className="text-lg font-bold">Playlists</h2>
+            </Link>
+            <div className="flex items-center gap-2">
+              <Dialog>
+                <TooltipProvider delayDuration={200}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="size-9 rounded-full"
+                        >
+                          <Plus />
+                        </Button>
+                      </DialogTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Criar playlist</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <DialogPortal>
+                  <DialogOverlay className="z-[9999] backdrop-blur-sm" />
+                  <DialogContent className="z-[99999] max-w-xs">
+                    <div className="flex w-full items-center justify-between">
+                      <DialogHeader>
+                        <DialogTitle>Criar playlist</DialogTitle>
+                      </DialogHeader>
+                      <DialogClose asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          title="Fechar"
+                          aria-label="Fechar"
+                        >
+                          <X />
+                        </Button>
+                      </DialogClose>
+                    </div>
+                    <CreatePlaylistForm />
+                  </DialogContent>
+                </DialogPortal>
+              </Dialog>
+              <Button
+                asChild
+                variant="outline"
+                className="rounded-full"
+                size="sm"
+              >
+                <Link href="/feed/playlists">Ver tudo</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <Link href="/playlist/WL" className="flex items-center gap-4">
+              <h2 className="text-lg font-bold">Assistir mais tarde</h2>
+              <span className="text-foreground/60">
+                {you.watchLater.length}
+              </span>
+            </Link>
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full"
+              size="sm"
+            >
+              <Link href="/playlist/WL">Ver tudo</Link>
+            </Button>
+          </div>
+          <ScrollArea>
+            <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
+              {you.watchLater.slice(0, 5).map((video) => (
+                <VideoCardRoot
+                  key={video.id}
+                  video={{ ...video, user: you }}
+                  className="flex-row xs:w-[214px] xs:flex-col xs:pb-4"
+                >
+                  <VideoCardThumb
+                    className="rounded-xl"
+                    linkClassName="rounded-xl xs:max-h-[118px] xs:max-w-[214px]"
+                    width={214}
+                    height={118}
+                  />
+                  <VideoCardInfo className="mt-1.5 md:px-0.5">
+                    <VideoCardTitle titleMaxChars={32} className="xs:text-sm" />
+                  </VideoCardInfo>
+                </VideoCardRoot>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <Link href="/playlist/LL" className="flex items-center gap-4">
+              <h2 className="text-lg font-bold">Vídeos curtidos</h2>
+              <span className="text-foreground/60">
+                {you.likedVideos.length}
+              </span>
+            </Link>
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full"
+              size="sm"
+            >
+              <Link href="/playlist/LL">Ver tudo</Link>
+            </Button>
+          </div>
+          <ScrollArea>
+            <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
+              {you.watchLater.slice(0, 5).map((video) => (
+                <VideoCardRoot
+                  key={video.id}
+                  video={{ ...video, user: you }}
+                  className="flex-row xs:w-[214px] xs:flex-col xs:pb-4"
+                >
+                  <VideoCardThumb
+                    className="rounded-xl"
+                    linkClassName="rounded-xl xs:max-h-[118px] xs:max-w-[214px]"
+                    width={214}
+                    height={118}
+                  />
+                  <VideoCardInfo className="mt-1.5 md:px-0.5">
+                    <VideoCardTitle titleMaxChars={32} className="xs:text-sm" />
+                  </VideoCardInfo>
+                </VideoCardRoot>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         </div>
       </div>
     </div>

@@ -47,7 +47,7 @@ export async function createPlaylistAction(
       data: {
         name,
         user: { connect: { externalId: user.id } },
-        videos: { connect: { id: videoId || prismaSkip } },
+        videos: videoId ? { connect: { id: videoId } } : prismaSkip,
         isPublic,
       },
     });
