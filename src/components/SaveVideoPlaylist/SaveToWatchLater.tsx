@@ -26,8 +26,7 @@ export function SaveToWatchLater({ videoId }: SaveToWatchLaterProps) {
             await fetch(`/api/playlists/my-playlists?videoId=${videoId}`)
           ).json()) as PLProps[];
 
-          const watchLater =
-            playlists.find((p) => p.id === "watch-later") || null;
+          const watchLater = playlists.find((p) => p.id === "WL") || null;
           setHasVideoInWatchLater(!!watchLater?.hasVideo);
 
           return watchLater;
@@ -45,7 +44,7 @@ export function SaveToWatchLater({ videoId }: SaveToWatchLaterProps) {
       method: "POST",
       body: JSON.stringify({
         videoId,
-        playlistId: "watch-later",
+        playlistId: "WL",
       }),
     });
 

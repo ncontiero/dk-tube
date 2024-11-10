@@ -6,6 +6,7 @@ import {
   Github,
   History,
   Home,
+  ListVideo,
   LogIn,
   ThumbsUp,
 } from "lucide-react";
@@ -43,6 +44,11 @@ const items = [
 ];
 const authItems = [
   { ...items[1]! },
+  {
+    label: "Playlists",
+    icon: ListVideo,
+    href: "/feed/playlists",
+  },
   {
     label: "Assistir mais tarde",
     icon: Clock,

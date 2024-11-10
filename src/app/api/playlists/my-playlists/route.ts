@@ -58,7 +58,7 @@ export async function POST(request: Request) {
     );
 
     const playlist =
-      playlistId === "watch-later"
+      playlistId === "WL"
         ? await getWatchLater(userId)
         : await prisma.playlist.findUnique({
             where: { id: playlistId },
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
     }
     const connected = playlist.videos.some((v) => v.id === videoId);
 
-    if (playlistId === "watch-later") {
+    if (playlistId === "WL") {
       const updatedWatchLater = await prisma.user.update({
         where: { externalId: userId },
         data: {
