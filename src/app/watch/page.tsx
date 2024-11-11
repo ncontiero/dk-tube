@@ -20,7 +20,8 @@ import {
   VideoCardThumb,
   VideoCardTitle,
 } from "@/components/VideoCard";
-import { prisma } from "@/lib/prisma";
+import { prisma, prismaSkip } from "@/lib/prisma";
+import { LikeVideoBtn } from "./LikeVideoBtn";
 
 type WatchPageProps = {
   readonly searchParams: Promise<{ v: string; t: string }>;
@@ -28,7 +29,7 @@ type WatchPageProps = {
 
 const getVideos = cache(async () => {
   return await prisma.video.findMany({
-    include: { user: true },
+    include: { user: true, likedVideosUsers: { select: { id: true } } },
   });
 });
 
@@ -75,7 +76,13 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
     .transform((v) => Number.parseInt(v, 10))
     .pipe(z.number().int().min(0))
     .safeParse((await searchParams).t).data;
+
   const { userId } = await auth();
+  const user = await prisma.user.findFirst({
+    where: { externalId: userId || prismaSkip },
+    select: { id: true, likedVideos: { select: { id: true } } },
+  });
+  const isLiked = user?.likedVideos.some((v) => v.id === video.id) || false;
 
   return (
     <div className="my-6 grid grid-cols-1 px-0 md:px-20 xl:grid-cols-4 xl:px-24">
@@ -114,8 +121,13 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
                 {video.user.username}
               </Link>
             </div>
-            {userId ? (
-              <div>
+            {userId && user ? (
+              <div className="flex items-center gap-2">
+                <LikeVideoBtn
+                  videoId={video.id}
+                  likes={video.likedVideosUsers.length}
+                  liked={isLiked}
+                />
                 <SaveVideoPlaylistDialog videoId={video.id}>
                   <DialogTrigger asChild>
                     <Button
