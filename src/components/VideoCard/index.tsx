@@ -159,15 +159,21 @@ export const VideoCardThumb = forwardRef<HTMLImageElement, VideoCardThumbProps>(
 );
 VideoCardThumb.displayName = "VideoCardThumb";
 
-export const VideoCardInfo = forwardRef<HTMLDivElement, CardContentProps>(
-  ({ children, ...props }, ref) => {
+interface VideoCardInfoProps extends CardContentProps {
+  readonly playlistId?: string | undefined;
+}
+
+export const VideoCardInfo = forwardRef<HTMLDivElement, VideoCardInfoProps>(
+  ({ children, playlistId, ...props }, ref) => {
     const { video, userId } = useVideoCardContext();
     if (!video) return null;
 
     return (
       <CardContent ref={ref} {...props}>
         {children}
-        {userId ? <SaveVideoPlaylistMenu videoId={video.id} /> : null}
+        {userId ? (
+          <SaveVideoPlaylistMenu videoId={video.id} playlistId={playlistId} />
+        ) : null}
       </CardContent>
     );
   },

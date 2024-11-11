@@ -1,8 +1,17 @@
 "use client";
 
-import { type PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useCallback, useState } from "react";
+import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
-import { Bookmark, EllipsisVertical, Plus, X } from "lucide-react";
+import {
+  Bookmark,
+  EllipsisVertical,
+  Loader2,
+  Plus,
+  Trash2,
+  X,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/Button";
 import {
   Dialog,
@@ -14,6 +23,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/Dialog";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +31,6 @@ import {
   DropdownMenuTrigger,
 } from "../ui/DropwDownMenu";
 import { Skeleton } from "../ui/Skeleton";
-
 import { CreatePlaylistForm } from "./CreatePlaylistForm";
 import {
   type PlaylistCheckboxProps,
@@ -135,13 +144,40 @@ export function SaveVideoPlaylistDialog({
   );
 }
 
+interface SaveVideoPlaylistMenuProps {
+  readonly videoId: string;
+  readonly playlistId?: string | undefined;
+}
+
 export function SaveVideoPlaylistMenu({
   videoId,
-}: {
-  readonly videoId: string;
-}) {
+  playlistId,
+}: SaveVideoPlaylistMenuProps) {
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [removingFromPlaylist, setRemovingFromPlaylist] = useState(false);
+  const router = useRouter();
+
+  const removeVideoFromPlaylist = useCallback(async () => {
+    if (!videoId || !playlistId || removingFromPlaylist) return;
+
+    setRemovingFromPlaylist(true);
+    const { status } = await fetch(`/api/playlists/remove-video`, {
+      method: "POST",
+      body: JSON.stringify({
+        videoId,
+        playlistId,
+      }),
+    });
+
+    if (status === 200) {
+      toast.success("Vídeo removido da playlist com sucesso!");
+      router.refresh();
+    } else {
+      toast.error("Erro ao remover vídeo da playlist!");
+    }
+    setRemovingFromPlaylist(false);
+  }, [playlistId, removingFromPlaylist, router, videoId]);
 
   return (
     <DropdownMenu open={dialogOpen || open} onOpenChange={setOpen}>
@@ -156,6 +192,21 @@ export function SaveVideoPlaylistMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <SaveToWatchLater videoId={videoId} />
+        {playlistId ? (
+          <DropdownMenuItem
+            className="w-full cursor-pointer gap-2 p-2"
+            onClick={() => removeVideoFromPlaylist()}
+            onSelect={(e) => e.preventDefault()}
+            disabled={removingFromPlaylist}
+          >
+            {removingFromPlaylist ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <Trash2 />
+            )}
+            <span>Remover da playlist</span>
+          </DropdownMenuItem>
+        ) : null}
         <SaveVideoPlaylistDialog
           open={dialogOpen}
           onOpenChange={setDialogOpen}

@@ -40,3 +40,15 @@ export const getWatchLater = async (
   if (!user) return null;
   return watchLaterObj(user, user.watchLater || []);
 };
+
+export const getLikedVideos = async (
+  userExternalId: string,
+): Promise<PlaylistProps | null> => {
+  const user = await prisma.user.findUnique({
+    where: { externalId: userExternalId },
+    include: { likedVideos: { include: { user: true } } },
+    omit: { externalId: false },
+  });
+  if (!user) return null;
+  return likedVideosObj(user, user.likedVideos || []);
+};

@@ -28,11 +28,13 @@ export type PlaylistPageCompProps = {
   readonly getPlaylists?: () => Promise<PlaylistProps[]>;
   readonly playlist?: PlaylistProps;
   readonly isPlaylistStatic?: boolean;
+  readonly removeVideoFromPlaylist?: boolean;
 } & PlaylistPageProps;
 
 export async function PlaylistPageComp({
   getPlaylists,
   isPlaylistStatic = false,
+  removeVideoFromPlaylist = true,
   ...props
 }: PlaylistPageCompProps) {
   const params = await props.params;
@@ -145,7 +147,10 @@ export async function PlaylistPageComp({
                 linkClassName="rounded-xl xs:max-h-[113px] xs:max-w-[200px]"
                 className="rounded-xl"
               />
-              <VideoCardInfo className="mt-0.5 gap-0 px-0">
+              <VideoCardInfo
+                className="mt-0.5 gap-0 px-0"
+                playlistId={removeVideoFromPlaylist ? playlist.id : undefined}
+              >
                 <div className="flex flex-col">
                   <VideoCardTitle
                     titleMaxChars={70}

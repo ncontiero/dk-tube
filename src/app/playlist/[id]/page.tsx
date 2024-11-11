@@ -1,22 +1,16 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
-
 import { prisma } from "@/lib/prisma";
 import { type PlaylistPageProps, PlaylistPageComp } from "../PlaylistPage";
 
-const getPlaylists = unstable_cache(
-  async () => {
-    return await prisma.playlist.findMany({
-      include: {
-        user: { omit: { externalId: false } },
-        videos: { include: { user: true } },
-      },
-    });
-  },
-  ["playlists"],
-  { revalidate: 60 },
-);
+const getPlaylists = async () => {
+  return await prisma.playlist.findMany({
+    include: {
+      user: { omit: { externalId: false } },
+      videos: { include: { user: true } },
+    },
+  });
+};
 
 export async function generateMetadata(
   { params }: PlaylistPageProps,

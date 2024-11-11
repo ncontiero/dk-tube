@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
-
 import { notFound } from "next/navigation";
 import { getWatchLater } from "@/utils/data";
 import { type PlaylistPageProps, PlaylistPageComp } from "../PlaylistPage";
@@ -16,5 +15,12 @@ export default async function WatchLaterPage(props: PlaylistPageProps) {
   const watchLater = await getWatchLater(user.id);
   if (!watchLater) notFound();
 
-  return <PlaylistPageComp {...props} playlist={watchLater} isPlaylistStatic />;
+  return (
+    <PlaylistPageComp
+      {...props}
+      playlist={watchLater}
+      isPlaylistStatic
+      removeVideoFromPlaylist={false}
+    />
+  );
 }
