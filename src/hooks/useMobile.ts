@@ -8,12 +8,12 @@ export function useIsMobile(isMobileC?: boolean) {
   useEffect(() => {
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
     const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT ?? isMobileC);
     };
     mql.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT ?? isMobileC);
     return () => mql.removeEventListener("change", onChange);
   }, []);
 
-  return isMobileC ?? !!isMobile;
+  return !!isMobile;
 }
