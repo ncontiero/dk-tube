@@ -78,7 +78,7 @@ export const getWatchLater = async (
 ): Promise<PlaylistProps | null> => {
   const user = await getUser<{ watchLater: { include: { user: true } } }>(
     userExternalId,
-    { watchLater: true },
+    { watchLater: { include: { user: true } } },
   );
   if (!user) return null;
   return watchLaterObj(user, user.watchLater || []);
@@ -89,7 +89,7 @@ export const getLikedVideos = async (
 ): Promise<PlaylistProps | null> => {
   const user = await getUser<{ likedVideos: { include: { user: true } } }>(
     userExternalId,
-    { likedVideos: true },
+    { likedVideos: { include: { user: true } } },
   );
   if (!user) return null;
   return likedVideosObj(user, user.likedVideos || []);
