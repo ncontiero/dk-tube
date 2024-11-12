@@ -156,7 +156,7 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
               className="mt-3 gap-1 xs:mt-0 xs:flex-row"
             >
               <VideoCardThumb linkClassName="xs:max-h-[94px] xs:max-w-[168px]" />
-              <VideoCardInfo className="xs:mt-0.5">
+              <VideoCardInfo className="gap-0 xs:mt-0.5">
                 <VideoCardChannel className="size-9 rounded-full xs:hidden md:mt-1">
                   <VideoCardChannelImage />
                 </VideoCardChannel>

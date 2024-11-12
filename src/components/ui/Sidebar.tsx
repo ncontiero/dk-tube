@@ -64,6 +64,7 @@ const SidebarProvider = forwardRef<
     readonly defaultOpen?: boolean;
     readonly open?: boolean;
     readonly onOpenChange?: (open: boolean) => void;
+    readonly isMobileC?: boolean | undefined;
   }
 >(
   (
@@ -71,6 +72,7 @@ const SidebarProvider = forwardRef<
       defaultOpen = true,
       open: openProp,
       onOpenChange: setOpenProp,
+      isMobileC,
       className,
       style,
       children,
@@ -78,7 +80,7 @@ const SidebarProvider = forwardRef<
     },
     ref,
   ) => {
-    const isMobile = useIsMobile();
+    const isMobile = useIsMobile(isMobileC);
     const [openMobile, setOpenMobile] = useState(false);
 
     // This is the internal state of the sidebar.
