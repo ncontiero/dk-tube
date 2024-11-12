@@ -124,7 +124,10 @@ export default async function YouPage() {
                     width={214}
                     height={118}
                   />
-                  <VideoCardInfo className="mt-1.5 md:px-0.5">
+                  <VideoCardInfo
+                    className="mt-1.5 md:px-0.5"
+                    removeVideoFromHistoryOpt
+                  >
                     <VideoCardTitle titleMaxChars={32} className="xs:text-sm" />
                   </VideoCardInfo>
                 </VideoCardRoot>

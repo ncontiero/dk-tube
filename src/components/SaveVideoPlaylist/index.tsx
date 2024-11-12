@@ -147,15 +147,18 @@ export function SaveVideoPlaylistDialog({
 interface SaveVideoPlaylistMenuProps {
   readonly videoId: string;
   readonly playlistId?: string | undefined;
+  readonly removeVideoFromHistoryOpt?: boolean;
 }
 
 export function SaveVideoPlaylistMenu({
   videoId,
   playlistId,
+  removeVideoFromHistoryOpt = false,
 }: SaveVideoPlaylistMenuProps) {
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [removingFromPlaylist, setRemovingFromPlaylist] = useState(false);
+  const [removingFromHistory, setRemovingFromHistory] = useState(false);
   const router = useRouter();
 
   const removeVideoFromPlaylist = useCallback(async () => {
@@ -179,6 +182,26 @@ export function SaveVideoPlaylistMenu({
     setRemovingFromPlaylist(false);
   }, [playlistId, removingFromPlaylist, router, videoId]);
 
+  const removeVideoFromHistory = useCallback(async () => {
+    if (!videoId || !removeVideoFromHistoryOpt || removingFromPlaylist) return;
+
+    setRemovingFromHistory(true);
+    const { status } = await fetch(`/api/history/remove-video`, {
+      method: "POST",
+      body: JSON.stringify({
+        videoId,
+      }),
+    });
+
+    if (status === 200) {
+      toast.success("Vídeo removido do histórico com sucesso!");
+      router.refresh();
+    } else {
+      toast.error("Erro ao remover vídeo da histórico!");
+    }
+    setRemovingFromHistory(false);
+  }, [removeVideoFromHistoryOpt, removingFromPlaylist, router, videoId]);
+
   return (
     <DropdownMenu open={dialogOpen || open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
@@ -192,6 +215,21 @@ export function SaveVideoPlaylistMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <SaveToWatchLater videoId={videoId} />
+        {removeVideoFromHistoryOpt ? (
+          <DropdownMenuItem
+            className="w-full cursor-pointer gap-2 p-2"
+            onClick={() => removeVideoFromHistory()}
+            onSelect={(e) => e.preventDefault()}
+            disabled={removingFromHistory}
+          >
+            {removingFromHistory ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <Trash2 />
+            )}
+            <span>Remover do histórico</span>
+          </DropdownMenuItem>
+        ) : null}
         {playlistId ? (
           <DropdownMenuItem
             className="w-full cursor-pointer gap-2 p-2"

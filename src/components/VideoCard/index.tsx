@@ -161,10 +161,14 @@ VideoCardThumb.displayName = "VideoCardThumb";
 
 interface VideoCardInfoProps extends CardContentProps {
   readonly playlistId?: string | undefined;
+  readonly removeVideoFromHistoryOpt?: boolean;
 }
 
 export const VideoCardInfo = forwardRef<HTMLDivElement, VideoCardInfoProps>(
-  ({ children, playlistId, ...props }, ref) => {
+  (
+    { children, playlistId, removeVideoFromHistoryOpt = false, ...props },
+    ref,
+  ) => {
     const { video, userId } = useVideoCardContext();
     if (!video) return null;
 
@@ -172,7 +176,11 @@ export const VideoCardInfo = forwardRef<HTMLDivElement, VideoCardInfoProps>(
       <CardContent ref={ref} {...props}>
         {children}
         {userId ? (
-          <SaveVideoPlaylistMenu videoId={video.id} playlistId={playlistId} />
+          <SaveVideoPlaylistMenu
+            videoId={video.id}
+            playlistId={playlistId}
+            removeVideoFromHistoryOpt={removeVideoFromHistoryOpt}
+          />
         ) : null}
       </CardContent>
     );

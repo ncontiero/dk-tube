@@ -64,7 +64,7 @@ export default async function HistoryPage({
                   linkClassName="xs:max-h-[150px] xs:max-w-[250px]"
                   className="rounded-xl"
                 />
-                <VideoCardInfo className="mt-0 px-0">
+                <VideoCardInfo className="mt-0 px-0" removeVideoFromHistoryOpt>
                   <div className="flex w-full flex-col px-2 xs:mt-0.5 xs:px-0.5">
                     <VideoCardTitle
                       titleMaxChars={50}
