@@ -4,6 +4,7 @@ import type { Playlist } from "@prisma/client";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
@@ -16,9 +17,12 @@ export function UpdatePlaylistForm({
 }: {
   readonly playlist: Playlist;
 }) {
+  const router = useRouter();
+
   const [{ errors, message, success }, handleSubmit, isPending] =
     useFormState<UpdatePlaylistKeys>(updatePlaylistAction, (message) => {
       toast.success(message);
+      router.refresh();
     });
 
   useEffect(() => {
