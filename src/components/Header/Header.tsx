@@ -46,22 +46,22 @@ export async function Header() {
           </Link>
         </div>
         <SearchForm />
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-2 lg:gap-4">
           <Dialog>
             <DialogTrigger asChild>
               <Button
                 variant="ghost"
-                className="rounded-full md:hidden"
+                className="rounded-full lg:hidden"
                 size="icon"
               >
                 <Search />
               </Button>
             </DialogTrigger>
             <DialogPortal>
-              <DialogOverlay className="z-[9999] backdrop-blur-sm" />
+              <DialogOverlay className="z-[99999] backdrop-blur-sm" />
               <DialogContent
                 variant="custom"
-                className="z-[9999] flex h-14 w-full p-0 sm:h-16 sm:rounded-none"
+                className="z-[99999] flex h-14 w-full p-0 sm:h-16 sm:rounded-none"
               >
                 <div className="flex size-full items-center gap-4 bg-secondary pl-2 pr-4 xs:pr-8">
                   <DialogClose asChild>

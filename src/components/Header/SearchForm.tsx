@@ -30,7 +30,7 @@ export function SearchForm({ size = "md" }: { readonly size?: "sm" | "md" }) {
   return (
     <form
       className={cn(
-        "hidden size-full max-w-lg items-center md:flex md:flex-1",
+        "hidden size-full max-w-lg items-center lg:flex lg:flex-1",
         size === "sm" && "flex max-w-none",
       )}
       onSubmit={handleSubmit}
