@@ -48,7 +48,7 @@
     "react-player": "^2.16.0",
     "react-toastify": "^10.0.6",
     "svix": "^1.41.0",
-    "tailwind-merge": "^2.5.4",
+    "tailwind-merge": "^2.5.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
