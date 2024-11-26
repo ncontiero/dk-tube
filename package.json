@@ -56,7 +56,7 @@
     "@commitlint/config-conventional": "^19.6.0",
     "@dkshs/eslint-config": "3.3.1",
     "@tanstack/eslint-plugin-query": "^5.61.3",
-    "@types/node": "^22.9.4",
+    "@types/node": "^22.10.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
