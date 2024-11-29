@@ -1,9 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
-
 import ReactPlayer from "react-player/youtube";
+import { useSearchParams } from "next/navigation";
 
 export type VideoProps = {
   readonly videoId: string;
