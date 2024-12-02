@@ -21,9 +21,9 @@
     "prisma:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@clerk/localizations": "^3.7.0",
-    "@clerk/nextjs": "^6.5.1",
-    "@clerk/themes": "^2.1.48",
+    "@clerk/localizations": "^3.7.1",
+    "@clerk/nextjs": "^6.5.2",
+    "@clerk/themes": "^2.1.49",
     "@prisma/client": "^6.0.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.1.2",
