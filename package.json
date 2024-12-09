@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@clerk/localizations": "^3.8.0",
-    "@clerk/nextjs": "^6.8.0",
+    "@clerk/nextjs": "^6.8.1",
     "@clerk/themes": "^2.1.53",
     "@prisma/client": "^6.0.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
