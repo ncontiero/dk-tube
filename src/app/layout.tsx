@@ -1,4 +1,3 @@
-import "react-toastify/dist/ReactToastify.min.css";
 import "./globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -74,8 +73,6 @@ export default function RootLayout({
               newestOnTop
               pauseOnFocusLoss={false}
               limit={3}
-              toastClassName="bg-background"
-              bodyClassName="text-foreground"
               progressClassName="bg-primary"
             />
             <div className="w-full pt-14 sm:pt-16">{children}</div>
