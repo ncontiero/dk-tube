@@ -37,7 +37,7 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.6",
     "@t3-oss/env-nextjs": "^0.11.1",
-    "@tanstack/react-query": "^5.62.11",
+    "@tanstack/react-query": "^5.62.12",
     "add": "^2.0.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
