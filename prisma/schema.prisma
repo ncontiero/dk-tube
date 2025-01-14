@@ -34,7 +34,7 @@ model Video {
   youtubeId String   @map("youtube_id")
   createdAt DateTime @default(now()) @map("created_at")
 
-  user             User           @relation(fields: [userId], references: [id])
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   playlists        Playlist[]
   watchLaterUsers  User[]         @relation("WatchLater")
   likedVideosUsers User[]         @relation("LikedVideos")
@@ -51,8 +51,8 @@ model HistoryVideo {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
   createdAt DateTime @default(now()) @map("created_at")
 
-  user  User  @relation(fields: [userId], references: [id])
-  video Video @relation(fields: [videoId], references: [id])
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
 
   @@map("history_videos")
 }
@@ -64,7 +64,7 @@ model Playlist {
   isPublic  Boolean  @default(true) @map("is_public")
   createdAt DateTime @default(now()) @map("created_at")
 
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   videos Video[]
 
   @@map("playlists")
