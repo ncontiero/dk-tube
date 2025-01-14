@@ -101,9 +101,9 @@ export default async function ChannelPage(props: ChannelPageProps) {
   const channelHasPlaylists = channel.playlists.length > 0;
   const channelHasContent = channelHasVideos || channelHasPlaylists;
 
-  if ((initialTab === "videos" || initialTab === "home") && !channelHasVideos)
-    redirect(`/channel/${channel.id}/playlists`);
   if (initialTab === "playlists" && !channelHasPlaylists)
+    redirect(`/channel/${channel.id}/videos`);
+  if (initialTab === "videos" && !channelHasVideos)
     redirect(`/channel/${channel.id}/home`);
 
   return (
