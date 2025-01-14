@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CardContent, CardRoot, CardTitle } from "@/components/Card";
-import { SaveVideoPlaylistMenu } from "@/components/SaveVideoPlaylist";
 import { Separator } from "@/components/ui/Separator";
+import { VideoCardOptionsMenu } from "@/components/VideoCardOptions";
 import { prisma } from "@/lib/prisma";
 
 type SearchPageProps = {
@@ -145,7 +145,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                         {result.user.username}
                       </span>
                     </Link>
-                    <SaveVideoPlaylistMenu videoId={result.id} />
+                    <VideoCardOptionsMenu videoId={result.id} />
                   </>
                 ) : null}
               </CardContent>

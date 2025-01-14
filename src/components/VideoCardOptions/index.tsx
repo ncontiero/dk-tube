@@ -144,21 +144,24 @@ export function SaveVideoPlaylistDialog({
   );
 }
 
-interface SaveVideoPlaylistMenuProps {
+interface VideoCardOptionsMenuProps {
   readonly videoId: string;
   readonly playlistId?: string | undefined;
   readonly removeVideoFromHistoryOpt?: boolean;
+  readonly videoIsFromChannel?: boolean;
 }
 
-export function SaveVideoPlaylistMenu({
+export function VideoCardOptionsMenu({
   videoId,
   playlistId,
   removeVideoFromHistoryOpt = false,
-}: SaveVideoPlaylistMenuProps) {
+  videoIsFromChannel = false,
+}: VideoCardOptionsMenuProps) {
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [removingFromPlaylist, setRemovingFromPlaylist] = useState(false);
   const [removingFromHistory, setRemovingFromHistory] = useState(false);
+  const [removingVideo, setRemovingVideo] = useState(false);
   const router = useRouter();
 
   const removeVideoFromPlaylist = useCallback(async () => {
@@ -201,6 +204,26 @@ export function SaveVideoPlaylistMenu({
     }
     setRemovingFromHistory(false);
   }, [removeVideoFromHistoryOpt, removingFromPlaylist, router, videoId]);
+
+  const removeVideo = useCallback(async () => {
+    if (!videoId || removingVideo) return;
+
+    setRemovingVideo(true);
+    const { status } = await fetch(`/api/videos/delete`, {
+      method: "DELETE",
+      body: JSON.stringify({
+        videoId,
+      }),
+    });
+
+    if (status === 200) {
+      toast.success("Vídeo removido com sucesso!");
+      router.refresh();
+    } else {
+      toast.error("Erro ao remover vídeo!");
+    }
+    setRemovingVideo(false);
+  }, [removingVideo, router, videoId]);
 
   return (
     <DropdownMenu open={dialogOpen || open} onOpenChange={setOpen}>
@@ -257,6 +280,17 @@ export function SaveVideoPlaylistMenu({
             </DialogTrigger>
           </DropdownMenuItem>
         </SaveVideoPlaylistDialog>
+        {videoIsFromChannel ? (
+          <DropdownMenuItem
+            className="w-full cursor-pointer gap-2 p-2"
+            onClick={() => removeVideo()}
+            onSelect={(e) => e.preventDefault()}
+            disabled={removingVideo}
+          >
+            {removingVideo ? <Loader2 className="animate-spin" /> : <Trash2 />}
+            <span>Excluir</span>
+          </DropdownMenuItem>
+        ) : null}
       </DropdownMenuContent>
     </DropdownMenu>
   );

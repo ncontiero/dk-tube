@@ -9,7 +9,6 @@ import {
   PlaylistCardRoot,
   PlaylistCardTitle,
 } from "@/components/PlaylistCard";
-import { CreatePlaylistForm } from "@/components/SaveVideoPlaylist/CreatePlaylistForm";
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
@@ -35,6 +34,7 @@ import {
   VideoCardThumb,
   VideoCardTitle,
 } from "@/components/VideoCard";
+import { CreatePlaylistForm } from "@/components/VideoCardOptions/CreatePlaylistForm";
 import { prisma } from "@/lib/prisma";
 
 const YouUnauthorizedPage = () => {

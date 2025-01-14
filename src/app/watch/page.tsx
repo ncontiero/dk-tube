@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { z } from "zod";
-import { SaveVideoPlaylistDialog } from "@/components/SaveVideoPlaylist";
 import { Button } from "@/components/ui/Button";
 import { DialogTrigger } from "@/components/ui/Dialog";
 import { Separator } from "@/components/ui/Separator";
@@ -20,6 +19,7 @@ import {
   VideoCardThumb,
   VideoCardTitle,
 } from "@/components/VideoCard";
+import { SaveVideoPlaylistDialog } from "@/components/VideoCardOptions";
 import { prisma, prismaSkip } from "@/lib/prisma";
 import { LikeVideoBtn } from "./LikeVideoBtn";
 

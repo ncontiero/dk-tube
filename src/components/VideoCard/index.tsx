@@ -24,13 +24,14 @@ import {
   CardRoot,
   CardTitle,
 } from "../Card";
-import { SaveVideoPlaylistMenu } from "../SaveVideoPlaylist";
+import { VideoCardOptionsMenu } from "../VideoCardOptions";
 
 export interface VideoCardContextProps {
   readonly video: VideoProps | null;
   percentageWatched: number | undefined;
   timeWatched: number | undefined;
   userId: string | null;
+  videoIsFromChannel: boolean;
 }
 
 const VideoCardContext = createContext<VideoCardContextProps>({
@@ -38,6 +39,7 @@ const VideoCardContext = createContext<VideoCardContextProps>({
   percentageWatched: undefined,
   timeWatched: undefined,
   userId: null,
+  videoIsFromChannel: false,
 });
 const useVideoCardContext = () => useContext(VideoCardContext);
 
@@ -67,6 +69,10 @@ export const VideoCardRoot = forwardRef<HTMLDivElement, VideoCardRootProps>(
   ({ video, timeWatched: timeWatchedB, ...props }, ref) => {
     const { user } = useUser();
     const [timeWatched, setTimeWatched] = useState(timeWatchedB);
+    const videoIsFromChannel = useMemo(
+      () => video.user.username === (user?.username || ""),
+      [user?.username, video.user.username],
+    );
 
     const dbTimeWatched = useCallback(async () => {
       return await fetch(
@@ -89,8 +95,9 @@ export const VideoCardRoot = forwardRef<HTMLDivElement, VideoCardRootProps>(
         percentageWatched,
         timeWatched,
         userId: user?.id || null,
+        videoIsFromChannel,
       }),
-      [video, percentageWatched, timeWatched, user?.id],
+      [video, percentageWatched, timeWatched, user?.id, videoIsFromChannel],
     );
 
     useEffect(() => {
@@ -169,17 +176,18 @@ export const VideoCardInfo = forwardRef<HTMLDivElement, VideoCardInfoProps>(
     { children, playlistId, removeVideoFromHistoryOpt = false, ...props },
     ref,
   ) => {
-    const { video, userId } = useVideoCardContext();
+    const { video, userId, videoIsFromChannel } = useVideoCardContext();
     if (!video) return null;
 
     return (
       <CardContent ref={ref} {...props}>
         {children}
         {userId ? (
-          <SaveVideoPlaylistMenu
+          <VideoCardOptionsMenu
             videoId={video.id}
             playlistId={playlistId}
             removeVideoFromHistoryOpt={removeVideoFromHistoryOpt}
+            videoIsFromChannel={videoIsFromChannel}
           />
         ) : null}
       </CardContent>
