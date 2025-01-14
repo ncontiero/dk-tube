@@ -6,7 +6,7 @@ import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { env } from "@/env";
 import { prisma } from "@/lib/prisma";
-import { getMostQualityThumb } from "@/utils/thumb";
+import { formatDuration, getMostQualityThumb } from "@/utils/youtube";
 
 const createVideoSchema = z.object({
   title: z.string().min(1, "O título é obrigatório"),
@@ -52,11 +52,7 @@ export async function createVideoAction(
       )
     ).json();
     const ytDuration = details.items[0].contentDetails.duration as string;
-    const duration = ytDuration
-      .replace("PT", "")
-      .replace("H", ":")
-      .replace("M", ":")
-      .replace("S", "");
+    const duration = formatDuration(ytDuration);
 
     await prisma.video.create({
       data: {

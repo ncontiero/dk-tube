@@ -70,7 +70,7 @@ async function main() {
   const video1 = await createVideo({
     title: "MAGIC FLUIDS HDR // 4K MACRO COLORS // HDR VISUALS // FLUID ART //",
     thumb: "https://i.ytimg.com/vi/1MieluM0c6c/maxresdefault.jpg",
-    duration: "2:39",
+    duration: "02:39",
     youtubeId: "1MieluM0c6c",
     userId: user1.id,
   });
@@ -79,7 +79,7 @@ async function main() {
   const video2 = await createVideo({
     title: "Fluid Sim Hue Test",
     thumb: "https://i.ytimg.com/vi/qC0vDKVPCrw/maxresdefault.jpg",
-    duration: "3:27",
+    duration: "03:27",
     youtubeId: "qC0vDKVPCrw",
     userId: user1.id,
   });
@@ -88,7 +88,7 @@ async function main() {
   const video3 = await createVideo({
     title: "Fluid Sim Hue Test 2",
     thumb: "https://i.ytimg.com/vi/Gt6wKDnG0xA/sddefault.jpg",
-    duration: "7:22",
+    duration: "07:22",
     youtubeId: "Gt6wKDnG0xA",
     userId: user1.id,
   });
