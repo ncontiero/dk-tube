@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@clerk/localizations':
-        specifier: ^3.9.11
-        version: 3.9.11
+        specifier: ^3.9.12
+        version: 3.9.12
       '@clerk/nextjs':
         specifier: ^6.9.14
         version: 6.9.14(next@15.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@clerk/themes':
-        specifier: ^2.2.8
-        version: 2.2.8
+        specifier: ^2.2.9
+        version: 2.2.9
       '@prisma/client':
         specifier: ^6.2.1
         version: 6.2.1(prisma@6.2.1)
@@ -176,8 +176,8 @@ packages:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-0
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-0
 
-  '@clerk/localizations@3.9.11':
-    resolution: {integrity: sha512-+H8qGv9afr8OJlc3NC6XqYCVMmm4YZIKS8UNpjOjVtNShElCiDK9eiT2yiup9ZgBqeJqhK/k7WSPGe5Qx7xzEg==}
+  '@clerk/localizations@3.9.12':
+    resolution: {integrity: sha512-M9ME3Xj2DtgC19wE7HyKsP1bUGfEg6OyOst9k/U7iwliu/kgKioAi4HwmFiiHbwzgByjQTns3JsJ4GXTmemy4Q==}
     engines: {node: '>=18.17.0'}
 
   '@clerk/nextjs@6.9.14':
@@ -200,12 +200,16 @@ packages:
       react-dom:
         optional: true
 
-  '@clerk/themes@2.2.8':
-    resolution: {integrity: sha512-OSmkNr8xSKMOOvqBr65SrUR2Bi52XKXTcmkpbijLXU+xwpBC0Zdy0412wwLFIFioV936zl4//EMp50ffCyiADQ==}
+  '@clerk/themes@2.2.9':
+    resolution: {integrity: sha512-vyv+ePK/hvYon1NZS9OtQM4zGPs+KpHWJpnJ2Ejh5/1sNSOodtfcnYm0SjAfuXFSPd973uWkIIN68b9xUocPaQ==}
     engines: {node: '>=18.17.0'}
 
   '@clerk/types@4.41.1':
     resolution: {integrity: sha512-Vz1jkHPUzJCVqR/Vmnjpab6hTsfV/Gt2y5W88Pv22xCyeFgmXwxqwu9dLyxMio32ekajRKI9S9hX5LxO0Vsx/Q==}
+    engines: {node: '>=18.17.0'}
+
+  '@clerk/types@4.41.2':
+    resolution: {integrity: sha512-8hvNzyeSa2sENQ86jHXTSnGKfhr9OHcIcm4w7bU4pAhCqF2aLYi9AZGNY4nvBcS3zPw1e8OLMiRKi5qhZrdt+g==}
     engines: {node: '>=18.17.0'}
 
   '@commitlint/cli@19.6.1':
@@ -3671,9 +3675,9 @@ snapshots:
       react-dom: 19.0.0(react@19.0.0)
       tslib: 2.4.1
 
-  '@clerk/localizations@3.9.11':
+  '@clerk/localizations@3.9.12':
     dependencies:
-      '@clerk/types': 4.41.1
+      '@clerk/types': 4.41.2
 
   '@clerk/nextjs@6.9.14(next@15.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -3700,12 +3704,16 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  '@clerk/themes@2.2.8':
+  '@clerk/themes@2.2.9':
     dependencies:
-      '@clerk/types': 4.41.1
+      '@clerk/types': 4.41.2
       tslib: 2.4.1
 
   '@clerk/types@4.41.1':
+    dependencies:
+      csstype: 3.1.1
+
+  '@clerk/types@4.41.2':
     dependencies:
       csstype: 3.1.1
 
