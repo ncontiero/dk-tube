@@ -55,7 +55,7 @@
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@dkshs/eslint-config": "4.0.2",
-    "@tanstack/eslint-plugin-query": "^5.66.0",
+    "@tanstack/eslint-plugin-query": "^5.66.1",
     "@types/node": "^22.13.1",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
