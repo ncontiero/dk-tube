@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@clerk/localizations':
-        specifier: ^3.10.6
-        version: 3.10.6
+        specifier: ^3.10.7
+        version: 3.10.7
       '@clerk/nextjs':
         specifier: ^6.12.0
         version: 6.12.0(next@15.1.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -173,8 +173,8 @@ packages:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-0
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-0
 
-  '@clerk/localizations@3.10.6':
-    resolution: {integrity: sha512-gzus3Sve/A3Kk8czuOlmjUixVSEVlVS4AvdxvtVTsKjQTK2zDLrfrXm1YCJ4bEBKTv040ZnuUTGvaIgmMpvs0Q==}
+  '@clerk/localizations@3.10.7':
+    resolution: {integrity: sha512-+Np7Vjx9KSIamZLm+8UTmm0OTF5HkcJfDFFYnNhfJz1/+JbwhcYOHspYTdsWjsml/VxM8OhfgyaBAgUUiAUSVA==}
     engines: {node: '>=18.17.0'}
 
   '@clerk/nextjs@6.12.0':
@@ -199,10 +199,6 @@ packages:
 
   '@clerk/themes@2.2.19':
     resolution: {integrity: sha512-Hx+aXeUdyPdWup4fHqqwAHflRB8aQVYA5JDhWaiRPGl9ZdbJWBX7yrrw1U+OcTOYHzFpZSQpp/kiwy4TR09p2A==}
-    engines: {node: '>=18.17.0'}
-
-  '@clerk/types@4.46.0':
-    resolution: {integrity: sha512-HsY3OCS9T4YP95skfoxwDQ41axXaCkjq67JoXoXxh0VTdvFXVzHwAoRiCvv9dLJeoapf1bfwJjGEMnDuNi3gbw==}
     engines: {node: '>=18.17.0'}
 
   '@clerk/types@4.46.1':
@@ -3686,9 +3682,9 @@ snapshots:
       react-dom: 19.0.0(react@19.0.0)
       tslib: 2.4.1
 
-  '@clerk/localizations@3.10.6':
+  '@clerk/localizations@3.10.7':
     dependencies:
-      '@clerk/types': 4.46.0
+      '@clerk/types': 4.46.1
 
   '@clerk/nextjs@6.12.0(next@15.1.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -3719,10 +3715,6 @@ snapshots:
     dependencies:
       '@clerk/types': 4.46.1
       tslib: 2.4.1
-
-  '@clerk/types@4.46.0':
-    dependencies:
-      csstype: 3.1.3
 
   '@clerk/types@4.46.1':
     dependencies:
