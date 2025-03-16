@@ -54,7 +54,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
-    "@dkshs/eslint-config": "4.4.0",
+    "@dkshs/eslint-config": "4.5.0",
     "@tanstack/eslint-plugin-query": "^5.68.0",
     "@types/node": "^22.13.10",
     "@types/react": "^19.0.10",
@@ -70,11 +70,11 @@
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
-  "prisma": {
-    "seed": "pnpm prisma:seed"
-  },
   "engines": {
     "node": ">=20"
+  },
+  "prisma": {
+    "seed": "pnpm prisma:seed"
   },
   "lint-staged": {
     "*": "pnpm lint:fix"
