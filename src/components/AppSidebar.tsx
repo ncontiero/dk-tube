@@ -195,7 +195,7 @@ export async function AppSidebar() {
               className="gap-4"
             >
               <a
-                href="https://github.com/dkshs/dk-tube"
+                href="https://github.com/ncontiero/dk-tube"
                 target="_blank"
                 rel="noopener noreferrer"
               >

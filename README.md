@@ -25,7 +25,7 @@ Do you use `nvm`? Then you can run `nvm install` in the project folder to instal
 ### Get the repository
 
 ```bash
-git clone https://github.com/dkshs/dk-tube.git
+git clone https://github.com/ncontiero/dk-tube.git
 ```
 
 ### Local Dependencies
