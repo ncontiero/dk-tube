@@ -35,11 +35,12 @@ async function createUser(params: createUserParams) {
   });
 }
 async function createVideo(params: createVideoParams) {
-  const { title, thumb, youtubeId, userId } = params;
+  const { title, thumb, youtubeId, userId, duration } = params;
   return await prisma.video.create({
     data: {
       title,
       thumb,
+      duration,
       youtubeId,
       userId,
     },
