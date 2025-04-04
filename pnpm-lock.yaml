@@ -13,7 +13,7 @@ importers:
         version: 3.13.5
       '@clerk/nextjs':
         specifier: ^6.13.0
-        version: 6.13.0(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(svix@1.63.0)
+        version: 6.13.0(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(svix@1.63.1)
       '@clerk/themes':
         specifier: ^2.2.27
         version: 2.2.27
@@ -87,8 +87,8 @@ importers:
         specifier: ^11.0.5
         version: 11.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       svix:
-        specifier: ^1.63.0
-        version: 1.63.0
+        specifier: ^1.63.1
+        version: 1.63.1
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0
@@ -3509,8 +3509,8 @@ packages:
   svix-fetch@3.0.0:
     resolution: {integrity: sha512-rcADxEFhSqHbraZIsjyZNh4TF6V+koloX1OzZ+AQuObX9mZ2LIMhm1buZeuc5BIZPftZpJCMBsSiBaeszo9tRw==}
 
-  svix@1.63.0:
-    resolution: {integrity: sha512-mJXiqr3pTtx5hwC5UXdeCy89p7+wsPmgdbMOrCdTqSFEWmqpPdyZohVClqLpvncrvWkFmR6suiF0x9DzjVLy8g==}
+  svix@1.63.1:
+    resolution: {integrity: sha512-1NdTJ4YI4jd8vbRLjGNg8ZCFlIb+t2iTtt1ddm+DsNKQC4GkhgjDMi7wRcXiWraBonYSlr/KARSknUW6iLM4fA==}
 
   swr@2.3.3:
     resolution: {integrity: sha512-dshNvs3ExOqtZ6kJBaAsabhPdHyeY4P2cKwRCniDVifBMoG/SVI7tfLWqPXriVspf2Rg4tPzXJTnwaihIeFw2A==}
@@ -3792,7 +3792,7 @@ snapshots:
 
   '@babel/helper-validator-identifier@7.25.9': {}
 
-  '@clerk/backend@1.26.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(svix@1.63.0)':
+  '@clerk/backend@1.26.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(svix@1.63.1)':
     dependencies:
       '@clerk/shared': 3.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@clerk/types': 4.50.2
@@ -3800,7 +3800,7 @@ snapshots:
       snakecase-keys: 8.0.1
       tslib: 2.8.1
     optionalDependencies:
-      svix: 1.63.0
+      svix: 1.63.1
     transitivePeerDependencies:
       - react
       - react-dom
@@ -3817,9 +3817,9 @@ snapshots:
     dependencies:
       '@clerk/types': 4.50.2
 
-  '@clerk/nextjs@6.13.0(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(svix@1.63.0)':
+  '@clerk/nextjs@6.13.0(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(svix@1.63.1)':
     dependencies:
-      '@clerk/backend': 1.26.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(svix@1.63.0)
+      '@clerk/backend': 1.26.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(svix@1.63.1)
       '@clerk/clerk-react': 5.25.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@clerk/shared': 3.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@clerk/types': 4.50.2
@@ -7509,7 +7509,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  svix@1.63.0:
+  svix@1.63.1:
     dependencies:
       '@stablelib/base64': 1.0.1
       '@types/node': 22.14.0
