@@ -1,16 +1,28 @@
 import type { Metadata, ResolvingMetadata } from "next";
+import { currentUser } from "@clerk/nextjs/server";
+import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { type PlaylistPageProps, PlaylistPageComp } from "../PlaylistPage";
+import { PlaylistPageComp } from "../PlaylistPage";
 
-const getPlaylists = async () => {
-  return await prisma.playlist.findMany({
-    include: {
-      user: { omit: { externalId: false } },
-      videos: { include: { user: true } },
-    },
-  });
+type PlaylistPageProps = {
+  readonly params: Promise<{ id: string }>;
 };
+
+const getCachedPlaylist = (id: string) =>
+  unstable_cache(
+    async () => {
+      return await prisma.playlist.findUnique({
+        where: { id },
+        include: {
+          user: { omit: { externalId: false } },
+          videos: { include: { user: true } },
+        },
+      });
+    },
+    [id],
+    { tags: [`playlist:${id}`], revalidate: 60 },
+  );
 
 export async function generateMetadata(
   { params }: PlaylistPageProps,
@@ -19,9 +31,7 @@ export async function generateMetadata(
   const playlistId = (await params).id;
   if (!playlistId) return notFound();
 
-  const playlist = (await getPlaylists()).find(
-    (playlist) => playlist.id === playlistId,
-  );
+  const playlist = await getCachedPlaylist(playlistId)();
   if (!playlist) return notFound();
 
   const playlistUrl = `${(await parent).metadataBase}playlist/${playlist.id}`;
@@ -45,14 +55,17 @@ export async function generateMetadata(
   };
 }
 
-export async function generateStaticParams() {
-  const playlists = await getPlaylists();
+export default async function PlaylistPage({ params }: PlaylistPageProps) {
+  const playlistId = (await params).id;
+  if (!playlistId) return notFound();
 
-  return playlists.map((playlist) => ({
-    id: playlist.id,
-  }));
-}
+  const playlist = await getCachedPlaylist(playlistId)();
+  if (!playlist) return notFound();
 
-export default function PlaylistPage(props: PlaylistPageProps) {
-  return <PlaylistPageComp {...props} getPlaylists={getPlaylists} />;
+  const user = await currentUser();
+  if (!playlist.isPublic && user?.id !== playlist.user.externalId) {
+    return notFound();
+  }
+
+  return <PlaylistPageComp playlist={playlist} userId={user?.id} />;
 }

@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { cache } from "react";
 import { auth } from "@clerk/nextjs/server";
 import { Bookmark } from "lucide-react";
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -19,7 +19,7 @@ import {
   VideoCardThumb,
   VideoCardTitle,
 } from "@/components/VideoCard";
-import { SaveVideoPlaylistDialog } from "@/components/VideoCardOptions";
+import { SaveVideoPlaylistDialog } from "@/components/VideoCardOptions/SaveVideoToPlaylist";
 import { prisma, prismaSkip } from "@/lib/prisma";
 import { LikeVideoBtn } from "./LikeVideoBtn";
 
@@ -27,11 +27,24 @@ type WatchPageProps = {
   readonly searchParams: Promise<{ v: string; t: string }>;
 };
 
-const getVideos = cache(async () => {
-  return await prisma.video.findMany({
-    include: { user: true, likedVideosUsers: { select: { id: true } } },
-  });
-});
+const getCachedVideos = unstable_cache(
+  async (excludeId?: string) => {
+    return await prisma.video.findMany({
+      include: { user: true, likedVideosUsers: { select: { id: true } } },
+      where: excludeId ? { id: { not: excludeId } } : {},
+    });
+  },
+  ["videos"],
+  { tags: ["videos"], revalidate: 60 * 60 },
+);
+const getCachedVideo = (videoId: string) =>
+  unstable_cache(
+    async () => {
+      return (await getCachedVideos()).find((video) => video.id === videoId);
+    },
+    [`video:${videoId}`],
+    { tags: [`video:${videoId}`], revalidate: 60 * 60 * 24 },
+  );
 
 export async function generateMetadata(
   { searchParams }: WatchPageProps,
@@ -40,7 +53,7 @@ export async function generateMetadata(
   const videoId = (await searchParams).v;
   if (!videoId) return notFound();
 
-  const video = (await getVideos()).find((video) => video.id === videoId);
+  const video = await getCachedVideo(videoId)();
   if (!video) return notFound();
 
   const videoUrl = `${(await parent).metadataBase}watch?v=${video.id}`;
@@ -67,8 +80,8 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
   const videoId = (await searchParams).v;
   if (!videoId) return notFound();
 
-  const videos = await getVideos();
-  const video = videos.find((video) => video.id === videoId);
+  const videos = await getCachedVideos(videoId);
+  const video = await getCachedVideo(videoId)();
   if (!video) return notFound();
 
   const startTime = z
@@ -78,11 +91,19 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
     .safeParse((await searchParams).t).data;
 
   const { userId } = await auth();
-  const user = await prisma.user.findFirst({
-    where: { externalId: userId || prismaSkip },
-    select: { id: true, likedVideos: { select: { id: true } } },
-  });
-  const isLiked = user?.likedVideos.some((v) => v.id === video.id) || false;
+
+  const isLikedCached = unstable_cache(
+    async () => {
+      const user = await prisma.user.findFirst({
+        where: { externalId: userId || prismaSkip },
+        select: { id: true, likedVideos: { select: { id: true } } },
+      });
+      return user?.likedVideos.some((v) => v.id === video.id) || false;
+    },
+    [`isLiked:${userId}:${video.id}`],
+    { tags: [`isLiked:${userId}:${video.id}`], revalidate: 60 * 60 },
+  );
+  const isLiked = await isLikedCached();
 
   return (
     <div className="my-6 grid grid-cols-1 px-0 md:px-20 xl:grid-cols-4 xl:px-24">
@@ -121,7 +142,7 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
                 {video.user.username}
               </Link>
             </div>
-            {userId && user ? (
+            {userId ? (
               <div className="flex items-center gap-2">
                 <LikeVideoBtn
                   videoId={video.id}

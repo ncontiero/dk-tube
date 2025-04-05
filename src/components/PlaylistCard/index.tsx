@@ -2,7 +2,7 @@
 
 import type { Playlist, Video } from "@prisma/client";
 import type { ImageProps } from "next/image";
-import type { CNonNullable } from "../VideoCard/types";
+import type { CNonNullable } from "@/utils/types";
 import {
   type CSSProperties,
   type HTMLAttributes,

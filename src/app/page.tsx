@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import {
   VideoCardChannel,
   VideoCardChannelImage,
@@ -10,9 +11,15 @@ import {
 import { prisma } from "@/lib/prisma";
 
 export default async function HomePage() {
-  const videos = await prisma.video.findMany({
-    include: { user: true },
-  });
+  const cachedVideos = unstable_cache(
+    async () =>
+      await prisma.video.findMany({
+        include: { user: true },
+      }),
+    ["videos"],
+    { tags: ["videos"], revalidate: 60 * 60 },
+  );
+  const videos = await cachedVideos();
 
   return (
     <div className="my-4 flex w-full justify-center gap-4 xs:mt-6 xs:max-w-screen-2xl md:mx-auto xl:mt-12">

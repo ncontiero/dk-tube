@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs/server";
+import { unstable_cache } from "next/cache";
 import {
   PlaylistCardImage,
   PlaylistCardInfo,
@@ -19,21 +20,29 @@ export default async function PlaylistsPage() {
     return null;
   }
 
-  const user = await prisma.user.findUnique({
-    where: { externalId: userId },
-    include: {
-      watchLater: { include: { user: true } },
-      likedVideos: { include: { user: true } },
-      playlists: {
+  const cachedUserPlaylists = unstable_cache(
+    async () => {
+      return await prisma.user.findUnique({
+        where: { externalId: userId },
         include: {
-          videos: {
-            include: { user: true },
-            orderBy: { createdAt: "desc" },
+          watchLater: { include: { user: true } },
+          likedVideos: { include: { user: true } },
+          playlists: {
+            include: {
+              videos: {
+                include: { user: true },
+                orderBy: { createdAt: "desc" },
+              },
+            },
           },
         },
-      },
+      });
     },
-  });
+    [`feed:playlists:${userId}`],
+    { tags: [`feed:playlists:${userId}`], revalidate: 60 },
+  );
+
+  const user = await cachedUserPlaylists();
   if (!user?.playlists) {
     return null;
   }

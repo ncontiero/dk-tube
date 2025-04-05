@@ -25,7 +25,7 @@
     --accent: 240 6% 10%;
     --accent-foreground: 210 20% 98%;
 
-    --destructive: 1 95% 40%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 20% 98%;
 
     --border: 240 6% 10%;
@@ -47,21 +47,13 @@
 
 @layer base {
   * {
-    @apply border-border selection:bg-primary/30;
+    @apply border-border selection:bg-primary/50 selection:text-primary-foreground;
   }
   html {
-    @apply scroll-smooth;
+    @apply scroll-smooth antialiased;
     color-scheme: dark;
   }
   body {
-    @apply bg-background font-inter text-foreground;
+    @apply relative bg-background text-foreground font-inter overscroll-none;
   }
-}
-
-/* Toastify */
-.Toastify__toast-container {
-  @apply z-[99999] font-inter text-foreground bg-background !important;
-}
-.Toastify__toast {
-  @apply bg-background !important;
 }

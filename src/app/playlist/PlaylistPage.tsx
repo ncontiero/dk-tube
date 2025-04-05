@@ -1,11 +1,14 @@
-import type { Playlist, User } from "@prisma/client";
-import type { VideoProps } from "@/components/VideoCard/types";
-import { currentUser } from "@clerk/nextjs/server";
-import { Play, Share } from "lucide-react";
+import type { PlaylistProps } from "@/utils/types";
+import { EllipsisVertical, Play, Share } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropwDownMenu";
 import {
   VideoCardChannel,
   VideoCardChannelName,
@@ -14,43 +17,18 @@ import {
   VideoCardThumb,
   VideoCardTitle,
 } from "@/components/VideoCard";
-import { PlaylistOptions } from "./PlaylistOptions";
-import { UpdatePlaylistDialog } from "./updatePlaylist/Dialog";
+import { DeletePlaylist } from "./DeletePlaylist";
+import { UpdatePlaylistDialog } from "./UpdatePlaylist";
 
-export type PlaylistProps = {
-  user: User;
-  videos: VideoProps[];
-} & Playlist;
-export type PlaylistPageProps = {
-  readonly params: Promise<{ id: string }>;
-};
 export type PlaylistPageCompProps = {
-  readonly getPlaylists?: () => Promise<PlaylistProps[]>;
-  readonly playlist?: PlaylistProps;
-  readonly isPlaylistStatic?: boolean;
-  readonly removeVideoFromPlaylist?: boolean;
-} & PlaylistPageProps;
+  readonly userId?: string | undefined;
+  readonly playlist: PlaylistProps;
+};
 
-export async function PlaylistPageComp({
-  getPlaylists,
-  isPlaylistStatic = false,
-  removeVideoFromPlaylist = true,
-  ...props
-}: PlaylistPageCompProps) {
-  const params = await props.params;
-  const user = await currentUser();
-  const playlist =
-    props.playlist ||
-    (getPlaylists &&
-      (await getPlaylists()).find((playlist) => playlist.id === params.id));
-  if (
-    !playlist ||
-    (!user && !playlist.isPublic) ||
-    (!playlist.isPublic && playlist.user.externalId !== user?.id)
-  )
-    return notFound();
-
+export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
   const plImage = playlist.videos[0]?.thumb || "/playlist-img.jpg";
+
+  const isStaticPlaylist = playlist.id === "WL" || playlist.id === "LL";
 
   return (
     <div className="flex flex-col gap-4">
@@ -88,7 +66,7 @@ export async function PlaylistPageComp({
               <span className="text-sm">{playlist.user.username}</span>
             </Link>
             <div className="mt-2 flex gap-1 text-xs opacity-70">
-              {!isPlaylistStatic && (
+              {!isStaticPlaylist && (
                 <>
                   <span>Playlist</span>
                   <span>•</span>
@@ -111,10 +89,10 @@ export async function PlaylistPageComp({
                   </Link>
                 </Button>
               ) : null}
-              {!isPlaylistStatic && (
+              {!isStaticPlaylist && (
                 <>
                   <div className="hidden gap-1 xxs:flex">
-                    {user && user.id === playlist.user.externalId ? (
+                    {userId && userId === playlist.user.externalId ? (
                       <UpdatePlaylistDialog playlist={playlist} />
                     ) : null}
                     <Button
@@ -126,8 +104,27 @@ export async function PlaylistPageComp({
                       <Share size={20} />
                     </Button>
                   </div>
-                  {user && user.id === playlist.user.externalId ? (
-                    <PlaylistOptions playlist={playlist} />
+                  {userId && userId === playlist.user.externalId ? (
+                    <DropdownMenu>
+                      <div>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="transparent"
+                            className="rounded-full"
+                            size="icon"
+                            title="Mais opções"
+                          >
+                            <EllipsisVertical size={20} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                      </div>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem className="flex py-2 xxs:hidden">
+                          <UpdatePlaylistDialog playlist={playlist} inMenu />
+                        </DropdownMenuItem>
+                        <DeletePlaylist playlist={playlist} />
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   ) : null}
                 </>
               )}
@@ -149,7 +146,7 @@ export async function PlaylistPageComp({
               />
               <VideoCardInfo
                 className="mt-0.5 gap-0 px-0"
-                playlistId={removeVideoFromPlaylist ? playlist.id : undefined}
+                playlistId={playlist.id !== "WL" ? playlist.id : undefined}
               >
                 <div className="flex flex-col">
                   <VideoCardTitle

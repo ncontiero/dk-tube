@@ -27,16 +27,18 @@ type ChannelPageProps = {
   readonly params: Promise<{ id: string[] }>;
 };
 
-const getChannels = unstable_cache(
-  async () => {
-    return await prisma.user.findMany({
-      include: { videos: true, playlists: { include: { videos: true } } },
-      omit: { externalId: false },
-    });
-  },
-  ["channels"],
-  { revalidate: 60 },
-);
+const getCachedChannel = (id: string) =>
+  unstable_cache(
+    async () => {
+      return await prisma.user.findUnique({
+        where: { id },
+        include: { videos: true, playlists: { include: { videos: true } } },
+        omit: { externalId: false },
+      });
+    },
+    [id],
+    { tags: [`channel:${id}`], revalidate: 60 },
+  );
 
 export async function generateMetadata(
   { params }: ChannelPageProps,
@@ -45,9 +47,7 @@ export async function generateMetadata(
   const channelId = (await params).id[0];
   if (!channelId) return notFound();
 
-  const channel = (await getChannels()).find(
-    (channel) => channel.id === channelId,
-  );
+  const channel = await getCachedChannel(channelId)();
   if (!channel) return notFound();
 
   const channelUrl = `${(await parent).metadataBase}channel/${channel.id}`;
@@ -71,21 +71,16 @@ export async function generateMetadata(
   };
 }
 
-export async function generateStaticParams() {
-  const channels = await getChannels();
-
-  return channels.map((channel) => ({
-    id: [channel.id],
-  }));
-}
-
 export default async function ChannelPage(props: ChannelPageProps) {
   const params = await props.params;
-  const user = await currentUser();
-  const channel = (await getChannels()).find(
-    (channel) => channel.id === params.id[0],
-  );
+
+  const channelId = params.id[0];
+  if (!channelId) return notFound();
+
+  const channel = await getCachedChannel(channelId)();
   if (!channel) return notFound();
+
+  const user = await currentUser();
 
   const tabs = [
     { value: "home", label: "Início" },

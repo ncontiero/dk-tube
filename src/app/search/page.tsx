@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fragment } from "react";
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,76 +17,84 @@ export async function generateMetadata({
   searchParams,
 }: SearchPageProps): Promise<Metadata> {
   const query = (await searchParams).q;
-  if (!query) return notFound();
 
   return {
     title: query || "Nenhuma consulta de pesquisa",
   };
 }
 
-const getSearchResults = async (query: string) => {
-  const dbChannels = await prisma.user.findMany({
-    where: {
-      username: {
-        contains: query,
-        mode: "insensitive",
-      },
-    },
-  });
-  const channels = dbChannels.map((channel) => ({
-    id: channel.id,
-    label: channel.username,
-    image: channel.image,
-    user: null,
-    createdAt: channel.createdAt,
-  }));
-
-  const dbVideos = await prisma.video.findMany({
-    where: {
-      title: {
-        contains: query,
-        mode: "insensitive",
-      },
-    },
-    include: { user: true },
-  });
-  const videos = dbVideos.map((video) => ({
-    id: video.id,
-    label: video.title,
-    image: video.thumb,
-    user: video.user,
-    createdAt: video.createdAt,
-  }));
-
-  const searchedItems = [...videos, ...channels];
-
-  let maxLettersAppear = 0;
-  const searchReturn = [];
-  for (const item of searchedItems) {
-    let lettersQuantity = 0;
-    for (const letter of item.label.toLowerCase()) {
-      for (const searchLetter of query.toLowerCase()) {
-        if (letter === searchLetter) {
-          lettersQuantity++;
-        }
-      }
-    }
-    if (lettersQuantity >= maxLettersAppear) {
-      maxLettersAppear = lettersQuantity;
-      searchReturn.unshift(item);
-    } else {
-      searchReturn.push(item);
-    }
-  }
-
-  return searchReturn;
+const getRelevanceScore = (label: string, query: string): number => {
+  // Compute a relevance score based on the index of the query in the username.
+  // If the query is not found, return 0; otherwise, return a score inversely proportional to the index.
+  if (!label) return 0;
+  const idx = label.toLowerCase().indexOf(query.toLowerCase());
+  return idx === -1 ? 0 : 1 / (idx + 1);
 };
+
+const getCachedSearchResults = (query: string) =>
+  unstable_cache(
+    async () => {
+      const dbChannels = await prisma.user.findMany({
+        where: {
+          username: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+      });
+      const channels = dbChannels.map((channel) => ({
+        id: channel.id,
+        label: channel.username,
+        image: channel.image,
+        user: null,
+        createdAt: channel.createdAt,
+      }));
+
+      const channelsWithRelevance = channels.map((channel) => ({
+        ...channel,
+        relevance: getRelevanceScore(channel.label, query),
+      }));
+      channelsWithRelevance.sort((a, b) => b.relevance - a.relevance);
+      const sortedChannels = channelsWithRelevance.map(
+        ({ relevance, ...rest }) => rest,
+      );
+
+      const dbVideos = await prisma.video.findMany({
+        where: {
+          title: {
+            contains: query,
+            mode: "insensitive",
+          },
+        },
+        include: { user: true },
+      });
+      const videos = dbVideos.map((video) => ({
+        id: video.id,
+        label: video.title,
+        image: video.thumb,
+        user: video.user,
+        createdAt: video.createdAt,
+      }));
+      const videosWithRelevance = videos.map((video) => ({
+        ...video,
+        relevance: getRelevanceScore(video.label, query),
+      }));
+      videosWithRelevance.sort((a, b) => b.relevance - a.relevance);
+      const sortedVideos = videosWithRelevance.map(
+        ({ relevance, ...rest }) => rest,
+      );
+
+      return [...sortedChannels, ...sortedVideos];
+    },
+    [query],
+    { tags: ["search", `search:${query}`], revalidate: 60 * 60 },
+  );
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const query = (await searchParams).q;
   if (!query) return notFound();
 
-  const searchResults = await getSearchResults(query);
+  const searchResults = await getCachedSearchResults(query)();
   const createURL = (id: string, type: "channel" | "video") => {
     return type === "channel" ? `/channel/${id}` : `/watch?v=${id}`;
   };
