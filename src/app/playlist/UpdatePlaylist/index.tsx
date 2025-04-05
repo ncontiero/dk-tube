@@ -47,8 +47,8 @@ export function UpdatePlaylistDialog({
         )}
       </DialogTrigger>
       <DialogPortal>
-        <DialogOverlay className="z-[9999] backdrop-blur-sm" />
-        <DialogContent className="z-[99999] max-w-xs">
+        <DialogOverlay />
+        <DialogContent className="max-w-xs">
           <div className="flex w-full items-center justify-between">
             <DialogHeader>
               <DialogTitle>Editar playlist</DialogTitle>

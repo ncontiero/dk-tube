@@ -1,6 +1,5 @@
 import type { Prisma, User } from "@prisma/client";
-import type { PlaylistProps } from "@/app/playlist/PlaylistPage";
-import type { VideoProps } from "@/components/VideoCard/types";
+import type { PlaylistProps, VideoProps } from "./types";
 import { prisma } from "@/lib/prisma";
 
 interface PlaylistInput {
@@ -53,33 +52,25 @@ type UserPayload<T extends Prisma.UserInclude> = Prisma.UserGetPayload<{
 
 export const getUser = async <T extends Prisma.UserInclude>(
   userExternalId: string,
-  include: Prisma.UserInclude | null = null,
+  include: T,
 ): Promise<UserPayload<T> | null> => {
   if (!userExternalId) {
-    throw new Error("User external ID is required");
+    return null;
   }
 
-  try {
-    return (await prisma.user.findUnique({
-      where: { externalId: userExternalId },
-      omit: { externalId: false },
-      include,
-    })) as UserPayload<T> | null;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    throw new Error(
-      `Failed to fetch user: ${error instanceof Error ? error.message : "Unknown error"}`,
-    );
-  }
+  return (await prisma.user.findUnique({
+    where: { externalId: userExternalId },
+    omit: { externalId: false },
+    include,
+  })) as UserPayload<T> | null;
 };
 
 export const getWatchLater = async (
   userExternalId: string,
 ): Promise<PlaylistProps | null> => {
-  const user = await getUser<{ watchLater: { include: { user: true } } }>(
-    userExternalId,
-    { watchLater: { include: { user: true } } },
-  );
+  const user = await getUser(userExternalId, {
+    watchLater: { include: { user: true } },
+  });
   if (!user) return null;
   return watchLaterObj(user, user.watchLater || []);
 };
@@ -87,10 +78,9 @@ export const getWatchLater = async (
 export const getLikedVideos = async (
   userExternalId: string,
 ): Promise<PlaylistProps | null> => {
-  const user = await getUser<{ likedVideos: { include: { user: true } } }>(
-    userExternalId,
-    { likedVideos: { include: { user: true } } },
-  );
+  const user = await getUser(userExternalId, {
+    likedVideos: { include: { user: true } },
+  });
   if (!user) return null;
   return likedVideosObj(user, user.likedVideos || []);
 };

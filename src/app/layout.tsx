@@ -73,6 +73,9 @@ export default function RootLayout({
               newestOnTop
               pauseOnFocusLoss={false}
               limit={3}
+              stacked
+              className="z-[999999] bg-background font-inter text-foreground"
+              toastClassName="bg-background text-foreground"
               progressClassName="bg-primary"
             />
             <div className="w-full pt-14 sm:pt-16">{children}</div>

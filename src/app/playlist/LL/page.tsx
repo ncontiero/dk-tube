@@ -1,21 +1,27 @@
 import type { Metadata } from "next";
+import { RedirectToSignIn } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
+import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { getLikedVideos } from "@/utils/data";
-import { type PlaylistPageProps, PlaylistPageComp } from "../PlaylistPage";
+import { PlaylistPageComp } from "../PlaylistPage";
 
 export const metadata: Metadata = {
   title: "Vídeos curtidos",
 };
 
-export default async function LikedVideosPage(props: PlaylistPageProps) {
+export default async function LikedVideosPage() {
   const user = await currentUser();
-  if (!user) notFound();
+  if (!user) return RedirectToSignIn({});
 
-  const likedVideos = await getLikedVideos(user.id);
+  const cachedLikedVideos = unstable_cache(
+    async () => await getLikedVideos(user.id),
+    [user.id],
+    { tags: ["likedVideos", `likedVideos:${user.id}`], revalidate: 60 },
+  );
+
+  const likedVideos = await cachedLikedVideos();
   if (!likedVideos) notFound();
 
-  return (
-    <PlaylistPageComp {...props} playlist={likedVideos} isPlaylistStatic />
-  );
+  return <PlaylistPageComp playlist={likedVideos} />;
 }

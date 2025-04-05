@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player/youtube";
+import { useAction } from "next-safe-action/hooks";
 import { useSearchParams } from "next/navigation";
+import { updateHistoryAction } from "@/actions/history";
 
 export type VideoProps = {
   readonly videoId: string;
@@ -29,23 +31,7 @@ export function Video({ videoId, startTime, hasUser = false }: VideoProps) {
     }
   }, []);
 
-  const updateHistory = useCallback(
-    async (playedSeconds: number) => {
-      try {
-        const data = await fetch("/api/history", {
-          method: "POST",
-          body: JSON.stringify({
-            videoId: dbVideoId,
-            playedSeconds,
-          }),
-        });
-        if (data.status !== 200) throw new Error("Failed to update history");
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [dbVideoId],
-  );
+  const updateHistory = useAction(updateHistoryAction);
 
   useEffect(() => {
     if (ambilightVideoRef.current) {
@@ -75,8 +61,11 @@ export function Video({ videoId, startTime, hasUser = false }: VideoProps) {
           }}
           onProgress={({ playedSeconds }) => {
             if (!hasUser) return;
-            if (Math.floor(playedSeconds) % 5 === 0)
-              updateHistory(Math.floor(playedSeconds));
+            if (Math.floor(playedSeconds) % 5 === 0 && dbVideoId)
+              updateHistory.execute({
+                playedSeconds: Math.floor(playedSeconds),
+                videoId: dbVideoId,
+              });
           }}
           config={{
             playerVars: { autoplay: 1, start: startTime },

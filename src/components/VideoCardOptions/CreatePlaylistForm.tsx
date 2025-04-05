@@ -1,86 +1,79 @@
 "use client";
 
-import type {
-  QueryObserverResult,
-  RefetchOptions,
-} from "@tanstack/react-query";
-import { useEffect } from "react";
+import { type Dispatch, type SetStateAction, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useFormState } from "@/hooks/useFormState";
+import { useAction } from "next-safe-action/hooks";
+import { createPlaylistAction } from "@/actions/playlist";
+import {
+  type CreatePlaylistSchema,
+  createPlaylistSchema,
+} from "@/actions/playlist/schema";
 import { Button } from "../ui/Button";
 import { DialogClose } from "../ui/Dialog";
 import { Input } from "../ui/Input";
 import { Label } from "../ui/Label";
 import { Switch } from "../ui/Switch";
-import {
-  type CreatePlaylistKeys,
-  createPlaylistAction,
-} from "./createPlaylistAction";
 
 interface CreatePlaylistFormProps {
   readonly videoId?: string;
   readonly createPlaylistFormOpen?: boolean;
-  readonly setCreatePlaylistFormOpen?: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
-  readonly refetchPlaylists?: (
-    options?: RefetchOptions,
-  ) => Promise<QueryObserverResult>;
+  readonly setCreatePlaylistFormOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export function CreatePlaylistForm({
   videoId,
-  refetchPlaylists,
   createPlaylistFormOpen = true,
   setCreatePlaylistFormOpen,
 }: CreatePlaylistFormProps) {
-  const router = useRouter();
+  const dialogCloseRef = useRef<HTMLButtonElement | null>(null);
 
-  const [{ errors, message, success }, handleSubmit, isPending] =
-    useFormState<CreatePlaylistKeys>(createPlaylistAction, async (message) => {
-      if (refetchPlaylists) {
-        await refetchPlaylists?.();
-      } else {
-        router.refresh();
-      }
-      toast.success(message);
+  const createPlaylist = useAction(createPlaylistAction, {
+    onError: ({ error }) => {
+      toast.error(error.serverError);
+    },
+    onSuccess: () => {
+      toast.success("Playlist criada com sucesso!");
+      dialogCloseRef.current?.click();
       setCreatePlaylistFormOpen?.(false);
-    });
+    },
+  });
 
-  useEffect(() => {
-    if (success === false && message) {
-      toast.error(message);
-    }
-    if (errors?.videoId) {
-      toast.error(errors.videoId);
-    }
-  }, [errors, message, success]);
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+  } = useForm({
+    resolver: zodResolver(createPlaylistSchema),
+    values: { name: "", isPublic: false, videoId },
+  });
+
+  function onSubmit(data: CreatePlaylistSchema) {
+    createPlaylist.execute(data);
+  }
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       data-state={createPlaylistFormOpen ? "open" : "closed"}
       className="duration-200 data-[state=closed]:hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-left-1/3 data-[state=open]:slide-in-from-left-1/3"
       aria-hidden={!createPlaylistFormOpen}
     >
-      {videoId ? (
-        <input hidden type="hidden" value={videoId} name="videoId" readOnly />
-      ) : null}
       <div className="space-y-2">
         <Label htmlFor="name">Nome</Label>
         <Input
-          name="name"
           type="text"
           id="name"
           placeholder="Digite o nome da playlist..."
+          {...register("name")}
         />
 
-        {errors?.name ? (
-          <p className="text-xs font-medium text-red-500 dark:text-red-400">
-            {errors.name[0]}
-          </p>
+        {errors.name ? (
+          <p className="text-sm text-destructive">{errors.name.message}</p>
         ) : null}
       </div>
 
@@ -90,18 +83,20 @@ export function CreatePlaylistForm({
       >
         <div className="flex w-full items-center justify-between">
           Pública
-          <Switch name="isPublic" id="isPublic" />
+          <Switch
+            id="isPublic"
+            checked={watch("isPublic") || false}
+            onCheckedChange={(value) => setValue("isPublic", value)}
+          />
         </div>
-        {errors?.isPublic ? (
-          <p className="text-xs font-medium text-red-500 dark:text-red-400">
-            {errors.isPublic[0]}
-          </p>
+        {errors.isPublic ? (
+          <p className="text-sm text-destructive">{errors.isPublic.message}</p>
         ) : null}
       </Label>
 
       <div className="mt-4 flex items-center gap-2">
         {!setCreatePlaylistFormOpen ? (
-          <DialogClose asChild>
+          <DialogClose asChild ref={dialogCloseRef}>
             <Button variant="outline" className="w-full rounded-full">
               Voltar
             </Button>
@@ -119,9 +114,13 @@ export function CreatePlaylistForm({
         <Button
           type="submit"
           className="w-full rounded-full"
-          disabled={isPending}
+          disabled={createPlaylist.status === "executing"}
         >
-          {isPending ? <Loader2 className="size-4 animate-spin" /> : "Criar"}
+          {createPlaylist.status === "executing" ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            "Criar"
+          )}
         </Button>
       </div>
     </form>

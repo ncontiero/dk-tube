@@ -1,7 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { Film, Plus, X } from "lucide-react";
-import Image from "next/image";
+import { unstable_cache } from "next/cache";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   PlaylistCardImage,
@@ -14,6 +15,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogOverlay,
   DialogPortal,
@@ -53,22 +55,30 @@ export default async function YouPage() {
     return <YouUnauthorizedPage />;
   }
 
-  const you = await prisma.user.findUnique({
-    where: { externalId: userId },
-    include: {
-      history: { include: { video: true } },
-      watchLater: true,
-      likedVideos: true,
-      playlists: {
+  const cachedYou = unstable_cache(
+    async () => {
+      return await prisma.user.findUnique({
+        where: { externalId: userId },
         include: {
-          videos: {
-            include: { user: true },
-            orderBy: { createdAt: "desc" },
+          history: { include: { video: true } },
+          watchLater: true,
+          likedVideos: true,
+          playlists: {
+            include: {
+              videos: {
+                include: { user: true },
+                orderBy: { createdAt: "desc" },
+              },
+            },
           },
         },
-      },
+      });
     },
-  });
+    [`feed:${userId}`],
+    { tags: ["feed", `feed:${userId}`], revalidate: 60 },
+  );
+
+  const you = await cachedYou();
   if (!you) {
     return <YouUnauthorizedPage />;
   }
@@ -162,11 +172,15 @@ export default async function YouPage() {
                   </Tooltip>
                 </TooltipProvider>
                 <DialogPortal>
-                  <DialogOverlay className="z-[9999] backdrop-blur-sm" />
-                  <DialogContent className="z-[99999] max-w-xs">
+                  <DialogOverlay />
+                  <DialogContent className="max-w-xs">
                     <div className="flex w-full items-center justify-between">
                       <DialogHeader>
                         <DialogTitle>Criar playlist</DialogTitle>
+                        <DialogDescription>
+                          Crie uma playlist para organizar seus vídeos
+                          favoritos.
+                        </DialogDescription>
                       </DialogHeader>
                       <DialogClose asChild>
                         <Button
@@ -174,6 +188,7 @@ export default async function YouPage() {
                           size="icon"
                           title="Fechar"
                           aria-label="Fechar"
+                          className="absolute right-2 top-2 rounded-full"
                         >
                           <X />
                         </Button>

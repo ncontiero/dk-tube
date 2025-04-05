@@ -1,20 +1,21 @@
 "use client";
 
-import type { LinkProps, VideoProps } from "./types";
+import type { VideoProps } from "@/utils/types";
+import type { LinkProps } from "./types";
 import {
   type HTMLAttributes,
   createContext,
   forwardRef,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
-
 import { useUser } from "@clerk/nextjs";
+import { useAction } from "next-safe-action/hooks";
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
+import { getTimeWatchedAction } from "@/actions/history";
 import { cn } from "@/lib/utils";
 import {
   type CardContentProps,
@@ -74,13 +75,13 @@ export const VideoCardRoot = forwardRef<HTMLDivElement, VideoCardRootProps>(
       [user?.username, video.user.username],
     );
 
-    const dbTimeWatched = useCallback(async () => {
-      return await fetch(
-        `/api/get-time-watched?videoId=${video.id}&userId=${user?.id}`,
-      )
-        .then((res) => res.json())
-        .catch(console.error);
-    }, [user?.id, video.id]);
+    const getTimeWatched = useAction(getTimeWatchedAction, {
+      onSuccess: ({ data }) => {
+        if (data) {
+          setTimeWatched(data);
+        }
+      },
+    });
 
     const videoDuration = video.duration
       .split(":")
@@ -105,10 +106,13 @@ export const VideoCardRoot = forwardRef<HTMLDivElement, VideoCardRootProps>(
         setTimeWatched(timeWatchedB);
         return;
       }
-      dbTimeWatched()
-        .then((data) => setTimeWatched(data.timeWatched))
-        .catch(console.error);
-    }, [dbTimeWatched, timeWatchedB]);
+      user?.id &&
+        getTimeWatched.execute({
+          videoId: video.id,
+          userId: user.id,
+        });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [timeWatchedB, user?.id, video.id]);
 
     return (
       <VideoCardContext.Provider value={contextValues}>

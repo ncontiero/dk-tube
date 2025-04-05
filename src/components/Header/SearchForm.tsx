@@ -1,31 +1,31 @@
 "use client";
 
-import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Search } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useFormState } from "@/hooks/useFormState";
+import { useAction } from "next-safe-action/hooks";
+import { useSearchParams } from "next/navigation";
+import { type SearchVideosSchema, searchVideosSchema } from "@/actions/schema";
 import { cn } from "@/lib/utils";
-import { type SearchDataKeys, searchAction } from "./searchAction";
+import { searchVideosAction } from "./searchAction";
 
 export function SearchForm({ size = "md" }: { readonly size?: "sm" | "md" }) {
-  const router = useRouter();
   const searchQuery = useSearchParams().get("q");
+  const form = useForm({
+    resolver: zodResolver(searchVideosSchema),
+    defaultValues: { search: searchQuery || "" },
+  });
 
-  const [{ errors, message, success }, handleSubmit, isPending] =
-    useFormState<SearchDataKeys>(searchAction, (_, data) => {
-      if (!data) return;
-      router.push(`/search?q=${data.search}`);
-    });
+  const searchVideos = useAction(searchVideosAction, {
+    onError: () => {
+      toast.error("Erro ao buscar vídeos");
+    },
+  });
 
-  useEffect(() => {
-    if (!success && message) {
-      toast.error(message);
-    }
-    if (errors?.search) {
-      errors.search.map((error) => toast.error(error));
-    }
-  }, [errors?.search, message, success]);
+  function onSubmit(data: SearchVideosSchema) {
+    searchVideos.execute(data);
+  }
 
   return (
     <form
@@ -33,15 +33,14 @@ export function SearchForm({ size = "md" }: { readonly size?: "sm" | "md" }) {
         "hidden size-full max-w-lg items-center lg:flex lg:flex-1",
         size === "sm" && "flex max-w-none",
       )}
-      onSubmit={handleSubmit}
+      onSubmit={form.handleSubmit(onSubmit)}
     >
       <div className="flex w-full rounded-3xl">
         <input
           type="text"
           placeholder="Buscar videos..."
-          name="search"
           className="w-full rounded-l-3xl border border-foreground/20 bg-transparent px-3 py-2 outline-none duration-200 focus:border-ring"
-          defaultValue={searchQuery || ""}
+          {...form.register("search")}
         />
         <button
           type="submit"
@@ -49,7 +48,7 @@ export function SearchForm({ size = "md" }: { readonly size?: "sm" | "md" }) {
           title="Buscar"
           aria-label="Buscar"
         >
-          {isPending ? (
+          {searchVideos.status === "executing" ? (
             <Loader className="mr-1 animate-spin" />
           ) : (
             <Search className="mr-1" />
