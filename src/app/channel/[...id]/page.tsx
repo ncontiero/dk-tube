@@ -33,10 +33,9 @@ const getCachedChannel = (id: string) =>
       return await prisma.user.findUnique({
         where: { id },
         include: { videos: true, playlists: { include: { videos: true } } },
-        omit: { externalId: false },
       });
     },
-    [id],
+    [`channel:${id}`],
     { tags: [`channel:${id}`], revalidate: 60 },
   );
 

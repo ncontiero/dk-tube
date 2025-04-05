@@ -15,7 +15,7 @@ const getCachedPlaylist = (id: string) =>
       return await prisma.playlist.findUnique({
         where: { id },
         include: {
-          user: { omit: { externalId: false } },
+          user: true,
           videos: { include: { user: true } },
         },
       });

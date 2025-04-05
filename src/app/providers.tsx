@@ -1,7 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useMemo, useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { type ReactNode, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { SidebarProvider } from "@/components/ui/Sidebar";
 
@@ -11,7 +10,6 @@ export function Providers({ children }: { readonly children: ReactNode }) {
     !pathname.startsWith("/watch"),
   );
   const [isMobile, setIsMobile] = useState(sidebarOpen ? undefined : true);
-  const queryClient = useMemo(() => new QueryClient(), []);
 
   useEffect(() => {
     setSidebarOpen(!pathname.startsWith("/watch"));
@@ -19,14 +17,12 @@ export function Providers({ children }: { readonly children: ReactNode }) {
   }, [pathname]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SidebarProvider
-        open={sidebarOpen}
-        onOpenChange={setSidebarOpen}
-        isMobileC={isMobile}
-      >
-        {children}
-      </SidebarProvider>
-    </QueryClientProvider>
+    <SidebarProvider
+      open={sidebarOpen}
+      onOpenChange={setSidebarOpen}
+      isMobileC={isMobile}
+    >
+      {children}
+    </SidebarProvider>
   );
 }

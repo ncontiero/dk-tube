@@ -60,7 +60,6 @@ export const getUser = async <T extends Prisma.UserInclude>(
 
   return (await prisma.user.findUnique({
     where: { externalId: userExternalId },
-    omit: { externalId: false },
     include,
   })) as UserPayload<T> | null;
 };
