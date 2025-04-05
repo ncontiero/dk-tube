@@ -85,7 +85,7 @@ export default async function YouPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto mt-6 flex size-full flex-col gap-6 px-4 md:max-w-md lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl">
+      <div className="mx-auto my-6 flex size-full flex-col gap-6 px-4 md:max-w-md lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl">
         <div className="flex items-center gap-4 xs:items-start">
           <Image
             src={you.image}

@@ -16,6 +16,7 @@ import {
 } from "../ui/Dialog";
 import { SidebarTrigger } from "../ui/Sidebar";
 import { SearchForm } from "./SearchForm";
+import { ThemeToggle } from "./ThemeToggle";
 import { UserButton } from "./UserButton";
 
 const getChannel = unstable_cache(
@@ -46,7 +47,7 @@ export async function Header() {
           </Link>
         </div>
         <SearchForm />
-        <div className="flex items-center gap-2 lg:gap-4">
+        <div className="flex items-center gap-3">
           <Dialog>
             <DialogTrigger asChild>
               <Button
@@ -98,6 +99,7 @@ export async function Header() {
             </Link>
             <UserButton channelId={channel?.id || null} />
           </SignedIn>
+          <ThemeToggle />
         </div>
       </div>
     </header>

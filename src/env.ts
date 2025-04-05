@@ -34,8 +34,6 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // API
-    NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3000/api"),
     // Clerk
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
     // Clerk URLs
@@ -64,8 +62,6 @@ export const env = createEnv({
 
     // Client
     // ----------------------------
-    // API
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     // Clerk
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,

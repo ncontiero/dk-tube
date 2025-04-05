@@ -50,8 +50,12 @@ export const clerkTheme = createTheme({
     userButtonPopoverCard: "border border-primary/50",
     userButtonPopoverMain: "bg-card",
     userButtonPopoverFooter: "hidden",
-    userButtonPopoverActionButton: "hover:bg-secondary/80",
-    userButtonPopoverCustomItemButton: "hover:bg-secondary/80",
+    userButtonPopoverActions: "border-border",
+    userButtonPopoverActionButton:
+      "!border-secondary text-foreground/80 hover:bg-secondary/80 hover:text-foreground",
+    userButtonPopoverCustomItemButton:
+      "!border-secondary text-foreground/80 hover:bg-secondary/80 hover:text-foreground",
+    userPreview: "text-foreground",
     menuButton:
       "text-foreground hover:bg-secondary active:bg-secondary focus:ring-2 focus:ring-ring",
     menuItem: "hover:bg-secondary active:bg-secondary",

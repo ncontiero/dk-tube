@@ -61,8 +61,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider appearance={{ baseTheme: clerkTheme }} localization={ptBR}>
-      <html lang="pt-BR" className={inter.variable} suppressHydrationWarning>
-        <body>
+      <html lang="pt-BR" suppressHydrationWarning>
+        <body className={inter.variable}>
           <Providers>
             <AppSidebar />
             <Header />

@@ -54,7 +54,7 @@ export const getTimeWatchedAction = actionClient
         });
 
         if (!history) {
-          throw new Error("Histórico não encontrado!");
+          return 0;
         }
 
         return history.videoTime;
