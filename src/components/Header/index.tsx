@@ -10,8 +10,11 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
   DialogOverlay,
   DialogPortal,
+  DialogTitle,
   DialogTrigger,
 } from "../ui/Dialog";
 import { SidebarTrigger } from "../ui/Sidebar";
@@ -59,11 +62,17 @@ export async function Header() {
               </Button>
             </DialogTrigger>
             <DialogPortal>
-              <DialogOverlay className="z-[99999] backdrop-blur-sm" />
+              <DialogOverlay />
               <DialogContent
                 variant="custom"
-                className="z-[99999] flex h-14 w-full p-0 sm:h-16 sm:rounded-none"
+                className="flex h-14 w-full p-0 sm:h-16 sm:rounded-none"
               >
+                <DialogHeader className="sr-only">
+                  <DialogTitle>Pesquisar</DialogTitle>
+                  <DialogDescription>
+                    Encontre vídeos, músicas e mais.
+                  </DialogDescription>
+                </DialogHeader>
                 <div className="flex size-full items-center gap-4 bg-secondary pl-2 pr-4 xs:pr-8">
                   <DialogClose asChild>
                     <Button

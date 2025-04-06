@@ -30,7 +30,7 @@ export const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
           <>
             <Link
               href={href}
-              className="absolute inset-0 z-[5] -my-1 rounded-xl outline-none duration-200 focus-visible:bg-zinc-600/30 group-active/card:bg-zinc-600/30 xs:-m-1"
+              className="absolute inset-0 z-[5] -my-1 rounded-xl outline-none duration-200 focus-visible:bg-secondary group-active/card:bg-secondary xs:-m-1"
             />
             <div className="absolute inset-0 z-[4] -my-1 rounded-xl duration-300 group-hover/card:bg-primary/20 xs:-m-1" />
           </>
