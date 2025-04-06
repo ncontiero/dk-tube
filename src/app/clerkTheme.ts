@@ -27,10 +27,10 @@ export const clerkTheme = createTheme({
     formFieldInputShowPasswordButton:
       "text-foreground/40 ring-ring !shadow-none hover:text-foreground/70 focus:ring",
     formButtonPrimary:
-      "text-foreground bg-primary/60 duration-200 hover:bg-primary/80 focus:bg-primary/80 !shadow-none ring-offset-card ring-ring focus:ring-2 focus:ring-offset-2",
-    buttonArrowIcon: "text-foreground",
+      "text-primary-foreground bg-primary/80 dark:bg-primary/60 duration-200 hover:bg-primary/80 focus:bg-primary/80 !shadow-none ring-offset-card ring-ring focus:ring-2 focus:ring-offset-2",
+    buttonArrowIcon: "text-primary-foreground",
     formButtonReset:
-      "hover:bg-secondary/80 active:bg-secondary duration-300 text-foreground focus:ring-2 focus:ring-ring",
+      "hover:text-foreground hover:bg-secondary/80 active:bg-secondary duration-300 text-foreground focus:ring-2 focus:ring-ring",
     formFieldAction:
       "text-primary ring-ring rounded hover:text-primary active:text-primary focus:outline-none focus:ring-2",
     formFieldSuccessText: "text-green-600",
@@ -49,6 +49,7 @@ export const clerkTheme = createTheme({
       "!shadow-none ring-ring ring-offset-input activate:ring-2 focus:ring-2 focus:ring-offset-2",
     userButtonPopoverCard: "border border-primary/50",
     userButtonPopoverMain: "bg-card",
+    userPreviewTextContainer: "*:text-foreground",
     userButtonPopoverFooter: "hidden",
     userButtonPopoverActions: "border-border",
     userButtonPopoverActionButton:
@@ -60,24 +61,34 @@ export const clerkTheme = createTheme({
       "text-foreground hover:bg-secondary active:bg-secondary focus:ring-2 focus:ring-ring",
     menuItem: "hover:bg-secondary active:bg-secondary",
     modalCloseButton:
-      "text-foreground hover:bg-secondary active:bg-secondary focus:ring-2 focus:ring-ring",
+      "text-foreground hover:text-foreground/80 hover:bg-secondary active:bg-secondary focus:ring-2 focus:ring-ring",
+    modalBackdrop: "z-[99999] backdrop-blur-md",
     // Profile
+    profilePage: "*:border-border",
     profileSectionPrimaryButton:
-      "text-foreground bg-secondary/60 duration-200 hover:bg-secondary focus:bg-primary/80 !shadow-none ring-offset-card ring-ring focus:ring-2 focus:ring-offset-2",
+      "text-foreground bg-secondary/60 duration-200 !shadow-none ring-offset-card ring-ring hover:text-foreground hover:bg-secondary focus:bg-primary/40 focus:ring-2 focus:ring-offset-2",
+    profileSectionTitleText: "text-foreground",
+    profileSectionItem: "[&_p]:text-foreground",
     // NavBar
-    navbar: "!bg-none !bg-card",
+    navbar:
+      "!bg-none !bg-card [&_h1]:text-foreground [&_p]:text-foreground/70 [&_.cl-internal-lqfubk]:hidden",
     navbarMobileMenuRow: "!bg-none !bg-card",
     navbarMobileMenuButton:
       "text-foreground/80 hover:bg-secondary focus:ring-1 focus:ring-ring",
     navbarButton:
       "text-foreground/80 data-[active=true]:text-foreground hover:bg-secondary focus:ring-1 focus:ring-ring",
     // Footer
-    footer: "[&>.cl-internal-180wb59]:hidden bg-card",
-    footerAction: "bg-card/60 w-full flex justify-center",
+    footer: "[&>.cl-internal-180wb59]:hidden bg-none",
+    footerAction: "bg-card/60 w-full flex justify-center border-t border-input",
+    footerActionText: "text-foreground",
     footerActionLink:
       "text-primary ring-ring rounded hover:text-primary active:text-primary focus:outline-none focus:ring-2",
+    // Devices
+    activeDevice:
+      "[&_.cl-internal-rvg68x]:text-foreground [&_p]:text-foreground/70",
     // Extras
     badge: "text-primary bg-primary/20",
     dividerText: "text-foreground/70",
+    backLink: "text-foreground hover:underline",
   },
 });
