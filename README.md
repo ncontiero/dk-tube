@@ -1,4 +1,4 @@
-# DKTUBE
+# DkTube
 
 [![license mit](https://img.shields.io/badge/licence-MIT-6C47FF)](LICENSE)
 
@@ -7,9 +7,8 @@ A project based on Youtube.
 ## Technologies used
 
 - [Next.Js](https://nextjs.org/)
-- [TailwindCSS](https://tailwindcss.com/)
+- [next-safe-action](https://next-safe-action.dev/)
 - [Clerk](https://clerk.com/)
-- [TanStack Query](https://tanstack.com/query/v3/)
 - [react-player](https://github.com/CookPete/react-player)
 
 ## Install and run the project
@@ -18,7 +17,7 @@ A project based on Youtube.
 
 You need to have a main dependency installed:
 
-- [Node.js](https://nodejs.dev/) LTS v18 (or any higher version)
+- [Node.js](https://nodejs.dev/) LTS v20 (or any higher version)
 
 Do you use `nvm`? Then you can run `nvm install` in the project folder to install and use the most appropriate version of Node.js.
 
@@ -33,17 +32,20 @@ git clone https://github.com/ncontiero/dk-tube.git
 So after getting the repository, don't forget to install the project's local dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Environment variables
 
 Create a `.env` file similar to [`.env.example`](./.env.example).
 
-Change [Clerk](https://dashboard.clerk.com/) variables according to your project.
+Change [Clerk](https://dashboard.clerk.com/) and [GCP](https://cloud.google.com/) variables according to your project.
 
 ```env
 # ...
+
+# Google Cloud
+GC_API_KEY="YOUR_GC_API_KEY"
 
 # Clerk Keys
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="YOUR_CLERK_PUBLISHABLE_KEY"
@@ -54,8 +56,6 @@ CLERK_WEBHOOK_SIGNING_SECRET="YOUR_CLERK_WEBHOOK_SIGNING_SECRET"
 # Clerk Routes
 NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
 NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/"
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/"
 
 # ...
 ```
@@ -65,7 +65,11 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/"
 To run the project locally, just run the command below:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 - go to <http://localhost:3000> to see the application.
+
+## License
+
+This project is licensed under the **MIT** License - see the [LICENSE](./LICENSE) file for details
