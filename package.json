@@ -22,9 +22,9 @@
     "prisma:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@clerk/localizations": "^3.13.12",
-    "@clerk/nextjs": "^6.16.0",
-    "@clerk/themes": "^2.2.34",
+    "@clerk/localizations": "^3.13.13",
+    "@clerk/nextjs": "^6.17.0",
+    "@clerk/themes": "^2.2.35",
     "@hookform/resolvers": "^5.0.1",
     "@prisma/client": "^6.6.0",
     "@radix-ui/react-alert-dialog": "^1.1.10",
