@@ -52,7 +52,7 @@
     "react-toastify": "^11.0.5",
     "svix": "^1.66.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^3.25.30"
+    "zod": "^3.25.32"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
