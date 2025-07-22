@@ -8,15 +8,15 @@ export type SearchVideoOnHistorySchema = z.infer<
 >;
 
 export const getTimeWatchedSchema = z.object({
-  videoId: z.string().cuid(),
+  videoId: z.cuid(),
   userId: z.string(),
 });
 
 export const removeVideoFromHistorySchema = z.object({
-  videoId: z.string().cuid(),
+  videoId: z.cuid(),
 });
 
 export const updateHistorySchema = z.object({
-  videoId: z.string().cuid(),
+  videoId: z.cuid(),
   playedSeconds: z.number(),
 });

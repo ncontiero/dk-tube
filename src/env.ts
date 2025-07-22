@@ -12,13 +12,13 @@ export const env = createEnv({
       .default("development"),
 
     // Database (Prisma)
-    DATABASE_URL: z.string().url(),
+    DATABASE_URL: z.url(),
 
     // these variables are used for the site's SEO
     SITE_NAME: z.string().default("DkTube"),
     SITE_LOCALE: z.string().default("en_US"),
     // URLs
-    SITE_BASEURL: z.string().url().default("http://localhost:3000"),
+    SITE_BASEURL: z.url().default("http://localhost:3000"),
 
     // Google Cloud
     GC_API_KEY: z.string().min(1),

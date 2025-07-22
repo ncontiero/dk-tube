@@ -19,6 +19,6 @@ export const deletePlaylistSchema = z.object({
 });
 
 export const handleVideoFromPlaylistSchema = z.object({
-  videoId: z.string().cuid(),
+  videoId: z.cuid(),
   playlistId: z.string(),
 });
