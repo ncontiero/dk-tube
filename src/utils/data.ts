@@ -1,4 +1,4 @@
-import type { Prisma, User } from "@prisma/client";
+import type { Prisma, User } from "@/lib/generated/prisma/client";
 import type { PlaylistProps, VideoProps } from "./types";
 import { prisma } from "@/lib/prisma";
 

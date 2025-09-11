@@ -1,7 +1,9 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { env } from "@/env";
+import { Prisma, PrismaClient } from "./generated/prisma/client";
 
-const createPrismaClient = () => new PrismaClient();
+const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
+const createPrismaClient = () => new PrismaClient({ adapter });
 
 const globalForPrisma = globalThis as unknown as {
   prisma: ReturnType<typeof createPrismaClient> | undefined;
