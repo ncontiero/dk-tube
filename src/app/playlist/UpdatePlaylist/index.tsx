@@ -1,4 +1,4 @@
-import type { Playlist } from "@prisma/client";
+import type { Playlist } from "@/lib/prisma";
 import { Pencil, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {

@@ -1,4 +1,4 @@
-import type { Playlist } from "@prisma/client";
+import type { Playlist } from "@/lib/prisma";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Loader2, Lock } from "lucide-react";

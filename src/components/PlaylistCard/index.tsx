@@ -1,7 +1,7 @@
 "use client";
 
-import type { Playlist, Video } from "@prisma/client";
 import type { ImageProps } from "next/image";
+import type { Playlist, Video } from "@/lib/prisma";
 import type { CNonNullable } from "@/utils/types";
 import {
   type CSSProperties,

@@ -1,4 +1,4 @@
-import type { Playlist, User, Video } from "@prisma/client";
+import type { Playlist, User, Video } from "@/lib/generated/prisma/browser";
 
 /**
  * @description Utility type to make all properties of an object non-nullable

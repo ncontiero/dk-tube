@@ -1,6 +1,6 @@
 "use client";
 
-import type { Playlist } from "@prisma/client";
+import type { Playlist } from "@/lib/prisma";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";

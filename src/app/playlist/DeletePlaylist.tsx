@@ -1,6 +1,6 @@
 "use client";
 
-import type { Playlist } from "@prisma/client";
+import type { Playlist } from "@/lib/prisma";
 import { toast } from "react-toastify";
 import { Loader2, Trash } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
