@@ -52,7 +52,7 @@
     "react-player": "^2.16.1",
     "react-toastify": "^11.0.5",
     "tailwind-merge": "^2.6.0",
-    "zod": "^4.1.9"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
