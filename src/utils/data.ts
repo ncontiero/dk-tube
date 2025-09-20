@@ -1,6 +1,5 @@
-import type { Prisma, User } from "@/lib/generated/prisma/client";
 import type { PlaylistProps, VideoProps } from "./types";
-import { prisma } from "@/lib/prisma";
+import { type Prisma, type User, prisma } from "@/lib/prisma";
 
 interface PlaylistInput {
   id: string;
