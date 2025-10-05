@@ -1,7 +1,7 @@
 "use client";
 
 import { type Dispatch, type SetStateAction, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -45,11 +45,16 @@ export function CreatePlaylistForm({
     formState: { errors },
     register,
     handleSubmit,
-    watch,
     setValue,
+    control,
   } = useForm({
     resolver: zodResolver(createPlaylistSchema),
     values: { name: "", isPublic: false, videoId },
+  });
+
+  const watchedIsPublic = useWatch({
+    control,
+    name: "isPublic",
   });
 
   function onSubmit(data: CreatePlaylistSchema) {
@@ -85,7 +90,7 @@ export function CreatePlaylistForm({
           Pública
           <Switch
             id="isPublic"
-            checked={watch("isPublic") || false}
+            checked={watchedIsPublic || false}
             onCheckedChange={(value) => setValue("isPublic", value)}
           />
         </div>

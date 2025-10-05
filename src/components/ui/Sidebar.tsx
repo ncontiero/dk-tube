@@ -2,12 +2,10 @@
 
 import {
   type ComponentProps,
+  type ComponentRef,
   type CSSProperties,
-  type ElementRef,
-  createContext,
   forwardRef,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -19,7 +17,13 @@ import { PanelLeft } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Separator } from "@/components/ui/Separator";
-import { Sheet, SheetContent } from "@/components/ui/Sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/Sheet";
 import { Skeleton } from "@/components/ui/Skeleton";
 import {
   Tooltip,
@@ -27,7 +31,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/Tooltip";
+import {
+  type SidebarContextProps,
+  SidebarContext,
+} from "@/context/sidebar-context";
 import { useIsMobile } from "@/hooks/useMobile";
+import { useSidebar } from "@/hooks/useSidebar";
 import { cn } from "@/lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
@@ -36,27 +45,6 @@ const SIDEBAR_WIDTH = "14rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
-
-type SidebarContextProps = {
-  state: "expanded" | "collapsed";
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  openMobile: boolean;
-  setOpenMobile: (open: boolean) => void;
-  isMobile: boolean;
-  toggleSidebar: () => void;
-};
-
-const SidebarContext = createContext<SidebarContextProps | null>(null);
-
-function useSidebar() {
-  const context = useContext(SidebarContext);
-  if (!context) {
-    throw new Error("useSidebar must be used within a SidebarProvider.");
-  }
-
-  return context;
-}
 
 const SidebarProvider = forwardRef<
   HTMLDivElement,
@@ -229,6 +217,12 @@ const Sidebar = forwardRef<
             }
             side={side}
           >
+            <SheetHeader className="sr-only">
+              <SheetTitle>Barra lateral</SheetTitle>
+              <SheetDescription>
+                Barra lateral com opções de navegação
+              </SheetDescription>
+            </SheetHeader>
             <div className="flex size-full flex-col">{children}</div>
           </SheetContent>
         </Sheet>
@@ -283,7 +277,7 @@ const Sidebar = forwardRef<
 Sidebar.displayName = "Sidebar";
 
 const SidebarTrigger = forwardRef<
-  ElementRef<typeof Button>,
+  ComponentRef<typeof Button>,
   ComponentProps<typeof Button>
 >(({ className, children, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar();
@@ -356,7 +350,7 @@ const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<"main">>(
 SidebarInset.displayName = "SidebarInset";
 
 const SidebarInput = forwardRef<
-  ElementRef<typeof Input>,
+  ComponentRef<typeof Input>,
   ComponentProps<typeof Input>
 >(({ className, ...props }, ref) => {
   return (
@@ -402,7 +396,7 @@ const SidebarFooter = forwardRef<HTMLDivElement, ComponentProps<"div">>(
 SidebarFooter.displayName = "SidebarFooter";
 
 const SidebarSeparator = forwardRef<
-  ElementRef<typeof Separator>,
+  ComponentRef<typeof Separator>,
   ComponentProps<typeof Separator>
 >(({ className, ...props }, ref) => {
   return (
@@ -665,11 +659,6 @@ const SidebarMenuSkeleton = forwardRef<
     readonly showIcon?: boolean;
   }
 >(({ className, showIcon = false, ...props }, ref) => {
-  // Random width between 50 to 90%.
-  const width = useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`;
-  }, []);
-
   return (
     <div
       ref={ref}
@@ -688,7 +677,7 @@ const SidebarMenuSkeleton = forwardRef<
         data-sidebar="menu-skeleton-text"
         style={
           {
-            "--skeleton-width": width,
+            "--skeleton-width": "60%",
           } as CSSProperties
         }
       />
@@ -772,5 +761,4 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
-  useSidebar,
 };

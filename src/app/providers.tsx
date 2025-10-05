@@ -1,21 +1,16 @@
 "use client";
 
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
 import { SidebarProvider } from "@/components/ui/Sidebar";
 
 export function Providers({ children }: { readonly children: ReactNode }) {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(
-    !pathname.startsWith("/watch"),
-  );
-  const [isMobile, setIsMobile] = useState(sidebarOpen ? undefined : true);
+  const sidebarOpenInitial = !pathname.startsWith("/watch");
+  const isMobile = pathname.startsWith("/watch");
 
-  useEffect(() => {
-    setSidebarOpen(!pathname.startsWith("/watch"));
-    setIsMobile(pathname.startsWith("/watch"));
-  }, [pathname]);
+  const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial);
 
   return (
     <ThemeProvider attribute="class">

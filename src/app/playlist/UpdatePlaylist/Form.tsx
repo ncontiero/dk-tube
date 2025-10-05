@@ -2,7 +2,7 @@
 
 import type { Playlist } from "@/lib/prisma";
 import { useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -39,12 +39,14 @@ export function UpdatePlaylistForm({
     handleSubmit,
     register,
     formState: { errors },
-    watch,
     setValue,
+    control,
   } = useForm({
     resolver: zodResolver(updatePlaylistSchema),
     defaultValues: playlist,
   });
+
+  const watchedIsPublic = useWatch({ control, name: "isPublic" });
 
   function onSubmit(data: UpdatePlaylistSchema) {
     updatePlaylist.execute({ ...data, id: playlist.id });
@@ -74,7 +76,7 @@ export function UpdatePlaylistForm({
           Pública
           <Switch
             id="isPublic"
-            checked={watch("isPublic") || false}
+            checked={watchedIsPublic || false}
             onCheckedChange={(value) => setValue("isPublic", value)}
           />
         </div>
