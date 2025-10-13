@@ -82,11 +82,19 @@ export const PlaylistCardImage = forwardRef<
         { "--width": `${width}px`, "--height": `${height}px` } as CSSProperties
       }
       className={cn(
-        "relative z-10 rounded-xl outline-none ring-ring duration-200 focus-visible:ring-2 xs:max-h-[var(--height)] xs:max-w-[var(--width)]",
+        `
+          relative z-10 rounded-xl outline-none ring-ring duration-200 focus-visible:ring-2 xs:max-h-[--height]
+          xs:max-w-[--width]
+        `,
         linkClassName,
       )}
     >
-      <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/80 text-sm font-semibold uppercase opacity-0 duration-300 group-hover/card:opacity-100 xs:text-base">
+      <div
+        className={`
+          absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/80 text-sm font-semibold
+          uppercase opacity-0 duration-300 group-hover/card:opacity-100 xs:text-base
+        `}
+      >
         Reproduzir tudo
       </div>
       <CardImage
@@ -127,7 +135,10 @@ export const PlaylistCardInfo = forwardRef<
       <Link
         href={`/playlist/${playlist.id}`}
         className={cn(
-          "z-10 mt-2 flex w-fit items-center gap-1 rounded-md text-xs text-foreground/60 ring-primary duration-200 hover:text-foreground focus:outline-none focus-visible:text-foreground focus-visible:ring-2 xs:text-sm",
+          `
+            z-10 mt-2 flex w-fit items-center gap-1 rounded-md text-xs text-foreground/60 ring-primary duration-200
+            hover:text-foreground focus:outline-none focus-visible:text-foreground focus-visible:ring-2 xs:text-sm
+          `,
           linkClassName,
         )}
       >
@@ -156,7 +167,9 @@ export const PlaylistCardTitle = forwardRef<
     <Link
       href={href}
       title={playlist.name}
-      className="z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
+      className={`
+        z-10 size-fit rounded-md ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2
+      `}
     >
       <CardTitle ref={ref} className={cn("text-base", className)} {...props}>
         {playlist.name}

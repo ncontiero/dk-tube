@@ -32,12 +32,22 @@ export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto flex size-full max-w-screen-2xl flex-col gap-4 mdlg:mt-4 mdlg:flex-row mdlg:px-4 mdlg:pt-4">
-        <div className="flex size-full flex-col items-center gap-4 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background p-4 sm:flex-row mdlg:fixed mdlg:w-fit mdlg:flex-col mdlg:gap-0 mdlg:rounded-xl">
+      <div
+        className={`mx-auto flex size-full max-w-screen-2xl flex-col gap-4 mdlg:mt-4 mdlg:flex-row mdlg:px-4 mdlg:pt-4`}
+      >
+        <div
+          className={`
+            flex size-full flex-col items-center gap-4 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10
+            to-background p-4 sm:flex-row mdlg:fixed mdlg:w-fit mdlg:flex-col mdlg:gap-0 mdlg:rounded-xl
+          `}
+        >
           <Image
             src={plImage}
             alt="image"
-            className="top-0 -z-10 size-full max-h-[50%] bg-cover bg-top bg-no-repeat opacity-70 blur-3xl sm:max-h-[35%] mdlg:max-h-[50%] mdlg:max-w-[400px]"
+            className={`
+              top-0 -z-10 size-full max-h-[50%] bg-cover bg-top bg-no-repeat opacity-70 blur-3xl sm:max-h-[35%]
+              mdlg:max-h-[50%] mdlg:max-w-[400px]
+            `}
             fill
           />
           <div className="size-full md:max-h-[240px] md:max-w-[426px] mdlg:h-[190px] mdlg:w-[326px]">
@@ -54,7 +64,9 @@ export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
             <h1 className="text-2xl font-bold">{playlist.name}</h1>
             <Link
               href={`/channel/${playlist.user.id}`}
-              className="mt-2 flex w-fit items-center gap-2 rounded-xl outline-none ring-ring duration-200 focus-visible:ring-2"
+              className={`
+                mt-2 flex w-fit items-center gap-2 rounded-xl outline-none ring-ring duration-200 focus-visible:ring-2
+              `}
             >
               <Image
                 src={playlist.user.image}

@@ -108,7 +108,10 @@ export async function AppSidebar() {
         {userId ? (
           <SidebarGroup>
             <SidebarGroupLabel
-              className="h-9 duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground"
+              className={`
+                h-9 duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2
+                active:bg-sidebar-accent active:text-sidebar-accent-foreground
+              `}
               asChild
             >
               <Link

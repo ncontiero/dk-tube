@@ -137,7 +137,10 @@ export default async function WatchPage({ searchParams }: WatchPageProps) {
               </Link>
               <Link
                 href={`/channel/${video.user.id}`}
-                className="size-fit self-center truncate rounded-md px-0.5 outline-none ring-ring duration-200 hover:opacity-90 focus:ring-2 mdlg:self-auto mdlg:font-semibold"
+                className={`
+                  size-fit self-center truncate rounded-md px-0.5 outline-none ring-ring duration-200 hover:opacity-90
+                  focus:ring-2 mdlg:self-auto mdlg:font-semibold
+                `}
               >
                 {video.user.username}
               </Link>

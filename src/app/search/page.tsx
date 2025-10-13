@@ -113,21 +113,35 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             >
               <Link
                 href={`/watch?v=${result.id}`}
-                className={`relative z-10 w-full outline-none ring-ring duration-200 hover:opacity-90 focus-visible:ring-2 xs:max-w-[360px] ${result.user ? "xs:max-h-[230px]" : "flex w-[136px] justify-center rounded-full xs:max-h-[136px] xs:w-full"} xs:rounded-xl`}
+                className={`
+                  relative z-10 w-full outline-none ring-ring duration-200 hover:opacity-90 focus-visible:ring-2
+                  xs:max-w-[360px]
+                  ${
+                    result.user
+                      ? `xs:max-h-[230px]`
+                      : `flex w-[136px] justify-center rounded-full xs:max-h-[136px] xs:w-full`
+                  } xs:rounded-xl`}
               >
                 <Image
                   src={result.image}
                   alt={result.label}
                   width={result.user ? 360 : 136}
                   height={result.user ? 230 : 136}
-                  className={`object-cover ${result.user ? "aspect-video w-full xs:rounded-xl" : "aspect-square rounded-full"}`}
+                  className={`object-cover ${
+                    result.user
+                      ? "aspect-video w-full xs:rounded-xl"
+                      : `aspect-square rounded-full`
+                  }`}
                 />
               </Link>
               <CardContent className="mt-0 flex-col px-2.5 xs:mt-0.5 xs:px-0.5 md:px-0.5">
                 <Link
                   href={`/watch?v=${result.id}`}
                   title={result.label}
-                  className="z-10 size-fit rounded-md pr-14 ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
+                  className={`
+                    z-10 size-fit rounded-md pr-14 ring-ring duration-200 hover:opacity-90 focus:outline-none
+                    focus-visible:ring-2
+                  `}
                 >
                   <CardTitle
                     className="max-h-max overflow-auto text-base xs:text-lg"
@@ -139,7 +153,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 {result.user ? (
                   <>
                     <Link
-                      className="group z-10 flex size-fit items-center gap-2 rounded-md outline-none ring-ring duration-200 focus:ring-2"
+                      className={`
+                        group z-10 flex size-fit items-center gap-2 rounded-md outline-none ring-ring duration-200
+                        focus:ring-2
+                      `}
                       href={`/channel/${result.user.id}`}
                       title={result.user.username}
                     >

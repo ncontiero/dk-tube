@@ -102,7 +102,11 @@ export default async function ChannelPage(props: ChannelPageProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto mt-4 flex w-full max-w-screen-2xl flex-col items-center px-4 pt-4 xs:flex-row xs:items-start">
+      <div
+        className={`
+          mx-auto mt-4 flex w-full max-w-screen-2xl flex-col items-center px-4 pt-4 xs:flex-row xs:items-start
+        `}
+      >
         <div className="size-14 max-w-max xs:mb-3 xs:mr-6 xs:size-auto">
           <Image
             src={channel.image}
@@ -143,7 +147,11 @@ export default async function ChannelPage(props: ChannelPageProps) {
                     <TabsTrigger
                       key={tab.value}
                       value={tab.value}
-                      className="rounded-none rounded-t-lg border-b border-transparent px-6 py-4 text-sm font-medium uppercase text-foreground/80 duration-200 hover:bg-secondary hover:text-foreground data-[state=active]:border-foreground hover:data-[state=active]:bg-secondary"
+                      className={`
+                        rounded-none rounded-t-lg border-b border-transparent px-6 py-4 text-sm font-medium uppercase
+                        text-foreground/80 duration-200 hover:bg-secondary hover:text-foreground
+                        data-[state=active]:border-foreground hover:data-[state=active]:bg-secondary
+                      `}
                       asChild
                     >
                       <Link href={`/channel/${channel.id}/${tab.value}`}>

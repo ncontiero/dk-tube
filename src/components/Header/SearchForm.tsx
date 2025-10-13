@@ -39,12 +39,18 @@ export function SearchForm({ size = "md" }: { readonly size?: "sm" | "md" }) {
         <input
           type="text"
           placeholder="Buscar videos..."
-          className="w-full rounded-l-3xl border border-foreground/20 bg-transparent px-3 py-2 outline-none duration-200 focus:border-ring"
+          className={`
+            w-full rounded-l-3xl border border-foreground/20 bg-transparent px-3 py-2 outline-none duration-200
+            focus:border-ring
+          `}
           {...form.register("search")}
         />
         <button
           type="submit"
-          className="rounded-r-3xl border-y border-r border-foreground/20 bg-foreground/10 px-2 outline-ring duration-200 disabled:cursor-not-allowed disabled:opacity-70 sm:px-4 sm:py-2 [&:not(:disabled):hover]:bg-foreground/20"
+          className={`
+            rounded-r-3xl border-y border-r border-foreground/20 bg-foreground/10 px-2 outline-ring duration-200
+            disabled:cursor-not-allowed disabled:opacity-70 sm:px-4 sm:py-2 [&:not(:disabled):hover]:bg-foreground/20
+          `}
           title="Buscar"
           aria-label="Buscar"
         >

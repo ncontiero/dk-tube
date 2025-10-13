@@ -37,7 +37,12 @@ export async function Header() {
   const channel = user?.id ? await getChannel(user.id) : null;
 
   return (
-    <header className="fixed top-0 z-[9999] flex h-14 w-full items-center border-b bg-secondary/60 pl-2 pr-3 backdrop-blur-md sm:h-16 sm:pl-4 sm:pr-6">
+    <header
+      className={`
+        fixed top-0 z-[9999] flex h-14 w-full items-center border-b bg-secondary/60 pl-2 pr-3 backdrop-blur-md sm:h-16
+        sm:pl-4 sm:pr-6
+      `}
+    >
       <div className="flex size-full items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <SidebarTrigger className="mt-1 sm:mt-0" />
@@ -93,7 +98,11 @@ export async function Header() {
           <SignedOut>
             <Link
               href="/sign-in"
-              className="flex size-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase ring-ring duration-200 hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70 sm:w-auto sm:rounded-3xl sm:px-4 sm:py-2"
+              className={`
+                flex size-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase ring-ring
+                duration-200 hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70
+                sm:w-auto sm:rounded-3xl sm:px-4 sm:py-2
+              `}
             >
               Login
             </Link>
@@ -102,7 +111,10 @@ export async function Header() {
             <Link
               href="/create-video"
               title="Criar vídeo"
-              className="rounded-full p-2 outline-none ring-ring duration-200 hover:bg-foreground/20 focus-visible:ring-2 active:bg-foreground/30"
+              className={`
+                rounded-full p-2 outline-none ring-ring duration-200 hover:bg-foreground/20 focus-visible:ring-2
+                active:bg-foreground/30
+              `}
             >
               <FilePlus />
             </Link>

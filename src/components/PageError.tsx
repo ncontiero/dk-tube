@@ -14,7 +14,10 @@ export function PageError({ title, description }: PageErrorProps) {
         Por favor, volte para a{" "}
         <Link
           href="/"
-          className="rounded-md text-primary underline-offset-2 ring-ring duration-200 hover:text-primary/80 hover:underline focus:outline-none focus:ring-2 active:opacity-70"
+          className={`
+            rounded-md text-primary underline-offset-2 ring-ring duration-200 hover:text-primary/80 hover:underline
+            focus:outline-none focus:ring-2 active:opacity-70
+          `}
         >
           página inicial
         </Link>

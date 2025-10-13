@@ -85,14 +85,21 @@ export default async function YouPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto my-6 flex size-full flex-col gap-6 px-4 md:max-w-md lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl">
+      <div
+        className={`
+          mx-auto my-6 flex size-full flex-col gap-6 px-4 md:max-w-md lg:max-w-screen-md xl:max-w-screen-lg
+          2xl:max-w-screen-xl
+        `}
+      >
         <div className="flex items-center gap-4 xs:items-start">
           <Image
             src={you.image}
             alt={you.username}
             width={120}
             height={120}
-            className="aspect-square max-h-[72px] max-w-[72px] rounded-full border object-cover xs:max-h-[120px] xs:max-w-[120px]"
+            className={`
+              aspect-square max-h-[72px] max-w-[72px] rounded-full border object-cover xs:max-h-[120px] xs:max-w-[120px]
+            `}
           />
           <Link
             href={`/channel/${you.id}`}
@@ -101,7 +108,12 @@ export default async function YouPage() {
             <h1 className="text-xl font-bold uppercase xs:text-4xl">
               {you.username}
             </h1>
-            <span className="mt-1 text-xs text-foreground/60 duration-200 group-hover:text-foreground group-hover:underline group-focus:text-foreground group-focus:underline xs:text-sm">
+            <span
+              className={`
+                mt-1 text-xs text-foreground/60 duration-200 group-hover:text-foreground group-hover:underline
+                group-focus:text-foreground group-focus:underline xs:text-sm
+              `}
+            >
               Ver canal
             </span>
           </Link>

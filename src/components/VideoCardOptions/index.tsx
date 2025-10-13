@@ -67,7 +67,10 @@ export function VideoCardOptionsMenu({
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-0 z-20 size-fit rounded-full p-0.5 duration-200 group-focus-within/card:opacity-100 group-hover/card:opacity-100 sm:opacity-0"
+          className={`
+            absolute right-0 z-20 size-fit rounded-full p-0.5 duration-200 group-focus-within/card:opacity-100
+            group-hover/card:opacity-100 sm:opacity-0
+          `}
         >
           <EllipsisVertical />
         </Button>

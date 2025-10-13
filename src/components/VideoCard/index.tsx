@@ -140,7 +140,10 @@ export const VideoCardThumb = forwardRef<HTMLImageElement, VideoCardThumbProps>(
       <Link
         href={`/watch?v=${video.id}${timeWatched ? `&t=${timeWatched}` : ""}`}
         className={cn(
-          "relative z-10 w-full overflow-hidden outline-none ring-ring duration-200 hover:opacity-90 focus-visible:ring-2 xs:rounded-xl",
+          `
+            relative z-10 w-full overflow-hidden outline-none ring-ring duration-200 hover:opacity-90
+            focus-visible:ring-2 xs:rounded-xl
+          `,
           linkClassName,
         )}
       >
@@ -215,7 +218,10 @@ export const VideoCardChannel = forwardRef<
         ref={ref}
         href={`/channel/${video.user.id}`}
         className={cn(
-          "group/channel flex items-center gap-2 outline-none ring-ring ring-offset-background duration-200 focus:ring-2 focus:ring-offset-2",
+          `
+            group/channel flex items-center gap-2 outline-none ring-ring ring-offset-background duration-200
+            focus:ring-2 focus:ring-offset-2
+          `,
           className,
         )}
         {...props}
@@ -289,7 +295,9 @@ export const VideoCardTitle = forwardRef<
     <Link
       href={`/watch?v=${video.id}${timeWatched ? `&t=${timeWatched}` : ""}`}
       title={video.title}
-      className="z-10 size-fit rounded-md pr-6 ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2"
+      className={`
+        z-10 size-fit rounded-md pr-6 ring-ring duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2
+      `}
     >
       <CardTitle ref={ref} {...props}>
         {video.title}

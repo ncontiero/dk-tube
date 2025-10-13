@@ -65,7 +65,11 @@ export function CreatePlaylistForm({
     <form
       onSubmit={handleSubmit(onSubmit)}
       data-state={createPlaylistFormOpen ? "open" : "closed"}
-      className="duration-200 data-[state=closed]:hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-left-1/3 data-[state=open]:slide-in-from-left-1/3"
+      className={`
+        duration-200 data-[state=closed]:hidden data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+        data-[state=closed]:slide-out-to-left-1/3 data-[state=open]:animate-in data-[state=open]:fade-in-0
+        data-[state=open]:slide-in-from-left-1/3
+      `}
       aria-hidden={!createPlaylistFormOpen}
     >
       <div className="space-y-2">
