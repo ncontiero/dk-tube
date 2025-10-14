@@ -61,7 +61,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider
-      appearance={{ elements: { ...clerkTheme.elements } }}
+      appearance={{ theme: { clerkTheme } as any }}
       localization={ptBR}
     >
       <html lang="pt-BR" suppressHydrationWarning>
