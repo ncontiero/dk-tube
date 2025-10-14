@@ -60,7 +60,10 @@ export default function RootLayout({
   readonly children: ReactNode;
 }) {
   return (
-    <ClerkProvider appearance={{ baseTheme: clerkTheme }} localization={ptBR}>
+    <ClerkProvider
+      appearance={{ elements: { ...clerkTheme.elements } }}
+      localization={ptBR}
+    >
       <html lang="pt-BR" suppressHydrationWarning>
         <body className={inter.variable}>
           <Providers>
