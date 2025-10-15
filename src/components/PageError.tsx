@@ -15,8 +15,8 @@ export function PageError({ title, description }: PageErrorProps) {
         <Link
           href="/"
           className={`
-            rounded-md text-primary underline-offset-2 ring-ring duration-200 hover:text-primary/80 hover:underline
-            focus:outline-none focus:ring-2 active:opacity-70
+            text-primary ring-ring rounded-md underline-offset-2 duration-200 hover:text-primary/80 hover:underline
+            focus:ring-2 focus:outline-hidden active:opacity-70
           `}
         >
           página inicial

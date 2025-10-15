@@ -31,26 +31,28 @@ export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
   const isStaticPlaylist = playlist.id === "WL" || playlist.id === "LL";
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex size-full flex-col gap-4">
       <div
-        className={`mx-auto flex size-full max-w-screen-2xl flex-col gap-4 mdlg:mt-4 mdlg:flex-row mdlg:px-4 mdlg:pt-4`}
+        className={`
+          mdl:mt-4 mdl:flex-row mdl:px-4 mdl:pt-4 mx-auto flex size-full max-w-(--breakpoint-2xl) flex-col gap-4
+        `}
       >
         <div
           className={`
-            flex size-full flex-col items-center gap-4 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10
-            to-background p-4 sm:flex-row mdlg:fixed mdlg:w-fit mdlg:flex-col mdlg:gap-0 mdlg:rounded-xl
+            from-primary/20 via-primary/10 to-background mdl:fixed mdl:w-fit mdl:flex-col mdl:gap-0 mdl:rounded-xl flex
+            flex-col items-center gap-4 overflow-hidden bg-linear-to-b p-4 sm:flex-row
           `}
         >
           <Image
             src={plImage}
             alt="image"
             className={`
-              top-0 -z-10 size-full max-h-[50%] bg-cover bg-top bg-no-repeat opacity-70 blur-3xl sm:max-h-[35%]
-              mdlg:max-h-[50%] mdlg:max-w-[400px]
+              mdl:max-h-[50%] mdl:max-w-[400px] top-0 -z-10 size-full max-h-[50%] bg-cover bg-top bg-no-repeat
+              opacity-70 blur-3xl sm:max-h-[35%]
             `}
             fill
           />
-          <div className="size-full md:max-h-[240px] md:max-w-[426px] mdlg:h-[190px] mdlg:w-[326px]">
+          <div className="mdl:h-[190px] mdl:w-[326px] size-full md:max-h-[240px] md:max-w-[426px]">
             <Image
               src={plImage}
               alt={playlist.name}
@@ -60,12 +62,12 @@ export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
               className="aspect-video size-full rounded-xl object-cover"
             />
           </div>
-          <div className="flex w-full flex-col items-start sm:w-auto mdlg:mt-5 mdlg:w-full">
+          <div className="mdl:mt-5 mdl:w-full flex w-full flex-col items-start sm:w-auto">
             <h1 className="text-2xl font-bold">{playlist.name}</h1>
             <Link
               href={`/channel/${playlist.user.id}`}
               className={`
-                mt-2 flex w-fit items-center gap-2 rounded-xl outline-none ring-ring duration-200 focus-visible:ring-2
+                ring-ring mt-2 flex w-fit items-center gap-2 rounded-xl outline-hidden duration-200 focus-visible:ring-2
               `}
             >
               <Image
@@ -103,13 +105,13 @@ export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
               ) : null}
               {!isStaticPlaylist && (
                 <>
-                  <div className="hidden gap-1 xxs:flex">
+                  <div className="xxs:flex hidden gap-1">
                     {userId && userId === playlist.user.externalId ? (
                       <UpdatePlaylistDialog playlist={playlist} />
                     ) : null}
                     <Button
                       variant="transparent"
-                      className="hidden rounded-full xs:flex"
+                      className="xs:flex hidden rounded-full"
                       size="icon"
                       title="Compartilhar"
                     >
@@ -131,7 +133,7 @@ export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
                         </DropdownMenuTrigger>
                       </div>
                       <DropdownMenuContent>
-                        <DropdownMenuItem className="flex py-2 xxs:hidden">
+                        <DropdownMenuItem className="xxs:hidden flex py-2">
                           <UpdatePlaylistDialog playlist={playlist} inMenu />
                         </DropdownMenuItem>
                         <DeletePlaylist playlist={playlist} />
@@ -143,12 +145,12 @@ export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
             </div>
           </div>
         </div>
-        <div className="mt-1.5 flex w-full flex-col gap-3 px-3 sm:px-8 mdlg:gap-2.5 mdlg:px-0 mdlg:pl-[380px]">
+        <div className="mdl:gap-2.5 mdl:px-0 mdl:pl-[380px] mt-1.5 flex w-full flex-col gap-3 px-3 sm:px-8">
           {playlist.videos.map((video) => (
             <VideoCardRoot
               key={video.id}
               video={video}
-              className="flex-col gap-1 xxs:flex-row"
+              className="xxs:flex-row flex-col gap-1"
             >
               <VideoCardThumb
                 width={200}
@@ -163,9 +165,9 @@ export function PlaylistPageComp({ playlist, userId }: PlaylistPageCompProps) {
                 <div className="flex flex-col">
                   <VideoCardTitle
                     titleMaxChars={70}
-                    className="max-h-10 xs:text-sm"
+                    className="xs:text-sm max-h-10"
                   />
-                  <VideoCardChannel className="size-fit rounded-md px-0.5 xxs:mt-1 md:mt-0.5">
+                  <VideoCardChannel className="xxs:mt-1 size-fit rounded-md px-0.5 md:mt-0.5">
                     <VideoCardChannelName className="md:text-xs" />
                   </VideoCardChannel>
                 </div>

@@ -59,21 +59,21 @@ export default async function HistoryPage({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto mt-6 flex size-full max-w-screen-xl flex-col gap-4 px-4">
+      <div className="mx-auto mt-6 flex size-full max-w-(--breakpoint-xl) flex-col gap-4 px-4">
         <div className="flex items-center gap-2">
           <h1 className="text-4xl font-bold">Histórico</h1>
-          <div className="flex xs:hidden">
+          <div className="xs:hidden flex">
             <DeleteHistoryBtn />
           </div>
         </div>
         <div className="flex justify-between gap-2">
-          <div className="mt-4 flex w-full flex-col gap-4 xs:max-w-3xl">
+          <div className="xs:max-w-3xl mt-4 flex w-full flex-col gap-4">
             {historyVideos.length > 0 ? (
               historyVideos.map((history) => (
                 <VideoCardRoot
                   key={history.id}
                   video={history.video}
-                  className="gap-1 pb-4 xs:flex-row xs:pb-0"
+                  className="xs:flex-row xs:pb-0 gap-1 pb-4"
                   timeWatched={history.videoTime}
                 >
                   <VideoCardThumb
@@ -84,10 +84,10 @@ export default async function HistoryPage({
                     className="mt-0 px-0"
                     removeVideoFromHistoryOpt
                   >
-                    <div className="flex w-full flex-col px-2 xs:mt-0.5 xs:px-0.5">
+                    <div className="xs:mt-0.5 xs:px-0.5 flex w-full flex-col px-2">
                       <VideoCardTitle
                         titleMaxChars={50}
-                        className="text-base xs:max-h-14 md:text-lg"
+                        className="xs:max-h-14 text-base md:text-lg"
                       />
                       <VideoCardChannel className="mt-1 flex size-fit rounded-md px-0.5 md:mt-0.5">
                         <VideoCardChannelName className="md:text-sm" />
@@ -102,7 +102,7 @@ export default async function HistoryPage({
               </p>
             )}
           </div>
-          <div className="hidden flex-col gap-4 xs:flex">
+          <div className="xs:flex hidden flex-col gap-4">
             <SearchVideoForm />
             <DeleteHistoryBtn />
           </div>

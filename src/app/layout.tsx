@@ -61,7 +61,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider
-      appearance={{ theme: { clerkTheme } as any }}
+      appearance={{ theme: clerkTheme as any }}
       localization={ptBR}
     >
       <html lang="pt-BR" suppressHydrationWarning>
@@ -77,9 +77,9 @@ export default function RootLayout({
               pauseOnFocusLoss={false}
               limit={3}
               stacked
-              className="z-[999999] bg-background font-inter text-foreground"
-              toastClassName="bg-background text-foreground"
-              progressClassName="bg-primary"
+              className="bg-background! font-inter! text-foreground! z-999999!"
+              toastClassName="bg-background! text-foreground!"
+              progressClassName="bg-primary!"
             />
             <div className="w-full pt-14 sm:pt-16">{children}</div>
           </Providers>

@@ -18,4 +18,9 @@ export default ncontiero({
       ],
     },
   },
+  tailwindcss: {
+    overrides: {
+      "tailwindcss/no-unknown-classes": "off",
+    },
+  },
 });

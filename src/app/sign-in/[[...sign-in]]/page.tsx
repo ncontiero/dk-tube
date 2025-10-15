@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function SignInPage() {
   return (
     <div className="mt-20 flex items-center justify-center">
-      <SignIn withSignUp />
+      <SignIn />
     </div>
   );
 }

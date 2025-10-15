@@ -39,8 +39,8 @@ export async function Header() {
   return (
     <header
       className={`
-        fixed top-0 z-[9999] flex h-14 w-full items-center border-b bg-secondary/60 pl-2 pr-3 backdrop-blur-md sm:h-16
-        sm:pl-4 sm:pr-6
+        bg-secondary/60 fixed top-0 z-9999 flex h-14 w-full items-center border-b pr-3 pl-2 backdrop-blur-md sm:h-16
+        sm:pr-6 sm:pl-4
       `}
     >
       <div className="flex size-full items-center justify-between gap-2">
@@ -49,7 +49,7 @@ export async function Header() {
           <Link
             href="/"
             title="Ir para o inicio"
-            className="rounded-md py-2 pl-1 ring-ring duration-200 focus:outline-none focus:ring-2 sm:px-3 sm:py-4"
+            className="ring-ring rounded-md py-2 pl-1 duration-200 focus:ring-2 focus:outline-hidden sm:px-3 sm:py-4"
           >
             <Logo />
           </Link>
@@ -78,7 +78,7 @@ export async function Header() {
                     Encontre vídeos, músicas e mais.
                   </DialogDescription>
                 </DialogHeader>
-                <div className="flex size-full items-center gap-4 bg-secondary pl-2 pr-4 xs:pr-8">
+                <div className="bg-secondary xs:pr-8 flex size-full items-center gap-4 pr-4 pl-2">
                   <DialogClose asChild>
                     <Button
                       variant="ghost"
@@ -99,8 +99,8 @@ export async function Header() {
             <Link
               href="/sign-in"
               className={`
-                flex size-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase ring-ring
-                duration-200 hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70
+                ring-ring flex size-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase
+                duration-200 hover:text-primary focus:text-primary focus:ring-2 focus:outline-hidden active:opacity-70
                 sm:w-auto sm:rounded-3xl sm:px-4 sm:py-2
               `}
             >
@@ -112,8 +112,8 @@ export async function Header() {
               href="/create-video"
               title="Criar vídeo"
               className={`
-                rounded-full p-2 outline-none ring-ring duration-200 hover:bg-foreground/20 focus-visible:ring-2
-                active:bg-foreground/30
+                ring-ring rounded-full p-2 outline-hidden duration-200 hover:bg-foreground/20 active:bg-foreground/30
+                focus-visible:ring-2
               `}
             >
               <FilePlus />

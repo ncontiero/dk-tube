@@ -87,31 +87,31 @@ export default async function YouPage() {
     <div className="flex flex-col gap-4">
       <div
         className={`
-          mx-auto my-6 flex size-full flex-col gap-6 px-4 md:max-w-md lg:max-w-screen-md xl:max-w-screen-lg
-          2xl:max-w-screen-xl
+          mx-auto my-6 flex size-full flex-col gap-6 px-4 md:max-w-md lg:max-w-(--breakpoint-md)
+          xl:max-w-(--breakpoint-lg) 2xl:max-w-(--breakpoint-xl)
         `}
       >
-        <div className="flex items-center gap-4 xs:items-start">
+        <div className="xs:items-start flex items-center gap-4">
           <Image
             src={you.image}
             alt={you.username}
             width={120}
             height={120}
             className={`
-              aspect-square max-h-[72px] max-w-[72px] rounded-full border object-cover xs:max-h-[120px] xs:max-w-[120px]
+              xs:max-h-[120px] xs:max-w-[120px] aspect-square max-h-[72px] max-w-[72px] rounded-full border object-cover
             `}
           />
           <Link
             href={`/channel/${you.id}`}
-            className="group flex size-fit flex-col rounded-md outline-none ring-primary duration-200 focus:ring-2"
+            className="group ring-primary flex size-fit flex-col rounded-md outline-hidden duration-200 focus:ring-2"
           >
-            <h1 className="text-xl font-bold uppercase xs:text-4xl">
+            <h1 className="xs:text-4xl text-xl font-bold uppercase">
               {you.username}
             </h1>
             <span
               className={`
-                mt-1 text-xs text-foreground/60 duration-200 group-hover:text-foreground group-hover:underline
-                group-focus:text-foreground group-focus:underline xs:text-sm
+                text-foreground/60 xs:text-sm mt-1 text-xs duration-200 group-hover:text-foreground
+                group-hover:underline group-focus:text-foreground group-focus:underline
               `}
             >
               Ver canal
@@ -133,12 +133,12 @@ export default async function YouPage() {
             </Button>
           </div>
           <ScrollArea>
-            <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
+            <div className="xs:flex-row xs:gap-2 flex flex-col gap-3 p-1">
               {you.history.slice(0, 5).map(({ video }) => (
                 <VideoCardRoot
                   key={video.id}
                   video={{ ...video, user: you }}
-                  className="flex-row xs:w-[214px] xs:flex-col xs:pb-4"
+                  className="xs:w-[214px] xs:flex-col xs:pb-4 flex-row"
                 >
                   <VideoCardThumb
                     className="rounded-xl"
@@ -200,7 +200,7 @@ export default async function YouPage() {
                           size="icon"
                           title="Fechar"
                           aria-label="Fechar"
-                          className="absolute right-2 top-2 rounded-full"
+                          className="absolute top-2 right-2 rounded-full"
                         >
                           <X />
                         </Button>
@@ -221,7 +221,7 @@ export default async function YouPage() {
             </div>
           </div>
           <ScrollArea>
-            <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
+            <div className="xs:flex-row xs:gap-2 flex flex-col gap-3 p-1">
               {you.playlists.slice(0, 5).map((playlist) => (
                 <PlaylistCardRoot
                   key={playlist.id}
@@ -229,7 +229,7 @@ export default async function YouPage() {
                   className="xs:w-[214px]"
                 >
                   <PlaylistCardImage
-                    linkClassName="[&>div]:xs:text-xs"
+                    linkClassName="xs:[&>div]:text-xs"
                     width={214}
                     height={118}
                   />
@@ -237,7 +237,7 @@ export default async function YouPage() {
                     className="md:px-0.5"
                     linkClassName="mt-0.5 xs:text-xs [&_svg]:size-3"
                   >
-                    <PlaylistCardTitle className="text-sm xs:text-sm" />
+                    <PlaylistCardTitle className="xs:text-sm text-sm" />
                   </PlaylistCardInfo>
                 </PlaylistCardRoot>
               ))}
@@ -263,12 +263,12 @@ export default async function YouPage() {
             </Button>
           </div>
           <ScrollArea>
-            <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
+            <div className="xs:flex-row xs:gap-2 flex flex-col gap-3 p-1">
               {you.watchLater.slice(0, 5).map((video) => (
                 <VideoCardRoot
                   key={video.id}
                   video={{ ...video, user: you }}
-                  className="flex-row xs:w-[214px] xs:flex-col xs:pb-4"
+                  className="xs:w-[214px] xs:flex-col xs:pb-4 flex-row"
                 >
                   <VideoCardThumb
                     className="rounded-xl"
@@ -303,12 +303,12 @@ export default async function YouPage() {
             </Button>
           </div>
           <ScrollArea>
-            <div className="flex flex-col gap-3 p-1 xs:flex-row xs:gap-2">
+            <div className="xs:flex-row xs:gap-2 flex flex-col gap-3 p-1">
               {you.likedVideos.slice(0, 5).map((video) => (
                 <VideoCardRoot
                   key={video.id}
                   video={{ ...video, user: you }}
-                  className="flex-row xs:w-[214px] xs:flex-col xs:pb-4"
+                  className="xs:w-[214px] xs:flex-col xs:pb-4 flex-row"
                 >
                   <VideoCardThumb
                     className="rounded-xl"

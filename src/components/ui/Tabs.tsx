@@ -18,7 +18,7 @@ const TabsList = forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      "bg-muted text-muted-foreground inline-flex h-10 items-center justify-center rounded-md p-1",
       className,
     )}
     {...props}
@@ -34,10 +34,10 @@ const TabsTrigger = forwardRef<
     ref={ref}
     className={cn(
       `
-        inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium
-        ring-offset-background duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
-        disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=active]:bg-background
-        data-[state=active]:text-foreground data-[state=active]:shadow-sm
+        ring-offset-background inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium
+        whitespace-nowrap duration-200 focus:ring-ring focus:ring-2 focus:ring-offset-2 focus:outline-hidden
+        data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs
+        disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
       `,
       className,
     )}
@@ -54,8 +54,8 @@ const TabsContent = forwardRef<
     ref={ref}
     className={cn(
       `
-        mt-2 ring-ring ring-offset-background focus-visible:outline-none focus-visible:ring-2
-        focus-visible:ring-offset-2
+        ring-ring ring-offset-background mt-2 focus-visible:ring-2 focus-visible:ring-offset-2
+        focus-visible:outline-hidden
       `,
       className,
     )}

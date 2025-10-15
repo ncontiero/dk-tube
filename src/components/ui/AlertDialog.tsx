@@ -24,8 +24,8 @@ const AlertDialogOverlay = forwardRef<
   <AlertDialogPrimitive.Overlay
     className={cn(
       `
-        fixed inset-0 z-[99999] bg-black/80 backdrop-blur-sm duration-200 data-[state=open]:animate-in
-        data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+        data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 fixed inset-0 z-99999
+        bg-black/80 backdrop-blur-xs duration-200 data-[state=closed]:animate-out
       `,
       className,
     )}
@@ -45,12 +45,12 @@ const AlertDialogContent = forwardRef<
       ref={ref}
       className={cn(
         `
-          fixed left-[50%] top-[50%] z-[99999] grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border
-          bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=open]:fade-in-0
-          data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-left-1/2
-          data-[state=open]:slide-in-from-top-[48%] data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-          data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2
-          data-[state=closed]:slide-out-to-top-[48%] sm:rounded-lg
+          bg-background data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
+          data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]
+          data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2
+          data-[state=closed]:slide-out-to-top-[48%] fixed top-[50%] left-[50%] z-99999 grid w-full max-w-lg
+          translate-[-50%] gap-4 border p-6 shadow-lg duration-200 data-[state=open]:animate-in
+          data-[state=closed]:animate-out sm:rounded-lg
         `,
         className,
       )}
@@ -106,7 +106,7 @@ const AlertDialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-muted-foreground text-sm", className)}
     {...props}
   />
 ));

@@ -54,7 +54,7 @@ export default async function PlaylistsPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto mt-6 flex size-full max-w-screen-2xl flex-col gap-4 px-4">
+      <div className="mx-auto mt-6 flex size-full max-w-(--breakpoint-2xl) flex-col gap-4 px-4">
         <h1 className="text-4xl font-bold">Playlists</h1>
         <div className="mt-2 flex flex-row flex-wrap items-center gap-4">
           {playlists.map((playlist) => (

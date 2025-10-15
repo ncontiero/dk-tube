@@ -31,12 +31,12 @@ export function SearchVideoForm() {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="hidden lg:flex">
-      <div className="flex items-center border-b-2 border-foreground/40 duration-200 focus-within:border-foreground">
+      <div className="border-foreground/40 flex items-center border-b-2 duration-200 focus-within:border-foreground">
         <button
           type="submit"
           title="Buscar"
           aria-label="Buscar"
-          className="rounded-full p-2 duration-200 hover:bg-foreground/40"
+          className="hover:bg-foreground/40 rounded-full p-2 duration-200"
           disabled={searchVideoOnHistory.status === "executing"}
         >
           {searchVideoOnHistory.status === "executing" ? (
@@ -48,7 +48,7 @@ export function SearchVideoForm() {
         <input
           type="text"
           placeholder="Buscar videos..."
-          className="bg-background outline-none"
+          className="bg-background outline-hidden"
           {...form.register("search")}
         />
       </div>
