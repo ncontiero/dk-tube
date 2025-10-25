@@ -14,7 +14,7 @@ import {
 } from "./schema";
 
 export const createPlaylistAction = authActionClient
-  .schema(createPlaylistSchema)
+  .inputSchema(createPlaylistSchema)
   .action(
     async ({
       clientInput: { name, isPublic = false, videoId },
@@ -41,7 +41,7 @@ export const createPlaylistAction = authActionClient
   );
 
 export const updatePlaylistAction = authActionClient
-  .schema(updatePlaylistSchema)
+  .inputSchema(updatePlaylistSchema)
   .action(
     async ({ clientInput: { id, name, isPublic = false }, ctx: { user } }) => {
       const playlist = await prisma.playlist.findUnique({
@@ -72,7 +72,7 @@ export const updatePlaylistAction = authActionClient
   );
 
 export const deletePlaylistAction = authActionClient
-  .schema(deletePlaylistSchema)
+  .inputSchema(deletePlaylistSchema)
   .action(async ({ clientInput: { id }, ctx: { user } }) => {
     try {
       const playlist = await prisma.playlist.findUnique({
@@ -103,7 +103,7 @@ export const deletePlaylistAction = authActionClient
   });
 
 export const handleVideoFromPlaylistAction = authActionClient
-  .schema(handleVideoFromPlaylistSchema)
+  .inputSchema(handleVideoFromPlaylistSchema)
   .action(async ({ clientInput: { videoId, playlistId }, ctx: { user } }) => {
     const playlist =
       playlistId === "LL"

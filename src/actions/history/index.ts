@@ -35,14 +35,14 @@ export const deleteHistoryAction = authActionClient.action(
 );
 
 export const searchVideoOnHistoryAction = actionClient
-  .schema(searchVideoOnHistorySchema)
+  .inputSchema(searchVideoOnHistorySchema)
   // eslint-disable-next-line require-await
   .action(async ({ clientInput: { search } }) => {
     redirect(`/feed/history?query=${search}`);
   });
 
 export const getTimeWatchedAction = actionClient
-  .schema(getTimeWatchedSchema)
+  .inputSchema(getTimeWatchedSchema)
   .action(async ({ clientInput: { videoId, userId } }) => {
     const cachedHistory = unstable_cache(
       async () => {
@@ -67,7 +67,7 @@ export const getTimeWatchedAction = actionClient
   });
 
 export const removeVideoFromHistoryAction = authActionClient
-  .schema(removeVideoFromHistorySchema)
+  .inputSchema(removeVideoFromHistorySchema)
   .action(async ({ clientInput: { videoId }, ctx: { user } }) => {
     const history = await prisma.historyVideo.findMany({
       where: { user: { externalId: user.id }, videoId },
@@ -87,7 +87,7 @@ export const removeVideoFromHistoryAction = authActionClient
   });
 
 export const updateHistoryAction = authActionClient
-  .schema(updateHistorySchema)
+  .inputSchema(updateHistorySchema)
   .action(
     async ({ clientInput: { videoId, playedSeconds }, ctx: { user } }) => {
       const history = await prisma.historyVideo.findFirst({

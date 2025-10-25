@@ -12,7 +12,7 @@ import {
 } from "./schema";
 
 export const createVideoAction = authActionClient
-  .schema(createVideoSchema)
+  .inputSchema(createVideoSchema)
   .action(async ({ clientInput: { title, youtubeId }, ctx: { user } }) => {
     const thumb = await getMostQualityThumb(youtubeId);
     if (!thumb) {
@@ -46,7 +46,7 @@ export const createVideoAction = authActionClient
   });
 
 export const likeVideoAction = authActionClient
-  .schema(likeVideoSchema)
+  .inputSchema(likeVideoSchema)
   .action(async ({ clientInput: { videoId }, ctx: { user } }) => {
     const video = await prisma.video.findFirst({
       where: { id: videoId },
@@ -84,7 +84,7 @@ export const likeVideoAction = authActionClient
   });
 
 export const removeVideoAction = authActionClient
-  .schema(removeVideoSchema)
+  .inputSchema(removeVideoSchema)
   .action(async ({ clientInput: { videoId }, ctx: { user } }) => {
     const video = await prisma.video.findFirst({
       where: { id: videoId, user: { externalId: user.id } },
