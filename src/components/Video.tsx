@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import ReactPlayer from "react-player/youtube";
+import { useEffect, useRef, useState } from "react";
+import ReactPlayer from "react-player";
 import { useAction } from "next-safe-action/hooks";
 import { useSearchParams } from "next/navigation";
 import { updateHistoryAction } from "@/actions/history";
@@ -17,28 +17,15 @@ export function Video({ videoId, startTime, hasUser = false }: VideoProps) {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [videoCurrentTime, setVideoCurrentTime] = useState(startTime || 0);
 
-  const videoRef = useRef<ReactPlayer>(null);
-  const ambilightVideoRef = useRef<ReactPlayer>(null);
-
-  const optimizeAmbilight = useCallback((player?: Record<string, any>) => {
-    if (!player || !player.getAvailableQualityLevels) return;
-    const qualityLevels: string[] = [...player.getAvailableQualityLevels()];
-    if (qualityLevels && qualityLevels.length > 0 && qualityLevels.length > 0) {
-      qualityLevels.reverse();
-      const lowestLevel =
-        qualityLevels[qualityLevels.findIndex((q) => q !== "auto")];
-      player.setPlaybackQuality(lowestLevel);
-    }
-  }, []);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const ambilightVideoRef = useRef<HTMLVideoElement>(null);
 
   const updateHistory = useAction(updateHistoryAction);
 
   useEffect(() => {
-    if (ambilightVideoRef.current) {
-      ambilightVideoRef.current.seekTo(videoCurrentTime, "seconds");
-      optimizeAmbilight(ambilightVideoRef.current.getInternalPlayer());
-    }
-  }, [optimizeAmbilight, videoCurrentTime]);
+    if (!ambilightVideoRef.current) return;
+    ambilightVideoRef.current.currentTime = videoCurrentTime;
+  }, [videoCurrentTime]);
 
   return (
     <div className="relative flex size-full justify-center">
@@ -48,28 +35,28 @@ export function Video({ videoId, startTime, hasUser = false }: VideoProps) {
       >
         <ReactPlayer
           ref={videoRef}
-          url={`https://www.youtube.com/watch?v=${videoId}`}
+          src={`https://www.youtube.com/watch?v=${videoId}`}
           width="100%"
           height="100%"
           onPlay={() => {
             setVideoPlaying(true);
-            setVideoCurrentTime(videoRef.current?.getCurrentTime() || 0);
+            setVideoCurrentTime(videoRef.current?.currentTime || 0);
           }}
           onPause={() => {
             setVideoPlaying(false);
-            setVideoCurrentTime(videoRef.current?.getCurrentTime() || 0);
+            setVideoCurrentTime(videoRef.current?.currentTime || 0);
           }}
-          onProgress={({ playedSeconds }) => {
+          onProgress={({ currentTarget: { currentTime } }) => {
+            setVideoCurrentTime(currentTime);
             if (!hasUser) return;
-            if (Math.floor(playedSeconds) % 5 === 0 && dbVideoId)
+            if (Math.floor(currentTime) % 5 === 0 && dbVideoId)
               updateHistory.execute({
-                playedSeconds: Math.floor(playedSeconds),
+                playedSeconds: Math.floor(currentTime),
                 videoId: dbVideoId,
               });
           }}
-          config={{
-            playerVars: { autoplay: 1, start: startTime },
-          }}
+          autoPlay={!!startTime}
+          config={startTime ? { youtube: { start: startTime } } : {}}
           controls
         />
       </div>
@@ -81,14 +68,13 @@ export function Video({ videoId, startTime, hasUser = false }: VideoProps) {
         `}
       >
         <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${videoId}`}
-          muted
+          src={`https://www.youtube.com/watch?v=${videoId}`}
           ref={ambilightVideoRef}
+          muted
           width="100%"
           height="100%"
-          playing={videoPlaying}
-          onReady={(player) => optimizeAmbilight(player.getInternalPlayer())}
           controls={false}
+          playing={videoPlaying}
         />
       </div>
     </div>
