@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { actionClient, authActionClient } from "@/lib/safe-action";
@@ -29,8 +29,8 @@ export const deleteHistoryAction = authActionClient.action(
       throw new Error("Houve um erro ao deletar o histórico!");
     }
 
-    revalidateTag(`history:${user.id}`);
-    revalidateTag(`feed:${user.id}`);
+    updateTag(`history:${user.id}`);
+    updateTag(`feed:${user.id}`);
   },
 );
 
@@ -82,8 +82,8 @@ export const removeVideoFromHistoryAction = authActionClient
       where: { user: { externalId: user.id }, videoId },
     });
 
-    revalidateTag(`history:${user.id}`);
-    revalidateTag(`feed:${user.id}`);
+    updateTag(`history:${user.id}`);
+    updateTag(`feed:${user.id}`);
   });
 
 export const updateHistoryAction = authActionClient
@@ -103,8 +103,8 @@ export const updateHistoryAction = authActionClient
           },
         });
 
-        revalidateTag(`history:${user.id}`);
-        revalidateTag(`feed:${user.id}`);
+        updateTag(`history:${user.id}`);
+        updateTag(`feed:${user.id}`);
 
         return;
       }
@@ -114,7 +114,7 @@ export const updateHistoryAction = authActionClient
         data: { videoTime: playedSeconds },
       });
 
-      revalidateTag(`history:${user.id}`);
-      revalidateTag(`feed:${user.id}`);
+      updateTag(`history:${user.id}`);
+      updateTag(`feed:${user.id}`);
     },
   );

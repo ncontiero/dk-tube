@@ -1,7 +1,7 @@
 "use server";
 
 import type { PlaylistProps } from "@/utils/types";
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma, prismaSkip } from "@/lib/prisma";
 import { authActionClient } from "@/lib/safe-action";
@@ -33,10 +33,10 @@ export const createPlaylistAction = authActionClient
         throw new Error("Houve um erro ao criar a playlist!");
       }
 
-      revalidateTag(`feed:${user.id}`);
-      revalidateTag(`feed:playlists:${user.id}`);
-      revalidateTag(`playlists:${user.id}`);
-      revalidateTag(`playlists`);
+      updateTag(`feed:${user.id}`);
+      updateTag(`feed:playlists:${user.id}`);
+      updateTag(`playlists:${user.id}`);
+      updateTag(`playlists`);
     },
   );
 
@@ -64,10 +64,10 @@ export const updatePlaylistAction = authActionClient
         throw new Error("Houve um erro ao editar a playlist!");
       }
 
-      revalidateTag(`playlist:${id}`);
-      revalidateTag(`feed:${user.id}`);
-      revalidateTag(`feed:playlists:${user.id}`);
-      revalidateTag(`playlists:${user.id}`);
+      updateTag(`playlist:${id}`);
+      updateTag(`feed:${user.id}`);
+      updateTag(`feed:playlists:${user.id}`);
+      updateTag(`playlists:${user.id}`);
     },
   );
 
@@ -94,10 +94,10 @@ export const deletePlaylistAction = authActionClient
       throw new Error("Houve um erro ao excluir a playlist!");
     }
 
-    revalidateTag(`playlist:${id}`);
-    revalidateTag(`feed:${user.id}`);
-    revalidateTag(`feed:playlists:${user.id}`);
-    revalidateTag(`playlists:${user.id}`);
+    updateTag(`playlist:${id}`);
+    updateTag(`feed:${user.id}`);
+    updateTag(`feed:playlists:${user.id}`);
+    updateTag(`playlists:${user.id}`);
 
     redirect("/feed/playlists");
   });
@@ -126,11 +126,11 @@ export const handleVideoFromPlaylistAction = authActionClient
     const connected = playlist.videos.some((v) => v.id === videoId);
 
     const revalidateTags = () => {
-      revalidateTag(`playlist:${playlistId}`);
-      revalidateTag(`feed:${user.id}`);
-      revalidateTag(`feed:playlists:${user.id}`);
-      revalidateTag(`playlists:${user.id}`);
-      revalidateTag(`watchLater:${user.id}`);
+      updateTag(`playlist:${playlistId}`);
+      updateTag(`feed:${user.id}`);
+      updateTag(`feed:playlists:${user.id}`);
+      updateTag(`playlists:${user.id}`);
+      updateTag(`watchLater:${user.id}`);
     };
 
     if (playlistId === "LL") {

@@ -5,9 +5,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { PlaylistPageComp } from "../PlaylistPage";
 
-type PlaylistPageProps = {
-  readonly params: Promise<{ id: string }>;
-};
+type PlaylistPageProps = PageProps<"/playlist/[id]">;
 
 const getCachedPlaylist = (id: string) =>
   unstable_cache(

@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 import { env } from "@/env";
 import { prisma } from "@/lib/prisma";
 import { authActionClient } from "@/lib/safe-action";
@@ -42,7 +42,7 @@ export const createVideoAction = authActionClient
       throw new Error("Houve um erro ao criar o vídeo!");
     }
 
-    revalidateTag("videos");
+    updateTag("videos");
   });
 
 export const likeVideoAction = authActionClient
@@ -75,10 +75,10 @@ export const likeVideoAction = authActionClient
       throw new Error("Houve um erro ao curtir o vídeo!");
     }
 
-    revalidateTag(`video:${videoId}`);
-    revalidateTag(`isLiked:${user.id}:${videoId}`);
-    revalidateTag(`feed:${user.id}`);
-    revalidateTag(`likedVideos:${user.id}`);
+    updateTag(`video:${videoId}`);
+    updateTag(`isLiked:${user.id}:${videoId}`);
+    updateTag(`feed:${user.id}`);
+    updateTag(`likedVideos:${user.id}`);
 
     return { hasAdded: !connected };
   });
@@ -102,7 +102,7 @@ export const removeVideoAction = authActionClient
       throw new Error("Houve um erro ao remover o vídeo!");
     }
 
-    revalidateTag("videos");
-    revalidateTag(`video:${video.id}`);
-    revalidateTag(`feed:${user.id}`);
+    updateTag("videos");
+    updateTag(`video:${video.id}`);
+    updateTag(`feed:${user.id}`);
   });

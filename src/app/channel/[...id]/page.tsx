@@ -23,9 +23,7 @@ import {
 } from "@/components/VideoCard";
 import { prisma } from "@/lib/prisma";
 
-type ChannelPageProps = {
-  readonly params: Promise<{ id: string[] }>;
-};
+type ChannelPageProps = PageProps<"/channel/[...id]">;
 
 const getCachedChannel = (id: string) =>
   unstable_cache(
