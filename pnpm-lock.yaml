@@ -90,8 +90,8 @@ importers:
         specifier: ^7.66.0
         version: 7.66.0(react@19.2.0)
       react-player:
-        specifier: ^3.3.3
-        version: 3.3.3(@types/react-dom@19.2.3(@types/react@19.2.4))(@types/react@19.2.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: ^3.4.0
+        version: 3.4.0(@types/react-dom@19.2.3(@types/react@19.2.4))(@types/react@19.2.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-toastify:
         specifier: ^11.0.5
         version: 11.0.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -2052,8 +2052,8 @@ packages:
     resolution: {integrity: sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw==}
     engines: {node: '>=12'}
 
-  dash-video-element@0.2.0:
-    resolution: {integrity: sha512-dgmhBOte6JgvSvowvrh0Q/vhSrB52Q/AUl/KqminAUkPuUT3CCUNhto1X8ANigWkmNwhktFc/PCe0lF/4tBFwQ==}
+  dash-video-element@0.3.0:
+    resolution: {integrity: sha512-Pe+BxG153n+CH++3gmWMApVXEUs767YGxsRebdNZRSZdXjbv7OGbsitYbjNMC4QAjCWBvBjIclAYV4hoc7OWSQ==}
 
   dashjs@5.0.3:
     resolution: {integrity: sha512-TXndNnCUjFjF2nYBxDVba+hWRpVkadkQ8flLp7kHkem+5+wZTfRShJCnVkPUosmjS0YPE9fVNLbYPJxHBeQZvA==}
@@ -3612,8 +3612,8 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-player@3.3.3:
-    resolution: {integrity: sha512-6U2ziVohA3WLdKI/WEQ7v27CIive0TCNIro55lJZka06fjB2kC4lJqBrvddG0yBvTDcn1owiUf2hRNaIzHAjIg==}
+  react-player@3.4.0:
+    resolution: {integrity: sha512-QpQSHXtnMBKjQVNeaCYMtTVcynWQ0DDDhz/FJu1OR9PHLC1Aih94UqNstywzSHbJ6Oc7lI8/7kDDqcIvyTI6zQ==}
     peerDependencies:
       '@types/react': ^17.0.0 || ^18 || ^19
       react: ^17.0.2 || ^18 || ^19
@@ -4193,8 +4193,8 @@ packages:
     resolution: {integrity: sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==}
     engines: {node: '>=12.20'}
 
-  youtube-video-element@1.7.0:
-    resolution: {integrity: sha512-vVRsv39v9gu3BMOEGTOT41XmnPlBmGrLKFYVoFA0iP/BDndan/tLZ01Q5bzNlGqQxpyd6mlOJ+TtAw50lAKpsQ==}
+  youtube-video-element@1.8.0:
+    resolution: {integrity: sha512-u3M0MgO+KUtVwIyKJXZXXJ0As0k6d5NflOrh1GjyG8NNOp+liW2nFU29hpXeUcxUWbVKhudIYd39hMVeEgCilQ==}
 
   zod-validation-error@4.0.2:
     resolution: {integrity: sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==}
@@ -6143,7 +6143,7 @@ snapshots:
 
   dargs@8.1.0: {}
 
-  dash-video-element@0.2.0:
+  dash-video-element@0.3.0:
     dependencies:
       custom-media-element: 1.4.5
       dashjs: 5.0.3
@@ -8035,12 +8035,12 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-player@3.3.3(@types/react-dom@19.2.3(@types/react@19.2.4))(@types/react@19.2.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  react-player@3.4.0(@types/react-dom@19.2.3(@types/react@19.2.4))(@types/react@19.2.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@mux/mux-player-react': 3.8.0(@types/react-dom@19.2.3(@types/react@19.2.4))(@types/react@19.2.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@types/react': 19.2.4
       cloudflare-video-element: 1.3.4
-      dash-video-element: 0.2.0
+      dash-video-element: 0.3.0
       hls-video-element: 1.5.9
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
@@ -8049,7 +8049,7 @@ snapshots:
       twitch-video-element: 0.1.5
       vimeo-video-element: 1.6.1
       wistia-video-element: 1.3.5
-      youtube-video-element: 1.7.0
+      youtube-video-element: 1.8.0
     transitivePeerDependencies:
       - '@types/react-dom'
 
@@ -8722,7 +8722,7 @@ snapshots:
 
   yocto-queue@1.2.1: {}
 
-  youtube-video-element@1.7.0: {}
+  youtube-video-element@1.8.0: {}
 
   zod-validation-error@4.0.2(zod@4.1.12):
     dependencies:
