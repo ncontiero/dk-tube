@@ -152,7 +152,7 @@ const SidebarProvider = forwardRef<
               } as CSSProperties
             }
             className={cn(
-              "group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",
+              "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
               className,
             )}
             ref={ref}
@@ -269,7 +269,7 @@ const Sidebar = forwardRef<
           <div
             data-sidebar="sidebar"
             className={`
-              bg-sidebar flex size-full flex-col group-data-[variant=floating]:border-sidebar-border
+              bg-sidebar group-data-[variant=floating]:border-sidebar-border flex size-full flex-col
               group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border
               group-data-[variant=floating]:shadow-sm
             `}
@@ -379,7 +379,7 @@ const SidebarInput = forwardRef<
       ref={ref}
       data-sidebar="input"
       className={cn(
-        "bg-background h-8 w-full shadow-none focus-visible:ring-sidebar-ring focus-visible:ring-2",
+        "bg-background focus-visible:ring-sidebar-ring h-8 w-full shadow-none focus-visible:ring-2",
         className,
       )}
       {...props}
@@ -498,8 +498,8 @@ const SidebarGroupAction = forwardRef<
       data-sidebar="group-action"
       className={cn(
         `
-          text-sidebar-foreground ring-sidebar-ring absolute top-3.5 right-3 flex aspect-square w-5 items-center
-          justify-center rounded-md p-0 outline-hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
+          text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
+          absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 outline-hidden
           focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0
         `,
         // Increases the hit area of the button on mobile.
@@ -551,23 +551,22 @@ SidebarMenuItem.displayName = "SidebarMenuItem";
 
 const sidebarMenuButtonVariants = cva(
   `
-    peer/menu-button ring-sidebar-ring flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm
-    outline-hidden duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent
-    active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent
-    data-[active=true]:text-sidebar-accent-foreground data-[active=true]:font-medium
-    data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground
-    group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8!
-    group-data-[collapsible=icon]:p-2! focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50
-    aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4
-    [&>svg]:shrink-0
+    peer/menu-button ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
+    active:bg-sidebar-accent active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent
+    data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent
+    data-[state=open]:hover:text-sidebar-accent-foreground flex w-full items-center gap-2 overflow-hidden rounded-md p-2
+    text-left text-sm outline-hidden duration-200 group-has-data-[sidebar=menu-action]/menu-item:pr-8
+    group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! focus-visible:ring-2
+    disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50
+    data-[active=true]:font-medium [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0
   `,
   {
     variants: {
       variant: {
         default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         outline: `
-          bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent
-          hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]
+          bg-background hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
+          shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]
         `,
       },
       size: {
@@ -657,9 +656,9 @@ const SidebarMenuAction = forwardRef<
       data-sidebar="menu-action"
       className={cn(
         `
-          text-sidebar-foreground ring-sidebar-ring absolute top-1.5 right-1 flex aspect-square w-5 items-center
-          justify-center rounded-md p-0 outline-hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
-          peer-hover/menu-button:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0
+          text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
+          peer-hover/menu-button:text-sidebar-accent-foreground absolute top-1.5 right-1 flex aspect-square w-5
+          items-center justify-center rounded-md p-0 outline-hidden focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0
         `,
         // Increases the hit area of the button on mobile.
         "after:absolute after:-inset-2 md:after:hidden",
@@ -778,11 +777,11 @@ const SidebarMenuSubButton = forwardRef<
       data-active={isActive}
       className={cn(
         `
-          text-sidebar-foreground ring-sidebar-ring flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden
-          rounded-md px-2 outline-hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
-          active:bg-sidebar-accent active:text-sidebar-accent-foreground [&>svg]:text-sidebar-accent-foreground
-          [&>svg]:size-4 [&>svg]:shrink-0 focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50
-          aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate
+          text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
+          active:bg-sidebar-accent active:text-sidebar-accent-foreground [&>svg]:text-sidebar-accent-foreground flex h-7
+          min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 outline-hidden focus-visible:ring-2
+          disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50
+          [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0
         `,
         "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",
         size === "sm" && "text-xs",

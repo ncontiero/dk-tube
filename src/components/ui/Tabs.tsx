@@ -34,10 +34,10 @@ const TabsTrigger = forwardRef<
     ref={ref}
     className={cn(
       `
-        ring-offset-background inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium
-        whitespace-nowrap duration-200 focus:ring-ring focus:ring-2 focus:ring-offset-2 focus:outline-hidden
-        data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs
-        disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
+        ring-offset-background focus:ring-ring data-[state=active]:bg-background data-[state=active]:text-foreground
+        inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium whitespace-nowrap
+        duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none
+        disabled:cursor-not-allowed disabled:opacity-50 data-[state=active]:shadow-xs
       `,
       className,
     )}

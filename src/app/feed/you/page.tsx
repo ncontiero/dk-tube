@@ -110,8 +110,8 @@ export default async function YouPage() {
             </h1>
             <span
               className={`
-                text-foreground/60 xs:text-sm mt-1 text-xs duration-200 group-hover:text-foreground
-                group-hover:underline group-focus:text-foreground group-focus:underline
+                text-foreground/60 xs:text-sm group-hover:text-foreground group-focus:text-foreground mt-1 text-xs
+                duration-200 group-hover:underline group-focus:underline
               `}
             >
               Ver canal

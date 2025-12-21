@@ -18,9 +18,9 @@ const Checkbox = forwardRef<
     ref={ref}
     className={cn(
       `
-        peer border-primary ring-offset-background size-4 shrink-0 rounded-sm border focus-visible:ring-ring
-        focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden data-[state=checked]:bg-primary
-        data-[state=checked]:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50
+        peer border-primary ring-offset-background focus-visible:ring-ring data-[state=checked]:bg-primary
+        data-[state=checked]:text-primary-foreground size-4 shrink-0 rounded-sm border focus-visible:ring-2
+        focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50
       `,
       className,
     )}

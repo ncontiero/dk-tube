@@ -31,7 +31,7 @@ export function SearchVideoForm() {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="hidden lg:flex">
-      <div className="border-foreground/40 flex items-center border-b-2 duration-200 focus-within:border-foreground">
+      <div className="border-foreground/40 focus-within:border-foreground flex items-center border-b-2 duration-200">
         <button
           type="submit"
           title="Buscar"

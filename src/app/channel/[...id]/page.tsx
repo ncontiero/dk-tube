@@ -142,9 +142,9 @@ export default async function ChannelPage(props: ChannelPageProps) {
                       key={tab.value}
                       value={tab.value}
                       className={`
-                        text-foreground/80 rounded-none rounded-t-lg border-b border-transparent px-6 py-4 text-sm
-                        font-medium uppercase duration-200 hover:bg-secondary hover:text-foreground
-                        data-[state=active]:border-foreground hover:data-[state=active]:bg-secondary
+                        text-foreground/80 hover:bg-secondary hover:text-foreground
+                        data-[state=active]:border-foreground hover:data-[state=active]:bg-secondary rounded-none
+                        rounded-t-lg border-b border-transparent px-6 py-4 text-sm font-medium uppercase duration-200
                       `}
                       asChild
                     >

@@ -99,8 +99,8 @@ export async function Header() {
             <Link
               href="/sign-in"
               className={`
-                ring-ring flex size-full items-center justify-center gap-2 rounded-full p-2 font-bold uppercase
-                duration-200 hover:text-primary focus:text-primary focus:ring-2 focus:outline-hidden active:opacity-70
+                ring-ring hover:text-primary focus:text-primary flex size-full items-center justify-center gap-2
+                rounded-full p-2 font-bold uppercase duration-200 focus:ring-2 focus:outline-hidden active:opacity-70
                 sm:w-auto sm:rounded-3xl sm:px-4 sm:py-2
               `}
             >
@@ -112,7 +112,7 @@ export async function Header() {
               href="/create-video"
               title="Criar vídeo"
               className={`
-                ring-ring rounded-full p-2 outline-hidden duration-200 hover:bg-foreground/20 active:bg-foreground/30
+                ring-ring hover:bg-foreground/20 active:bg-foreground/30 rounded-full p-2 outline-hidden duration-200
                 focus-visible:ring-2
               `}
             >

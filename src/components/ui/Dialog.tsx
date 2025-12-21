@@ -27,8 +27,8 @@ const DialogOverlay = forwardRef<
     ref={ref}
     className={cn(
       `
-        data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 fixed inset-0 z-99999
-        bg-black/80 backdrop-blur-xs data-[state=closed]:animate-out
+        data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0
+        data-[state=closed]:animate-out fixed inset-0 z-99999 bg-black/80 backdrop-blur-xs
       `,
       className,
     )}
@@ -40,8 +40,8 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 const dialogContentVariants = cva(
   `
     bg-background data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:fade-out-0
-    data-[state=closed]:zoom-out-95 fixed z-99999 grid w-full gap-4 border p-6 shadow-lg duration-200
-    data-[state=open]:animate-in data-[state=closed]:animate-out sm:rounded-lg
+    data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-99999 grid
+    w-full gap-4 border p-6 shadow-lg duration-200 sm:rounded-lg
   `,
   {
     variants: {
@@ -61,7 +61,8 @@ const dialogContentVariants = cva(
 );
 
 export interface DialogContentProps
-  extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
+  extends
+    ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
     VariantProps<typeof dialogContentVariants> {}
 
 const DialogContent = forwardRef<

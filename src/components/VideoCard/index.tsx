@@ -257,8 +257,7 @@ export const VideoCardChannelImage = forwardRef<
 });
 VideoCardChannelImage.displayName = "VideoCardChannelImage";
 
-export interface VideoCardChannelNameProps
-  extends HTMLAttributes<HTMLSpanElement> {}
+export interface VideoCardChannelNameProps extends HTMLAttributes<HTMLSpanElement> {}
 
 export const VideoCardChannelName = forwardRef<
   HTMLSpanElement,

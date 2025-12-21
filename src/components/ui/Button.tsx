@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ButtonVariants";
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   readonly asChild?: boolean;
 }

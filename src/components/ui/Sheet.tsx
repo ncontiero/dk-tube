@@ -27,8 +27,8 @@ const SheetOverlay = forwardRef<
   <SheetPrimitive.Overlay
     className={cn(
       `
-        data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 fixed inset-0 z-99999
-        bg-black/80 data-[state=closed]:animate-out
+        data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0
+        data-[state=closed]:animate-out fixed inset-0 z-99999 bg-black/80
       `,
       className,
     )}
@@ -40,8 +40,8 @@ SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
   `
-    bg-background fixed z-99999 gap-4 p-6 shadow-lg transition ease-in-out data-[state=closed]:animate-out
-    data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=open]:duration-500
+    bg-background data-[state=closed]:animate-out data-[state=open]:animate-in fixed z-99999 gap-4 p-6 shadow-lg
+    transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500
   `,
   {
     variants: {
@@ -66,7 +66,8 @@ const sheetVariants = cva(
 );
 
 interface SheetContentProps
-  extends ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
+  extends
+    ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {}
 
 const SheetContent = forwardRef<
@@ -83,8 +84,8 @@ const SheetContent = forwardRef<
       {children}
       <SheetPrimitive.Close
         className={`
-          ring-offset-background absolute top-4 right-4 rounded-sm opacity-70 transition-opacity focus:ring-ring
-          focus:ring-2 focus:ring-offset-2 focus:outline-hidden data-[state=open]:bg-secondary hover:opacity-100
+          ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-sm
+          opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden
           disabled:pointer-events-none
         `}
       >

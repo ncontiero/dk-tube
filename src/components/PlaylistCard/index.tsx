@@ -28,7 +28,8 @@ const PlaylistCardContext = createContext<PlaylistCardContextProps>({
 const usePlaylistCardContext = () => useContext(PlaylistCardContext);
 
 interface PlaylistCardRootProps
-  extends HTMLAttributes<HTMLDivElement>,
+  extends
+    HTMLAttributes<HTMLDivElement>,
     CNonNullable<PlaylistCardContextProps> {}
 
 export const PlaylistCardRoot = forwardRef<
@@ -136,8 +137,8 @@ export const PlaylistCardInfo = forwardRef<
         href={`/playlist/${playlist.id}`}
         className={cn(
           `
-            text-foreground/60 ring-primary xs:text-sm z-10 mt-2 flex w-fit items-center gap-1 rounded-md text-xs
-            duration-200 hover:text-foreground focus-visible:text-foreground focus-visible:ring-2 focus:outline-hidden
+            text-foreground/60 ring-primary xs:text-sm hover:text-foreground focus-visible:text-foreground z-10 mt-2
+            flex w-fit items-center gap-1 rounded-md text-xs duration-200 focus:outline-hidden focus-visible:ring-2
           `,
           linkClassName,
         )}
